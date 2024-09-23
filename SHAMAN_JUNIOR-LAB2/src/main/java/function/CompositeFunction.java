@@ -1,6 +1,6 @@
 package function;
 
-public class CompositeFunction {
+public class CompositeFunction implements MathFunction {
     private MathFunction firstFunc,secondFunc;
 
     public CompositeFunction(MathFunction first, MathFunction second){
@@ -8,7 +8,7 @@ public class CompositeFunction {
         this.secondFunc = second;
     }
 
-    double apply(double x){
+    public double apply(double x){
         return secondFunc.apply(firstFunc.apply(x));
     }
 
