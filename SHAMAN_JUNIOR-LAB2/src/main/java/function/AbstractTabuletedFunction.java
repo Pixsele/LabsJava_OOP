@@ -3,12 +3,7 @@ package function;
 public abstract class AbstractTabuletedFunction implements TabulatedFunction {
 
     // Приватное поле count для количества строк в таблице
-    private int count;
-
-    // Конструктор для инициализации поля count
-    protected AbstractTabuletedFunction(int count) {
-        this.count = count;
-    }
+    protected int count;
 
     // Метод для получения количества элементов
     public int getCount() {
