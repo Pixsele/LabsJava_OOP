@@ -1,5 +1,6 @@
 package function.Chaplygin;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.BiFunction;
@@ -9,26 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ChaplyginFunctionTest {
 
-    @Test
-    void methodСhap() {
-//        BiFunction<Double,Double,Double> ODE = (x,y) -> y*y - x*x;
-//        DoubleFunction<Double> u = (x) -> -x;
-//        DoubleFunction<Double> v = (x) -> x;
-//        ChaplyginFunction obj = new ChaplyginFunction(ODE,u,v,0);
-//        obj.MethodСhap(10);
-    }
 
     @Test
     void apply() {
-    }
 
-    @Test
-    void method() {
-        BiFunction<Double,Double,Double> ODE = (x,y) -> y*y - x*x;
-        DoubleFunction<Double> u = (x) -> -x;
-        DoubleFunction<Double> v = (x) -> x;
-        ChaplyginFunction obj = new ChaplyginFunction(ODE,u,v,0,10);
-        obj.Method(10);
+        BiFunction<Double,Double,Double> func = (x,y) -> x + y;
+        ChaplyginFunction chap = new ChaplyginFunction(func,0.5,1,0,10);
+
+        double res = chap.apply(1.0);
+        assertEquals(6.043865,res,1e-6);
 
     }
 }
