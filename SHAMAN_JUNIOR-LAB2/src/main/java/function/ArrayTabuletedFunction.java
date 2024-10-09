@@ -30,7 +30,6 @@ public class ArrayTabuletedFunction extends AbstractTabuletedFunction{
             xFrom = xTo;
             xTo = temp;
         }
-
         this.count = count;
         this.xValues = new double[count];
         this.yValues = new double[count];
