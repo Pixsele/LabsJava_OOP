@@ -2,13 +2,13 @@ package function;
 
 import java.util.Arrays;
 
-public class ArrayTabuletedFunction extends AbstractTabuletedFunction{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;
 
     // Конструктор с массивами xValues и yValues
-    public ArrayTabuletedFunction(double[] xValues, double[] yValues) {
+    public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         if (xValues.length < 2) {
             throw new IllegalArgumentException("The size must be at least 2");
         }
@@ -19,7 +19,7 @@ public class ArrayTabuletedFunction extends AbstractTabuletedFunction{
     }
 
     // Конструктор с параметрами source, xFrom, xTo, count
-    public ArrayTabuletedFunction(MathFunction source, double xFrom, double xTo, int count) {
+    public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
         if (count < 2) {
             throw new IllegalArgumentException("The number of points must be at least 2");
         }
@@ -132,6 +132,9 @@ public class ArrayTabuletedFunction extends AbstractTabuletedFunction{
 
     @Override
     public double interpolate(double x, int floorIndex) {
+        if (count == 1) {
+            return yValues[0];
+        }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
 }

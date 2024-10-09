@@ -1,6 +1,6 @@
 package function;
 
-public abstract class AbstractTabuletedFunction implements TabulatedFunction {
+public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     // Приватное поле count для количества строк в таблице
     protected int count;
