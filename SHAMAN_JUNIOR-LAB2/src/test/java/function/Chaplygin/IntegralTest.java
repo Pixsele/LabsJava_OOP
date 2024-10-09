@@ -12,7 +12,7 @@ class IntegralTest {
     void solveByTrapezoidalRule() {
         DoubleFunction<Double> f0 = (x) -> x*x;
         DoubleFunction<Double> f1 = (x) -> Math.pow(Math.E,x);
-        DoubleFunction<Double> f2 = (x) -> x*x*x + x*2;
+        DoubleFunction<Double> f2 = (x) -> Math.sin(x*x + 2*x);
 
         Integral integral0 = new Integral(f0);
         Integral integral1 = new Integral(f1);
@@ -20,7 +20,7 @@ class IntegralTest {
 
         assertEquals(2673.72,integral0.solveByTrapezoidalRule(20,2),0.1);
         assertEquals(23831.041,integral1.solveByTrapezoidalRule(10,0),0.1);
-        assertEquals(0,integral2.solveByTrapezoidalRule(10,-10),0.1);
+        assertEquals(-0.71805,integral2.solveByTrapezoidalRule(Math.PI,-Math.PI),0.1);
 
 
     }
