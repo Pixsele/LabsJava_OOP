@@ -2,7 +2,7 @@ package function;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;
@@ -113,6 +113,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
         return count - 1;
     }
 
+    // Метод экстраполяции слева
     @Override
     protected double extrapolateLeft(double x) {
         if (count == 1) {
@@ -136,5 +137,57 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
             return yValues[0];
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
+    }
+
+    @Override
+    public void insert(double x, double y) {
+
+        int index = indexOfX(x);
+
+        if(index != -1){
+            yValues[index] = y;
+            return;
+        }
+        else {
+            double[] newArrayX = new double[count+1];
+            double[] newArrayY = new double[count+1];
+
+            if(x < this.xValues[0]) {
+                newArrayX[0] = x;
+                newArrayY[0] = y;
+
+                System.arraycopy(this.xValues, 0, newArrayX, 1, count);
+                System.arraycopy(this.yValues, 0, newArrayY, 1, count);
+            }
+            else if(x > this.xValues[count-1]){
+                System.arraycopy(this.xValues, 0, newArrayX, 0, count);
+                System.arraycopy(this.yValues, 0, newArrayY, 0, count);
+
+                newArrayX[count] = x;
+                newArrayY[count] = y;
+            }else{
+                int pos = 0;
+                for(; pos < count; pos++){
+                    if(this.xValues[pos] < x && x < this.xValues[pos + 1]){
+                        break;
+                    }
+                    System.arraycopy(this.xValues, 0, newArrayX, 0, pos+1);
+                    System.arraycopy(this.yValues, 0, newArrayY, 0, pos+1);
+
+                    newArrayX[pos + 1] = x;
+                    newArrayY[pos + 1] = y;
+
+                    System.arraycopy(this.xValues, pos + 1, newArrayX,pos + 2, count - pos - 1);
+                    System.arraycopy(this.yValues, pos + 1, newArrayY, pos + 2, count - pos - 1);
+
+                }
+            }
+
+            this.xValues = newArrayX;
+            this.yValues = newArrayY;
+            this.count++;
+
+            return;
+        }
     }
 }

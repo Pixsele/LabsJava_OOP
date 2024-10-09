@@ -2,7 +2,7 @@ package function;
 
 import java.rmi.UnexpectedException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
 
     private static final class Node{
         public Node next;
@@ -41,8 +41,15 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
 
         Node currentNode = head;
 
-        for(int i = 0; i < index;i++){
-            currentNode = currentNode.next;
+        if(index>0){
+            for(int i = 0; i < index;i++){
+                currentNode = currentNode.next;
+            }
+        }
+        else{
+            for(int i = index; i < 0;i++){
+                currentNode = currentNode.prev;
+            }
         }
 
         return currentNode;
@@ -218,5 +225,35 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction{
                 return interpolate(x, floorIndexOfX(x));
             }
         }
+    }
+
+    @Override
+    public void remove(int index) {
+        if(count == 0){
+            throw new IllegalArgumentException("Zero length");
+        }
+
+        Node currentNode = head;
+        if(head.next != currentNode){
+            if(index>0){
+                for(int i = 0; i < index;i++){
+                    currentNode = currentNode.next;
+                }
+            }
+            else{
+                for(int i = index; i < 0;i++){
+                    currentNode = currentNode.prev;
+                }
+            }
+            if(currentNode == head){
+                head = head.next;
+            }
+            currentNode.prev.next = currentNode.next;
+            currentNode.next.prev = currentNode.prev;
+        }
+        else{
+            head = null;
+        }
+        count--;
     }
 }

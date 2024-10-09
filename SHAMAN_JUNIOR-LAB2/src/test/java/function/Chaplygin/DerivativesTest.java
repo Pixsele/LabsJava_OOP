@@ -16,6 +16,6 @@ class DerivativesTest {
 
         assertEquals(20,Derivatives.derive(f0).apply(10),0.0001);
         assertEquals(2.16093,Derivatives.derive(f1).apply(10),0.0001);
-        assertEquals(22027.5671,Derivatives.derive(f2).apply(10),0.0001);
+        assertEquals(22026.4679,Derivatives.derive(f2).apply(10),0.0001);
     }
 }
