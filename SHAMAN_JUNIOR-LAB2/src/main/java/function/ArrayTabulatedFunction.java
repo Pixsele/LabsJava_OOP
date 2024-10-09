@@ -163,17 +163,16 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
                 int pos = 0;
                 for(; pos < count; pos++){
                     if(this.xValues[pos] < x && x < this.xValues[pos + 1]){
+                        System.arraycopy(this.xValues, 0, newArrayX, 0, pos+1);
+                        System.arraycopy(this.yValues, 0, newArrayY, 0, pos+1);
+
+                        newArrayX[pos + 1] = x;
+                        newArrayY[pos + 1] = y;
+
+                        System.arraycopy(this.xValues, pos + 1, newArrayX,pos + 2, count - pos - 1);
+                        System.arraycopy(this.yValues, pos + 1, newArrayY, pos + 2, count - pos - 1);
                         break;
                     }
-                    System.arraycopy(this.xValues, 0, newArrayX, 0, pos+1);
-                    System.arraycopy(this.yValues, 0, newArrayY, 0, pos+1);
-
-                    newArrayX[pos + 1] = x;
-                    newArrayY[pos + 1] = y;
-
-                    System.arraycopy(this.xValues, pos + 1, newArrayX,pos + 2, count - pos - 1);
-                    System.arraycopy(this.yValues, pos + 1, newArrayY, pos + 2, count - pos - 1);
-
                 }
             }
 
