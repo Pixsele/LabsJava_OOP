@@ -9,9 +9,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     // Конструктор с массивами xValues и yValues
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
-        if (xValues.length < 2) {
-            throw new IllegalArgumentException("The size must be at least 2");
-        }
 
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);
@@ -20,9 +17,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     // Конструктор с параметрами source, xFrom, xTo, count
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
-        if (count < 2) {
-            throw new IllegalArgumentException("The number of points must be at least 2");
-        }
 
         // Если xFrom > xTo, поменять их местами
         if (xFrom > xTo) {
