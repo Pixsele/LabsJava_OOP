@@ -1,7 +1,5 @@
 package function;
 
-import java.rmi.UnexpectedException;
-
 public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
 
     private static final class Node{
@@ -106,7 +104,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double getY(int index) {
-        return getNode(index).x;
+        return getNode(index).y;
     }
 
     @Override
@@ -142,21 +140,22 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-//        Node current = head;
-//
-//        if(head.x < x){
-//            return count;
-//        }
-//
-//        for(int i = 0;i < count;i++){
-//            if(x < current.next.x){
-//                return i-1;
-//            }
-//        }
-        throw new UnsupportedOperationException();
+        Node current = head;
+
+        if(head.x < x){
+            return count;
+        }
+
+        for(int i = 0;i < count;i++){
+            if(x < current.next.x){
+                return i-1;
+            }
+        }
+
+        return 0;
     }
 
-    protected Node floorIndexOfx(double x){
+    protected Node floorNodeOfx(double x){
         Node current = head;
 
         if(head.x < x){
