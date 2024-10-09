@@ -10,10 +10,10 @@ public class Integral {
         this.f = f;
     }
 
-    double solveByTrapezoidalRule(double testX, double x0){
+    double solveByTrapezoidalRule(double x, double x0){
         int n = 10;
-        double h = (testX - x0)/n;
-        double result = 0.5 * (f.apply(x0) + f.apply(testX));
+        double h = (x - x0)/n;
+        double result = 0.5 * (f.apply(x0) + f.apply(x));
 
         for(int i = 1;i < n;i++){
             double newx = x0 + i * h;
