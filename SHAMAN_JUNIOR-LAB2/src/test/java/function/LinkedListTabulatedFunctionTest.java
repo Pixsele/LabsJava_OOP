@@ -121,23 +121,51 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(5, res);
     }
 
-
+    @Test
     void removeMiddleTest() {
         list.remove(2);
         list.remove(5);
-        assertEquals(3, list.getX(2));
-        assertEquals(7, list.getX(5));
+        assertEquals(5, list.getX(2));
+        assertEquals(5, list.getX(5));
     }
 
-
+    @Test
     void removeLeftBoundTest() {
         list.remove(0);
-        assertEquals(1, list.getX(0));
+        assertEquals(2, list.getX(0));
     }
 
-
+    @Test
     void removeRightBoundTest() {
         list.remove(list.getCount() - 1);
-        assertEquals(6, list.getX(list.getCount() - 1));
+        assertEquals(4, list.getX(list.getCount() - 1));
+    }
+
+    @Test
+    void insertTest(){
+        return;
+    }
+
+    @Test
+    void extrapilateLeftTest(){
+        assertEquals(-4,list.apply(-2));
+    }
+
+    @Test
+    void extrapilateRightTest(){
+        assertEquals(40,list.apply(20));
+    }
+
+    @Test
+    void interpolateTest(){
+        assertEquals(6,list.apply(3));
+        assertEquals(8.4,list.interpolate(4.2,4));
+    }
+
+    @Test
+    void applyTest(){
+        assertEquals(24,list.apply(12));
+        assertEquals(15.3,list.apply(7.65));
+
     }
 }

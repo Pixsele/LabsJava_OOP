@@ -155,7 +155,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return 0;
     }
 
-    protected Node floorNodeOfx(double x){
+    private Node floorNodeOfx(double x){
         Node current = head;
 
         if(head.x < x){
