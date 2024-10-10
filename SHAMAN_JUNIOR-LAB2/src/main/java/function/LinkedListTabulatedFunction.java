@@ -1,6 +1,8 @@
 package function;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
+import java.rmi.UnexpectedException;
+
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable{
 
     private static final class Node{
         public Node next;
@@ -104,7 +106,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double getY(int index) {
-        return getNode(index).y;
+        return getNode(index).x;
     }
 
     @Override
@@ -140,22 +142,21 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-        Node current = head;
-
-        if(head.x < x){
-            return count;
-        }
-
-        for(int i = 0;i < count;i++){
-            if(x < current.next.x){
-                return i-1;
-            }
-        }
-
-        return 0;
+//        Node current = head;
+//
+//        if(head.x < x){
+//            return count;
+//        }
+//
+//        for(int i = 0;i < count;i++){
+//            if(x < current.next.x){
+//                return i-1;
+//            }
+//        }
+        throw new UnsupportedOperationException();
     }
 
-    private Node floorNodeOfx(double x){
+    protected Node floorIndexOfx(double x){
         Node current = head;
 
         if(head.x < x){
@@ -254,5 +255,45 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             head = null;
         }
         count--;
+    }
+
+    @Override
+    public void insert(double x, double y) {
+        if (count == 0){
+            addNode(x,y);
+        }
+        if (x < head.x) {
+            Node newNode = new Node(x, y);
+            newNode.next = head;
+            newNode.prev = head.prev;
+            head.prev.next = newNode;
+            head.prev = newNode;
+            head = newNode;
+            count++;
+        }
+        Node cur;
+        if (x > head.prev.x) {
+            cur = head.prev;
+        } else {
+            cur = head;
+            while (cur.next != head && cur.next.x < x) {
+                cur = cur.next;
+            }
+        }
+        if (cur.x == x) {
+            cur.y = y;
+            return;
+        }
+        if (cur.next != head && cur.next.x == x) {
+            cur.next.y = y;
+            return;
+        }
+        Node newNode = new Node(x, y);
+        newNode.next = cur.next;
+        newNode.prev = cur;
+        cur.next.prev = newNode;
+        cur.next = newNode;
+        count++;
+
     }
 }
