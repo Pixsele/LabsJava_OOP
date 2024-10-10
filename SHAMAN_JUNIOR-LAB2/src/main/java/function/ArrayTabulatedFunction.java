@@ -96,9 +96,6 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
-        if (x < xValues[0]) {
-            throw new IllegalArgumentException("Lesser than left left bound");
-        }
         for (int i = 1; i < count; i++) {
             if (x < xValues[i]) {
                 return i - 1;

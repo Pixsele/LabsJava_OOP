@@ -130,4 +130,39 @@ class ArrayTabulatedFunctionTest {
 
         assertEquals(7.0, function.extrapolateRight(3.5), 1e-9);
     }
+
+    @Test
+    void testRemove() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {1.0, 4.0, 9.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        function.remove(2);
+
+        assertEquals(2, function.getCount());
+
+        assertEquals(1.0, function.getX(0));
+        assertEquals(2.0, function.getX(1));
+
+        assertEquals(1.0, function.getY(0));
+        assertEquals(4.0, function.getY(1));
+
+        function.remove(0);
+
+        assertEquals(1, function.getCount());
+
+        assertEquals(2.0, function.getX(0));
+
+        assertEquals(4.0, function.getY(0));
+    }
+
+
+    @Test
+    void floorIndexOfX() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {1.0, 4.0, 9.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        assertEquals(2,function.floorIndexOfX(15));
+    }
 }

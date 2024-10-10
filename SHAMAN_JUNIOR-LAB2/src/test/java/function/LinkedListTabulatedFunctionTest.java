@@ -142,8 +142,27 @@ class LinkedListTabulatedFunctionTest {
     }
 
     @Test
-    void insertTest(){
-        return;
+    void insertTestFirstPos(){
+        list.insert(0.5, 1.0);
+        assertEquals(6, list.getCount());
+        assertEquals(0.5, list.getX(0));
+        assertEquals(1.0, list.getY(0));
+    }
+
+    @Test
+    void testInsertIntoMiddle() {
+        list.insert(2.0, 3.0);
+        assertEquals(6, list.getCount());
+        assertEquals(2.0, list.getX(1));
+        assertEquals(3.0, list.getY(1));
+    }
+
+    @Test
+    void testInsertIntoEnd() {
+        list.insert(6.0, 12.0);
+        assertEquals(6, list.getCount());
+        assertEquals(4.0, list.getX(3));
+        assertEquals(8.0, list.getY(3));
     }
 
     @Test

@@ -106,7 +106,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double getY(int index) {
-        return getNode(index).x;
+        return getNode(index).y;
     }
 
     @Override
@@ -142,18 +142,19 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected int floorIndexOfX(double x) {
-//        Node current = head;
-//
-//        if(head.x < x){
-//            return count;
-//        }
-//
-//        for(int i = 0;i < count;i++){
-//            if(x < current.next.x){
-//                return i-1;
-//            }
-//        }
-        throw new UnsupportedOperationException();
+        Node current = head;
+
+        if(head.x < x){
+            return count;
+        }
+
+        for(int i = 0;i < count;i++){
+            if(x < current.next.x){
+                return i-1;
+            }
+        }
+
+        return 0;
     }
 
     protected Node floorIndexOfx(double x){
@@ -183,7 +184,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x,floor.x,floor.next.x,floor.y,floor.next.y);
     }
 
-    protected double interpolate(double x, Node floorIndex) {
+    private double interpolate(double x, Node floorIndex) {
         if (count == 1) {
             return head.y;
         }
@@ -270,6 +271,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             head.prev = newNode;
             head = newNode;
             count++;
+            return;
         }
         Node cur;
         if (x > head.prev.x) {
@@ -282,10 +284,12 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
         if (cur.x == x) {
             cur.y = y;
+            count++;
             return;
         }
         if (cur.next != head && cur.next.x == x) {
             cur.next.y = y;
+            count++;
             return;
         }
         Node newNode = new Node(x, y);
