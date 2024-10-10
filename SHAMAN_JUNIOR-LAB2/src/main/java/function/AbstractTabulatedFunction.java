@@ -6,9 +6,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
     protected int count;
 
     // Метод для получения количества элементов
-    public int getCount() {
-        return count;
-    }
+    public abstract int getCount();
 
     // Метод для поиска индекса x, который меньше заданного, но максимален из всех меньших
     protected abstract int floorIndexOfX(double x);

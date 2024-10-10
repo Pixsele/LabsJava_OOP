@@ -2,7 +2,7 @@ package function;
 
 import java.rmi.UnexpectedException;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Insertable, Removable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable{
 
     private static final class Node{
         public Node next;
@@ -255,45 +255,5 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             head = null;
         }
         count--;
-    }
-
-    @Override
-    public void insert(double x, double y) {
-        if (count == 0){
-            addNode(x,y);
-        }
-        if (x < head.x) {
-            Node newNode = new Node(x, y);
-            newNode.next = head;
-            newNode.prev = head.prev;
-            head.prev.next = newNode;
-            head.prev = newNode;
-            head = newNode;
-            count++;
-        }
-        Node cur;
-        if (x > head.prev.x) {
-            cur = head.prev;
-        } else {
-            cur = head;
-            while (cur.next != head && cur.next.x < x) {
-                cur = cur.next;
-            }
-        }
-        if (cur.x == x) {
-            cur.y = y;
-            return;
-        }
-        if (cur.next != head && cur.next.x == x) {
-            cur.next.y = y;
-            return;
-        }
-        Node newNode = new Node(x, y);
-        newNode.next = cur.next;
-        newNode.prev = cur;
-        cur.next.prev = newNode;
-        cur.next = newNode;
-        count++;
-
     }
 }
