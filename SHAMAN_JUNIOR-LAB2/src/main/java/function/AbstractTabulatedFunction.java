@@ -1,5 +1,8 @@
 package function;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
+
 import function.api.TabulatedFunction;
 
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
@@ -45,6 +48,21 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction {
                 // Интерполяция внутри интервала
                 int floorIndex = floorIndexOfX(x);
                 return interpolate(x, floorIndex);
+            }
+        }
+    }
+    // Метод проверки одинаковой длины массивов
+    public static void checkLengthIsTheSame(double[] xValues, double[] yValues) {
+        if (xValues.length != yValues.length) {
+            throw new DifferentLengthOfArraysException("Lengths of xValues and yValues are not the same.");
+        }
+    }
+
+    // Метод проверки сортировки массива
+    public static void checkSorted(double[] xValues) {
+        for (int i = 1; i < xValues.length; i++) {
+            if (xValues[i] <= xValues[i - 1]) {
+                throw new ArrayIsNotSortedException("Array xValues is not sorted.");
             }
         }
     }

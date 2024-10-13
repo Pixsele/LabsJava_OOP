@@ -4,6 +4,8 @@ import function.api.Insertable;
 import function.api.MathFunction;
 import function.api.Removable;
 
+import exceptions.InterpolationException;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.lang.Iterable;
@@ -62,6 +64,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     public LinkedListTabulatedFunction(double[] xValues, double[] yValues){
+        // Проверка на одинаковую длину массивов
+        checkLengthIsTheSame(xValues, yValues);
+        // Проверка на отсортированность массива xValues
+        checkSorted(xValues);
+
         if(xValues.length < 2 || yValues.length < 2){
             throw new IllegalArgumentException("The size must be >2");
         }
@@ -198,10 +205,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     protected double interpolate(double x, int floorIndex) {
         Node floor = getNode(floorIndex);
 
-        //ЗАМЕНИТЬ ОШИБКУ TODO
-
         if(x < floor.x || x > floor.next.x){
-            throw new IllegalArgumentException("x is out of bounds");
+            throw new InterpolationException("x is out of bounds");
         }
 
         return interpolate(x,floor.x,floor.next.x,floor.y,floor.next.y);
@@ -209,10 +214,8 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private double interpolate(double x, Node floorIndex) {
 
-        //ЗАМЕНИТЬ ОШИБКУ TODO
-
         if(x < floorIndex.x || x > floorIndex.next.x){
-            throw new IllegalArgumentException("x is out of bounds");
+            throw new InterpolationException("x is out of bounds");
         }
 
 

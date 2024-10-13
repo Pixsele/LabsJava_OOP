@@ -5,6 +5,8 @@ import function.api.Iterable;
 import function.api.MathFunction;
 import function.api.Removable;
 
+import exceptions.InterpolationException;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -15,6 +17,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     // Конструктор с массивами xValues и yValues
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+        // Проверка на одинаковую длину массивов
+        checkLengthIsTheSame(xValues, yValues);
+        // Проверка на отсортированность массива xValues
+        checkSorted(xValues);
 
         if(xValues.length < 2 || yValues.length < 2){
             throw new IllegalArgumentException("The size must be >2");
@@ -143,7 +149,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public double interpolate(double x, int floorIndex) {
         if(x < xValues[floorIndex] || x > xValues[floorIndex+1]){
-            throw new IllegalArgumentException("x is out of bounds");
+            throw new InterpolationException("x is out of interpolation bounds");
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
