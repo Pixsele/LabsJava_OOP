@@ -1,6 +1,6 @@
 package function.Chaplygin;
 
-import function.MathFunction;
+import function.api.MathFunction;
 
 import java.util.function.BiFunction;
 import java.util.function.DoubleFunction;

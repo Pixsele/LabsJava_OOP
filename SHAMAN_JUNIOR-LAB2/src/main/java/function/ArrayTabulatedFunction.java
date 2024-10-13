@@ -1,9 +1,14 @@
 package function;
 
+import function.api.Insertable;
+import function.api.Iterable;
+import function.api.MathFunction;
+import function.api.Removable;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable {
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;

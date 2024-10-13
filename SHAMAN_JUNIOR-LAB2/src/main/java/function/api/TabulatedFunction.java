@@ -1,4 +1,4 @@
-package function;
+package function.api;
 
 public interface TabulatedFunction extends MathFunction {
 

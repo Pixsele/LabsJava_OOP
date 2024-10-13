@@ -1,5 +1,6 @@
 package function;
 
+import function.api.MathFunction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

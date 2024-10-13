@@ -1,4 +1,6 @@
-package function;
+package function.api;
+
+import function.CompositeFunction;
 
 public interface MathFunction {
     default CompositeFunction andThen(MathFunction afterFunction){

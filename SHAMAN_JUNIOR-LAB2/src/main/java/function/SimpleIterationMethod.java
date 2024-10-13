@@ -1,6 +1,8 @@
 package function;
+import function.api.MathFunction;
+
 import java.util.Arrays;
-public class SimpleIterationMethod implements MathFunction{
+public class SimpleIterationMethod implements MathFunction {
     private final MathFunction[] equations;  // Массив функций, представляющих систему уравнений
     private final double epsilon;            // Точность
     private final int maxIterations;         // Максимальное количество итераций

@@ -1,6 +1,8 @@
 package function;
 
-public class StrictTabulatedFunction implements TabulatedFunction{
+import function.api.TabulatedFunction;
+
+public class StrictTabulatedFunction implements TabulatedFunction {
 
     TabulatedFunction function;
 

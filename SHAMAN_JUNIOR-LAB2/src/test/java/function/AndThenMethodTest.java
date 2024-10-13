@@ -2,6 +2,7 @@ package function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import function.api.MathFunction;
 import org.junit.jupiter.api.Test;
 
 public class AndThenMethodTest {

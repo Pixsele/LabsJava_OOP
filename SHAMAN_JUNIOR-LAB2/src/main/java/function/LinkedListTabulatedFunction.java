@@ -1,6 +1,9 @@
 package function;
 
-import java.rmi.UnexpectedException;
+import function.api.Insertable;
+import function.api.MathFunction;
+import function.api.Removable;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.lang.Iterable;
@@ -58,7 +61,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return currentNode;
     }
 
-    LinkedListTabulatedFunction(double[] xValues, double[] yValues){
+    public LinkedListTabulatedFunction(double[] xValues, double[] yValues){
         if(xValues.length < 2 || yValues.length < 2){
             throw new IllegalArgumentException("The size must be >2");
         }
@@ -68,7 +71,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         }
     }
 
-    LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count){
+    public LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count){
         if(count < 2){
             throw new IllegalArgumentException("The number of elements must be >2");
         }

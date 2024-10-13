@@ -1,5 +1,7 @@
 package function;
 
+import function.api.MathFunction;
+
 public class ConstantFunction implements MathFunction {
     private final double consta;
 

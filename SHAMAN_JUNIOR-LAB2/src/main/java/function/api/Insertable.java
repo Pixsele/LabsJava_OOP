@@ -1,4 +1,4 @@
-package function;
+package function.api;
 
 public interface Insertable {
     // Метод для вставки значения в табулированную функцию

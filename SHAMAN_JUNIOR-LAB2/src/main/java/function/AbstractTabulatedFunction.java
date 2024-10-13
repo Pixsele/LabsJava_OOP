@@ -1,5 +1,7 @@
 package function;
 
+import function.api.TabulatedFunction;
+
 public abstract class AbstractTabulatedFunction implements TabulatedFunction {
 
     // Приватное поле count для количества строк в таблице

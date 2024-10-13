@@ -1,5 +1,7 @@
 package function;
 
+import function.api.MathFunction;
+
 public class CompositeFunction implements MathFunction {
     private final MathFunction firstFunc,secondFunc;
 
