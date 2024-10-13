@@ -2,6 +2,8 @@ package function;
 
 import function.api.TabulatedFunction;
 
+import java.util.Iterator;
+
 public class StrictTabulatedFunction implements TabulatedFunction {
 
     TabulatedFunction function;
@@ -59,5 +61,10 @@ public class StrictTabulatedFunction implements TabulatedFunction {
             throw new IllegalArgumentException();
         }
         return function.apply(x);
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return function.iterator();
     }
 }
