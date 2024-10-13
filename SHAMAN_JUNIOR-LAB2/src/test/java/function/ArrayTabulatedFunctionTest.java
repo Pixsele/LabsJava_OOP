@@ -146,14 +146,6 @@ class ArrayTabulatedFunctionTest {
 
         assertEquals(1.0, function.getY(0));
         assertEquals(4.0, function.getY(1));
-
-        function.remove(0);
-
-        assertEquals(1, function.getCount());
-
-        assertEquals(2.0, function.getX(0));
-
-        assertEquals(4.0, function.getY(0));
     }
 
 

@@ -1,10 +1,8 @@
 package function.Chaplygin;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.BiFunction;
-import java.util.function.DoubleFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 

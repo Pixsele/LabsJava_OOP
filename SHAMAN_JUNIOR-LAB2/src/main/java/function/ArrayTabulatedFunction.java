@@ -1,14 +1,19 @@
 package function;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable{
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable{
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;
 
     // Конструктор с массивами xValues и yValues
     public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+
+        if(xValues.length < 2 || yValues.length < 2){
+            throw new IllegalArgumentException("The size must be >2");
+        }
 
         this.xValues = Arrays.copyOf(xValues, xValues.length);
         this.yValues = Arrays.copyOf(yValues, yValues.length);
@@ -17,6 +22,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     // Конструктор с параметрами source, xFrom, xTo, count
     public ArrayTabulatedFunction(MathFunction source, double xFrom, double xTo, int count) {
+
+        if(count < 2){
+            throw new IllegalArgumentException("The number of elements must be >2");
+        }
 
         // Если xFrom > xTo, поменять их местами
         if (xFrom > xTo) {
@@ -96,6 +105,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     protected int floorIndexOfX(double x) {
+        if(x < xValues[0]){
+            throw new IllegalArgumentException("Lesser than left bound");
+        }
+
         for (int i = 1; i < count; i++) {
             if (x < xValues[i]) {
                 return i - 1;
@@ -124,8 +137,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public double interpolate(double x, int floorIndex) {
-        if (count == 1) {
-            return yValues[0];
+        if(x < xValues[floorIndex] || x > xValues[floorIndex+1]){
+            throw new IllegalArgumentException("x is out of bounds");
         }
         return interpolate(x, xValues[floorIndex], xValues[floorIndex + 1], yValues[floorIndex], yValues[floorIndex + 1]);
     }
@@ -182,6 +195,15 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     }
     @Override
     public void remove(int index) {
+        if(count <= 2){
+            throw new IllegalArgumentException("The number of elements must be >2, can not remove the point");
+        }
+
+        if(index < 0 || index >= count){
+            throw new IllegalArgumentException("Incorrect index");
+        }
+
+
         double[] newXValues = new double[count - 1];
         double[] newYValues = new double[count - 1];
 
@@ -194,5 +216,10 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         this.xValues = newXValues;
         this.yValues = newYValues;
         count--;
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        throw new UnsupportedOperationException();
     }
 }

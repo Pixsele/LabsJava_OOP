@@ -3,6 +3,8 @@ package function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedListTabulatedFunctionTest {
@@ -111,13 +113,13 @@ class LinkedListTabulatedFunctionTest {
 
     @Test
     void floorIndexOfXMiddleTest() {
-        int res = list.floorIndexOfX(5.5);
+        int res = list.floorIndexOfX(2.5);
         assertEquals(5, res);
     }
 
     @Test
     void floorIndexOfXBoundTest() {
-        int res = list.floorIndexOfX(100);
+        int res = list.floorIndexOfX(5);
         assertEquals(5, res);
     }
 
@@ -178,7 +180,7 @@ class LinkedListTabulatedFunctionTest {
     @Test
     void interpolateTest(){
         assertEquals(6,list.apply(3));
-        assertEquals(8.4,list.interpolate(4.2,4));
+        assertEquals(5,list.interpolate(2.5,1));
     }
 
     @Test
@@ -186,5 +188,36 @@ class LinkedListTabulatedFunctionTest {
         assertEquals(24,list.apply(12));
         assertEquals(15.3,list.apply(7.65));
 
+    }
+
+    @Test
+    void iteratorTestWithWhile() {
+        Iterator<Point> iterator = list.iterator();
+
+        int i = 1;
+
+        while(iterator.hasNext()){
+            Point point = iterator.next();
+
+            assertEquals(i,point.x);
+            assertEquals(i*2,point.y);
+
+            i++;
+        }
+    }
+
+    @Test
+    void iteratorTestWithFor(){
+        Iterator<Point> iterator = list.iterator();
+
+        int i = 1;
+
+        for(Point point : list){
+
+            assertEquals(i,point.x);
+            assertEquals(i*2,point.y);
+
+            i++;
+        }
     }
 }

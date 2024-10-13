@@ -1,8 +1,11 @@
 package function;
 
 import java.rmi.UnexpectedException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.lang.Iterable;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point>{
 
     private static final class Node{
         public Node next;
@@ -56,12 +59,20 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     LinkedListTabulatedFunction(double[] xValues, double[] yValues){
+        if(xValues.length < 2 || yValues.length < 2){
+            throw new IllegalArgumentException("The size must be >2");
+        }
+
         for(int i = 0; i < xValues.length ;i++){
             addNode(xValues[i],yValues[i]);
         }
     }
 
     LinkedListTabulatedFunction(MathFunction source, double xFrom, double xTo, int count){
+        if(count < 2){
+            throw new IllegalArgumentException("The number of elements must be >2");
+        }
+
         if(xFrom > xTo){
             double temp = xFrom;
             xFrom = xTo;
@@ -91,11 +102,17 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     public double leftBound() {
+        if(head==null){
+            throw new IllegalStateException("List is empty");
+        }
         return head.x;
     }
 
     @Override
     public double rightBound() {
+        if(head==null){
+            throw new IllegalStateException("List is empty");
+        }
         return head.prev.x;
     }
 
@@ -157,11 +174,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return 0;
     }
 
-    protected Node floorIndexOfx(double x){
+    protected Node floorNodeOfx(double x){
         Node current = head;
 
         if(head.x < x){
-            throw new IllegalArgumentException("Less");
+            throw new IllegalArgumentException("Less than left bound");
         }
 
         for(int i = 0;i < count;i++){
@@ -176,37 +193,36 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     @Override
     protected double interpolate(double x, int floorIndex) {
-        if (count == 1) {
-            return head.y;
-        }
         Node floor = getNode(floorIndex);
+
+        //ЗАМЕНИТЬ ОШИБКУ TODO
+
+        if(x < floor.x || x > floor.next.x){
+            throw new IllegalArgumentException("x is out of bounds");
+        }
 
         return interpolate(x,floor.x,floor.next.x,floor.y,floor.next.y);
     }
 
     private double interpolate(double x, Node floorIndex) {
-        if (count == 1) {
-            return head.y;
+
+        //ЗАМЕНИТЬ ОШИБКУ TODO
+
+        if(x < floorIndex.x || x > floorIndex.next.x){
+            throw new IllegalArgumentException("x is out of bounds");
         }
+
 
         return interpolate(x,floorIndex.x,floorIndex.next.x,floorIndex.y,floorIndex.next.y);
     }
 
     @Override
     protected double extrapolateLeft(double x) {
-        if (count == 1) {
-            return head.y;
-        }
-
         return interpolate(x, head.x, head.next.x, head.y, head.next.y);
     }
 
     @Override
     protected double extrapolateRight(double x) {
-        if (count == 1) {
-            return head.y;
-        }
-
         return interpolate(x, head.prev.prev.x, head.prev.x, head.prev.prev.y, head.prev.y);
     }
 
@@ -299,5 +315,39 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         cur.next = newNode;
         count++;
 
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new Iterator<Point>() {
+
+            Node node = head;
+
+            @Override
+            public boolean hasNext() {
+                if(node != null && node.next != head){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public Point next() {
+                if(node == null){
+                    throw new NoSuchElementException("Empty list");
+                }
+
+                Point point = new Point(node.x,node.y);
+
+                if(hasNext()){
+                    node = node.next;
+                }
+                else{
+                    node =null;
+                }
+
+                return point;
+            }
+        };
     }
 }
