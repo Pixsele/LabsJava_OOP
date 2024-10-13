@@ -3,6 +3,10 @@ package function;
 import function.api.MathFunction;
 import org.junit.jupiter.api.Test;
 
+import exceptions.DifferentLengthOfArraysException;
+import exceptions.InterpolationException;
+import exceptions.ArrayIsNotSortedException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayTabulatedFunctionTest {
@@ -157,5 +161,44 @@ class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
         assertEquals(2,function.floorIndexOfX(15));
+    }
+
+    @Test
+    public void testInterpolate_ValidInterval() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        // Проверка корректного результата интерполяции
+        assertEquals(4.5, function.interpolate(1.5, 0), 0.0001);
+    }
+
+    @Test
+    public void testInterpolate_xOutsideInterval() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        // x за пределами интервала [xValues[floorIndex], xValues[floorIndex + 1]]
+        assertThrows(InterpolationException.class, () -> function.interpolate(2.5, 0));
+    }
+
+
+    @Test
+    public void testCheckLengthIsTheSame_DifferentLength() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0};
+        assertThrows(DifferentLengthOfArraysException.class, () ->
+                new ArrayTabulatedFunction(xValues, yValues)
+        );
+    }
+
+    @Test
+    public void testCheckSorted_UnsortedArray() {
+        double[] xValues = {1.0, 3.0, 2.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+        assertThrows(ArrayIsNotSortedException.class, () ->
+                new ArrayTabulatedFunction(xValues, yValues)
+        );
     }
 }
