@@ -2,6 +2,7 @@ package function;
 
 import function.api.MathFunction;
 import org.junit.jupiter.api.Test;
+import java.util.Iterator;
 
 import exceptions.DifferentLengthOfArraysException;
 import exceptions.InterpolationException;
@@ -200,5 +201,57 @@ class ArrayTabulatedFunctionTest {
         assertThrows(ArrayIsNotSortedException.class, () ->
                 new ArrayTabulatedFunction(xValues, yValues)
         );
+    }
+
+    @Test
+    public void testIteratorHasNextAndNext() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        Iterator<Point> iterator = function.iterator();
+
+        // Проверяем hasNext() и next() для каждого элемента
+        for (int i = 0; i < xValues.length; i++) {
+            assertTrue(iterator.hasNext());
+            Point point = iterator.next();
+            assertEquals(xValues[i], point.x, 0.0001);
+            assertEquals(yValues[i], point.y, 0.0001);
+        }
+
+        // После последнего элемента hasNext() должно вернуть false
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testArrayIteratorWithWhile() {
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(new double[]{1.0, 2.0, 3.0}, new double[]{10.0, 20.0, 30.0});
+        Iterator<Point> iterator = function.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(function.getX(index), point.x, 1e-9);
+            assertEquals(function.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(function.getCount(), index);
+    }
+
+    @Test
+    public void testForEach() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {10.0, 20.0, 30.0};
+
+        ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
+
+        int index = 0;
+        for (Point point : function) {
+            assertEquals(xValues[index], point.x, 1e-9);
+            assertEquals(yValues[index], point.y, 1e-9);
+            index++;
+        }
+        assertEquals(xValues.length, index);
     }
 }
