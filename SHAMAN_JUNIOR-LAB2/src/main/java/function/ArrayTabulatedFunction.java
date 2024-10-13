@@ -1,16 +1,17 @@
 package function;
 
 import function.api.Insertable;
-import function.api.Iterable;
 import function.api.MathFunction;
 import function.api.Removable;
 
 import exceptions.InterpolationException;
 
+import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.lang.Iterable;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;
@@ -231,6 +232,24 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     @Override
     public Iterator<Point> iterator() {
-        throw new UnsupportedOperationException();
+        return new Iterator<Point>() {
+            private int i = 0; // индекс
+
+            @Override
+            public boolean hasNext() {
+                return i < getCount();
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("No more elements available.");
+                }
+                // Создаем объект Point на основе xValues и yValues
+                Point point = new Point(xValues[i], yValues[i]);
+                i++; // увеличиваем индекс
+                return point;
+            }
+        };
     }
 }
