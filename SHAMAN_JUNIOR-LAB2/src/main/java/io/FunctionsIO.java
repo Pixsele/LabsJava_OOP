@@ -1,4 +1,6 @@
 package io;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.xstream.security.NoTypePermission;
 import function.api.TabulatedFunction;
 import function.ArrayTabulatedFunction;
@@ -122,5 +124,16 @@ public final class FunctionsIO {
         });
 
         return (ArrayTabulatedFunction) xstream.fromXML(reader);
+    }
+
+    public static void serializeJson(BufferedWriter writer, ArrayTabulatedFunction function) throws IOException {
+        ObjectMapper obj = new ObjectMapper();
+        writer.write(obj.writeValueAsString(function));
+        writer.flush();
+    }
+
+    public static ArrayTabulatedFunction deserializeJson(BufferedReader reader) throws IOException {
+        ObjectMapper obj = new ObjectMapper();
+        return obj.readerFor(ArrayTabulatedFunction.class).readValue(reader);
     }
 }

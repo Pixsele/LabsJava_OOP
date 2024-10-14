@@ -1,5 +1,8 @@
 package function;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import function.api.Insertable;
 import function.api.MathFunction;
 import function.api.Removable;
@@ -16,11 +19,14 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     private static final long serialVersionUID = 126625469617924761L;
 
     // Поля для хранения значений x и y
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private double[] xValues;
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
     private double[] yValues;
 
     // Конструктор с массивами xValues и yValues
-    public ArrayTabulatedFunction(double[] xValues, double[] yValues) {
+    @JsonCreator
+    public ArrayTabulatedFunction(@JsonProperty(value = "xValues") double[] xValues, @JsonProperty(value = "yValues") double[] yValues) {
         // Проверка на одинаковую длину массивов
         checkLengthIsTheSame(xValues, yValues);
         // Проверка на отсортированность массива xValues
