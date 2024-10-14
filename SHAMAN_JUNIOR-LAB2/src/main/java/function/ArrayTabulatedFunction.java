@@ -10,8 +10,11 @@ import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.lang.Iterable;
+import java.io.Serializable;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point> {
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point>, Serializable {
+    private static final long serialVersionUID = 126625469617924761L;
+
     // Поля для хранения значений x и y
     private double[] xValues;
     private double[] yValues;
