@@ -8,7 +8,7 @@ public class StrictTabulatedFunction implements TabulatedFunction {
 
     TabulatedFunction function;
 
-    StrictTabulatedFunction(TabulatedFunction function){
+    public StrictTabulatedFunction(TabulatedFunction function){
         this.function = function;
     }
 
@@ -56,9 +56,7 @@ public class StrictTabulatedFunction implements TabulatedFunction {
     public double apply(double x) {
         if(function.indexOfX(x) == -1){
 
-            //ЗАМЕНИТЬ ОШИБКУ TODO
-
-            throw new IllegalArgumentException();
+            throw new UnsupportedOperationException("X not found");
         }
         return function.apply(x);
     }

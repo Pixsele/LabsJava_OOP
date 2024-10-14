@@ -45,4 +45,19 @@ class AbstractTabulatedFunctionTest {
                 AbstractTabulatedFunction.checkSorted(xValues)
         );
     }
+
+    @Test
+    void testToString() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 8.0, 12.0};
+
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(xValues,yValues);
+        LinkedListTabulatedFunction function2 = new LinkedListTabulatedFunction(xValues,yValues);
+
+        String strArrayRef = "ArrayTabulatedFunction size = 3\n[1.0; 4.0]\n[2.0; 8.0]\n[3.0; 12.0]\n";
+        String strLinkRef = "LinkedListTabulatedFunction size = 3\n[1.0; 4.0]\n[2.0; 8.0]\n[3.0; 12.0]\n";
+
+        assertEquals(strArrayRef,function1.toString());
+        assertEquals(strLinkRef,function2.toString());
+    }
 }
