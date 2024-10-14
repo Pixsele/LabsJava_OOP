@@ -3,9 +3,7 @@ package io;
 import function.api.TabulatedFunction;
 import function.Point;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public final class FunctionsIO {
     private FunctionsIO (){
@@ -24,5 +22,17 @@ public final class FunctionsIO {
 
         // Пробрасываем данные из буфера в поток
         printWriter.flush();
+    }
+
+    public static void writeTabulatedFunction(BufferedOutputStream outputStream, TabulatedFunction function) throws IOException {
+        DataOutputStream stream = new DataOutputStream(outputStream);
+        stream.writeInt(function.getCount());
+
+        for(Point point: function){
+            stream.writeDouble(point.x);
+            stream.writeDouble(point.y);
+        }
+
+        stream.flush();
     }
 }
