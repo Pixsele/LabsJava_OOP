@@ -8,7 +8,7 @@ import function.LinkedListTabulatedFunction;
 import function.factory.*;
 import function.api.TabulatedFunction;
 import org.junit.jupiter.api.Test;
-
+import exceptions.InconsistentFunctionsException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -53,4 +53,73 @@ class TabulatedFunctionOperationServiceTest {
         }
     }
 
+    @Test
+    public void testAdditionWithSameFunctionTypes() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValuesA = {4.0, 5.0, 6.0};
+        double[] yValuesB = {7.0, 8.0, 9.0};
+
+        TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+        ArrayTabulatedFunction functionA = new ArrayTabulatedFunction(xValues, yValuesA);
+        ArrayTabulatedFunction functionB = new ArrayTabulatedFunction(xValues, yValuesB);
+
+        TabulatedFunction result = service.add(functionA, functionB);
+
+        assertEquals(11.0, result.apply(1.0), 0.0001);
+        assertEquals(13.0, result.apply(2.0), 0.0001);
+        assertEquals(15.0, result.apply(3.0), 0.0001);
+    }
+
+    @Test
+    public void testSubtractionWithDifferentFunctionTypes() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValuesA = {10.0, 20.0, 30.0};
+        double[] yValuesB = {5.0, 15.0, 25.0};
+
+        TabulatedFunctionFactory factory = new LinkedListTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+        LinkedListTabulatedFunction functionA = new LinkedListTabulatedFunction(xValues, yValuesA);
+        ArrayTabulatedFunction functionB = new ArrayTabulatedFunction(xValues, yValuesB);
+
+        TabulatedFunction result = service.subtract(functionA, functionB);
+
+        assertEquals(5.0, result.apply(1.0), 0.0001);
+        assertEquals(5.0, result.apply(2.0), 0.0001);
+        assertEquals(5.0, result.apply(3.0), 0.0001);
+    }
+
+    @Test
+    public void testInconsistentFunctionsExceptionByDifferentLength() {
+        double[] xValuesA = {1.0, 2.0, 3.0};
+        double[] xValuesB = {1.0, 2.0};
+        double[] yValuesA = {4.0, 5.0, 6.0};
+        double[] yValuesB = {7.0, 8.0};
+
+        TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+        ArrayTabulatedFunction functionA = new ArrayTabulatedFunction(xValuesA, yValuesA);
+        ArrayTabulatedFunction functionB = new ArrayTabulatedFunction(xValuesB, yValuesB);
+
+        assertThrows(InconsistentFunctionsException.class, () -> service.add(functionA, functionB));
+    }
+
+    @Test
+    public void testInconsistentFunctionsExceptionByDifferentXValues() {
+        double[] xValuesA = {1.0, 2.0, 3.0};
+        double[] xValuesB = {1.0, 2.5, 3.0};
+        double[] yValuesA = {4.0, 5.0, 6.0};
+        double[] yValuesB = {7.0, 8.0, 9.0};
+
+        TabulatedFunctionFactory factory = new ArrayTabulatedFunctionFactory();
+        TabulatedFunctionOperationService service = new TabulatedFunctionOperationService(factory);
+
+        ArrayTabulatedFunction functionA = new ArrayTabulatedFunction(xValuesA, yValuesA);
+        ArrayTabulatedFunction functionB = new ArrayTabulatedFunction(xValuesB, yValuesB);
+
+        assertThrows(InconsistentFunctionsException.class, () -> service.add(functionA, functionB));
+    }
 }
