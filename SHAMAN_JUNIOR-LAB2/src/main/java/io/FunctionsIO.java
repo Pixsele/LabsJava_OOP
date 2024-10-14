@@ -1,9 +1,12 @@
 package io;
+import com.thoughtworks.xstream.security.NoTypePermission;
 import function.api.TabulatedFunction;
+import function.ArrayTabulatedFunction;
 import function.factory.TabulatedFunctionFactory;
-import function.api.TabulatedFunction;
-import function.Point;
+import com.thoughtworks.xstream.XStream;
+import java.io.BufferedWriter;
 import java.io.BufferedReader;
+import function.Point;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -11,7 +14,7 @@ import java.util.Locale;
 import java.io.*;
 
 public final class FunctionsIO {
-    private FunctionsIO (){
+    private FunctionsIO() {
         throw new UnsupportedOperationException();
     }
 
@@ -33,7 +36,7 @@ public final class FunctionsIO {
         DataOutputStream stream = new DataOutputStream(outputStream);
         stream.writeInt(function.getCount());
 
-        for(Point point: function){
+        for (Point point : function) {
             stream.writeDouble(point.x);
             stream.writeDouble(point.y);
         }
@@ -74,12 +77,12 @@ public final class FunctionsIO {
         double[] xValues = new double[count];
         double[] yValues = new double[count];
 
-        for(int i = 0;i < count;i++){
+        for (int i = 0; i < count; i++) {
             xValues[i] = input.readDouble();
             yValues[i] = input.readDouble();
         }
 
-        return factory.create(xValues,yValues);
+        return factory.create(xValues, yValues);
     }
 
 
@@ -99,5 +102,25 @@ public final class FunctionsIO {
 
         Object obj = inputStream.readObject();
         return (TabulatedFunction) obj;
+    }
+
+    public static void serializeXml(BufferedWriter writer, ArrayTabulatedFunction function) throws IOException {
+        XStream xstream = new XStream();
+        String xml = xstream.toXML(function);
+        writer.write(xml);
+        writer.flush();
+    }
+
+    public static ArrayTabulatedFunction deserializeXml(BufferedReader reader) {
+        XStream xstream = new XStream();
+
+        xstream.addPermission(NoTypePermission.NONE);
+        xstream.allowTypes(new Class[]{
+                ArrayTabulatedFunction.class,
+                double[].class,
+                Double.class
+        });
+
+        return (ArrayTabulatedFunction) xstream.fromXML(reader);
     }
 }
