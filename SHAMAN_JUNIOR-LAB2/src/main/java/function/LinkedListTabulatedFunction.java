@@ -1,5 +1,6 @@
 package function;
 
+import com.sun.xml.internal.ws.developer.Serialization;
 import function.api.Insertable;
 import function.api.MathFunction;
 import function.api.Removable;
@@ -15,7 +16,10 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
 
     private static final long serialVersionUID = -5129692047839922672L;
 
-    private static final class Node{
+    private static final class Node implements Serializable{
+
+        private static final long serialVersionUID = -825464191096433495L;
+
         public Node next;
         public  Node prev;
         public double x,y;
