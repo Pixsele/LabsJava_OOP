@@ -60,5 +60,6 @@ public class UnmodifiableTabulatedFunction implements TabulatedFunction {
     @Override
     public Iterator<Point> iterator() {
         return function.iterator();
+
     }
 }

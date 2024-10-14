@@ -67,6 +67,22 @@ public final class FunctionsIO {
         }
     }
 
+    public static TabulatedFunction readTabulatedFunction(BufferedInputStream inputStream, TabulatedFunctionFactory factory) throws IOException {
+        DataInputStream input = new DataInputStream(inputStream);
+        int count = input.readInt();
+
+        double[] xValues = new double[count];
+        double[] yValues = new double[count];
+
+        for(int i = 0;i < count;i++){
+            xValues[i] = input.readDouble();
+            yValues[i] = input.readDouble();
+        }
+
+        return factory.create(xValues,yValues);
+    }
+
+
     public static void serialize(BufferedOutputStream stream, TabulatedFunction function) throws IOException {
         // Оборачиваем поток в ObjectOutputStream для записи объекта
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(stream);
@@ -76,5 +92,12 @@ public final class FunctionsIO {
 
         // Пробрасываем данные из буфера
         objectOutputStream.flush();
+    }
+
+    static TabulatedFunction deserialize(BufferedInputStream stream) throws IOException, ClassNotFoundException {
+        ObjectInputStream inputStream = new ObjectInputStream(stream);
+
+        Object obj = inputStream.readObject();
+        return (TabulatedFunction) obj;
     }
 }

@@ -6,11 +6,14 @@ import function.api.Removable;
 
 import exceptions.InterpolationException;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.lang.Iterable;
 
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point>{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable, Insertable, Iterable<Point>, Serializable {
+
+    private static final long serialVersionUID = -5129692047839922672L;
 
     private static final class Node{
         public Node next;

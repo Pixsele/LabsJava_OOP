@@ -33,7 +33,7 @@ public class ArrayTabulatedFunctionSerialization {
             e.printStackTrace();
         }
 
-        /*try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream("output/serialized_array_functions.bin"))) {
+        try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream("output/serialized_array_functions.bin"))) {
             TabulatedFunction deserializedFunction1 = FunctionsIO.deserialize(inputStream);
             TabulatedFunction deserializedFunction2 = FunctionsIO.deserialize(inputStream);
             TabulatedFunction deserializedFunction3 = FunctionsIO.deserialize(inputStream);
@@ -43,6 +43,6 @@ public class ArrayTabulatedFunctionSerialization {
             System.out.println(deserializedFunction3.toString());
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
