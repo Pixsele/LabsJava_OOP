@@ -108,8 +108,6 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
                 addNode(xFrom,source.apply(xFrom));
             }
         }
-
-
     }
 
     @Override
@@ -194,7 +192,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     public Node floorNodeOfx(double x){
         Node current = head;
 
-        if(head.x < x){
+        if(x < head.x){
             throw new IllegalArgumentException("Less than left bound");
         }
 

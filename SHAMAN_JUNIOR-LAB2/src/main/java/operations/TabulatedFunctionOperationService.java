@@ -7,8 +7,6 @@ import exceptions.InconsistentFunctionsException;
 import function.factory.ArrayTabulatedFunctionFactory;
 import function.factory.TabulatedFunctionFactory;
 
-import function.api.Iterable;
-import function.Point;
 import function.api.TabulatedFunction;
 
 public class TabulatedFunctionOperationService {

@@ -168,6 +168,7 @@ class ArrayTabulatedFunctionTest {
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
         assertEquals(2,function.floorIndexOfX(15));
+        assertThrows(IllegalArgumentException.class, ()-> function.floorIndexOfX(-1));
     }
 
     @Test
@@ -259,5 +260,12 @@ class ArrayTabulatedFunctionTest {
             index++;
         }
         assertEquals(xValues.length, index);
+    }
+
+    @Test
+    public void testConstructTrows() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new ArrayTabulatedFunction(new SqrFunction(),10, 20,1)
+        );
     }
 }

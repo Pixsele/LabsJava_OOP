@@ -143,6 +143,8 @@ class LinkedListTabulatedFunctionTest {
     void indexOfYNotInclude() {
         int res = list.indexOfY(1000);
         assertEquals(-1, res);
+
+        assertThrows(IllegalArgumentException.class, ()->list.floorNodeOfx(-1));
     }
 
     @Test
