@@ -3,6 +3,8 @@ package function;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MockTabulatedFunctionTest {
@@ -90,5 +92,20 @@ class MockTabulatedFunctionTest {
         assertEquals(2,func.floorIndexOfX(5));
 
 
+    }
+
+    @Test
+    public void testArrayIteratorWithWhile() {
+        Iterator<Point> iterator = func.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(func.getX(index), point.x, 1e-9);
+            assertEquals(func.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(func.getCount(), index);
     }
 }

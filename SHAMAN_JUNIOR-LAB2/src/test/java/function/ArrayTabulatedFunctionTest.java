@@ -139,19 +139,25 @@ class ArrayTabulatedFunctionTest {
 
     @Test
     void testRemove() {
-        double[] xValues = {1.0, 2.0, 3.0};
-        double[] yValues = {1.0, 4.0, 9.0};
+        double[] xValues = {1.0, 2.0, 3.0,5.0,6.0};
+        double[] yValues = {1.0, 4.0, 9.0,5.0,6.0};
         ArrayTabulatedFunction function = new ArrayTabulatedFunction(xValues, yValues);
 
         function.remove(2);
 
-        assertEquals(2, function.getCount());
+        assertEquals(4, function.getCount());
 
         assertEquals(1.0, function.getX(0));
         assertEquals(2.0, function.getX(1));
 
         assertEquals(1.0, function.getY(0));
         assertEquals(4.0, function.getY(1));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(4));
+        function.remove(0);
+        function.remove(0);
+        assertThrows(IllegalStateException.class, () -> function.remove(0));
     }
 
 

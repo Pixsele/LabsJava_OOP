@@ -1,5 +1,7 @@
 package function;
 
+import exceptions.ArrayIsNotSortedException;
+import exceptions.InterpolationException;
 import function.api.MathFunction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,11 +52,42 @@ class LinkedListTabulatedFunctionTest {
         }
     }
 
+    @Test
+    void testConstructorArraysWithDuplicates(){
+
+        double[] xArray = {1.0, 2.0, 1.0, 3.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(xArray, yArray));
+    }
+
+    @Test
+    void testConstructorArraysWithUnsorted(){
+
+        double[] xArray = {10.0, 2.0, 4.5, 1.0};
+        double[] yArray = {0.0, 3.0, 2.0, 1.1};
+
+        assertThrows(ArrayIsNotSortedException.class, () -> new LinkedListTabulatedFunction(xArray, yArray));
+    }
+
+
     @BeforeEach
     void CreateFromMassive() {
         list = new LinkedListTabulatedFunction(xVal, yVal);
     }
 
+    @Test
+    void testLeftRightBoundExecption(){
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+
+        assertThrows(IllegalStateException.class, () -> list.rightBound());
+        assertThrows(IllegalStateException.class, () -> list.leftBound());
+
+    }
 
     @Test
     void getCount() {
@@ -145,6 +178,17 @@ class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    void removeExceptionTest(){
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+        list.remove(0);
+
+        assertThrows(IllegalArgumentException.class, () -> list.remove(0));
+    }
+
+    @Test
     void insertTestFirstPos(){
         list.insert(0.5, 1.0);
         assertEquals(6, list.getCount());
@@ -182,6 +226,28 @@ class LinkedListTabulatedFunctionTest {
     void interpolateTest(){
         assertEquals(6,list.apply(3));
         assertEquals(5,list.interpolate(2.5,1));
+
+
+    }
+
+    @Test
+    void interpolationExceptionTest() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xValues, yValues);
+        assertThrows(InterpolationException.class,
+                () -> linkedListFunction.interpolate(3.5, linkedListFunction.floorNodeOfx(1)));
+    }
+
+    @Test
+    void interpolationExceptiontest2() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xValues, yValues);
+        assertThrows(InterpolationException.class,
+                () -> linkedListFunction.interpolate(3.5, 1));
     }
 
     @Test
@@ -220,5 +286,15 @@ class LinkedListTabulatedFunctionTest {
 
             i++;
         }
+    }
+
+    @Test
+    void testInterpolationException() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {4.0, 5.0, 6.0};
+
+        LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(xValues, yValues);
+        assertThrows(InterpolationException.class,
+                () -> linkedListFunction.interpolate(3.5, linkedListFunction.floorNodeOfx(1)));
     }
 }

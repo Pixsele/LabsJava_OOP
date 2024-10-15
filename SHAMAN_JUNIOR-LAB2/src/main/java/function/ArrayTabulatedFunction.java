@@ -225,11 +225,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
     @Override
     public void remove(int index) {
         if(count <= 2){
-            throw new IllegalArgumentException("The number of elements must be >2, can not remove the point");
+            throw new IllegalStateException("The number of elements must be >2, can not remove the point");
         }
 
         if(index < 0 || index >= count){
-            throw new IllegalArgumentException("Incorrect index");
+            throw new IndexOutOfBoundsException("Incorrect index");
         }
 
 

@@ -191,7 +191,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return 0;
     }
 
-    protected Node floorNodeOfx(double x){
+    public Node floorNodeOfx(double x){
         Node current = head;
 
         if(head.x < x){
@@ -209,7 +209,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     @Override
-    protected double interpolate(double x, int floorIndex) {
+    public double interpolate(double x, int floorIndex) {
         Node floor = getNode(floorIndex);
 
         if(x < floor.x || x > floor.next.x){
@@ -219,14 +219,11 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         return interpolate(x,floor.x,floor.next.x,floor.y,floor.next.y);
     }
 
-    private double interpolate(double x, Node floorIndex) {
-
-        if(x < floorIndex.x || x > floorIndex.next.x){
-            throw new InterpolationException("x is out of bounds");
+    public double interpolate(double x, Node floor) {
+        if (x < floor.x || x > floor.next.x) {
+            throw new InterpolationException("x is out of interpolation bounds");
         }
-
-
-        return interpolate(x,floorIndex.x,floorIndex.next.x,floorIndex.y,floorIndex.next.y);
+        return interpolate(x, floor.x, floor.next.x, floor.y, floor.next.y);
     }
 
     @Override

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UnmodifiableTabulatedFunctionTest {
@@ -108,5 +110,63 @@ class UnmodifiableTabulatedFunctionTest {
 
         // Проверка, что setY выбрасывает UnsupportedOperationException
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableFunction.setY(0, 10.0));
+    }
+
+    @Test
+    public void testIndexOfX() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {2.0, 4.0, 6.0};
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(xValues, yValues);
+        UnmodifiableTabulatedFunction function = new UnmodifiableTabulatedFunction(function1);
+
+
+        assertEquals(1, function.indexOfX(2.0));
+        assertEquals(-1, function.indexOfX(4.0));
+    }
+
+    @Test
+    public void testIndexOfY() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {2.0, 4.0, 6.0};
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(xValues, yValues);
+        UnmodifiableTabulatedFunction function = new UnmodifiableTabulatedFunction(function1);
+        assertEquals(1, function.indexOfY(4.0));
+        assertEquals(-1, function.indexOfY(5.0));
+    }
+
+    @Test
+    public void testLeftBound() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {2.0, 4.0, 6.0};
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(xValues, yValues);
+        UnmodifiableTabulatedFunction function = new UnmodifiableTabulatedFunction(function1);
+        assertEquals(1.0, function.leftBound());
+    }
+
+    @Test
+    public void testRightBound() {
+        double[] xValues = {1.0, 2.0, 3.0};
+        double[] yValues = {2.0, 4.0, 6.0};
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(xValues, yValues);
+        UnmodifiableTabulatedFunction function = new UnmodifiableTabulatedFunction(function1);
+        assertEquals(3.0, function.rightBound());
+    }
+
+    @Test
+    public void testArrayIteratorWithWhile() {
+        ArrayTabulatedFunction function1 = new ArrayTabulatedFunction(new double[]{1.0, 2.0, 3.0}, new double[]{10.0, 20.0, 30.0});
+        UnmodifiableTabulatedFunction function = new UnmodifiableTabulatedFunction(function1);
+
+        Iterator<Point> iterator = function.iterator();
+        int index = 0;
+
+        while (iterator.hasNext()) {
+            Point point = iterator.next();
+            assertEquals(function.getX(index), point.x, 1e-9);
+            assertEquals(function.getY(index), point.y, 1e-9);
+            index++;
+        }
+
+        assertEquals(function.getCount(), index);
     }
 }

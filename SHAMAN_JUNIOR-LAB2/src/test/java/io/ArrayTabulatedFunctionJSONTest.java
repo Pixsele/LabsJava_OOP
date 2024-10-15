@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayTabulatedFunctionJSONTest {
     @Test
-    public void testSerializeDeserializeXml() throws IOException {
+    public void testSerializeDeserializeJSON() throws IOException {
         double[] xValues = {1.0, 3.0, 5.0};
         double[] yValues = {1.0, 9.0, 25.0};
         ArrayTabulatedFunction originalFunction = new ArrayTabulatedFunction(xValues, yValues);

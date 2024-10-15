@@ -5,7 +5,9 @@ import exceptions.DifferentLengthOfArraysException;
 
 import function.api.TabulatedFunction;
 
-public abstract class AbstractTabulatedFunction implements TabulatedFunction {
+import java.io.Serializable;
+
+public abstract class AbstractTabulatedFunction implements TabulatedFunction, Serializable {
 
     // Приватное поле count для количества строк в таблице
     protected int count;

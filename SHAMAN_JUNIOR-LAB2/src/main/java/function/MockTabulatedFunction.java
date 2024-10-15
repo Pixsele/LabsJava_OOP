@@ -1,6 +1,7 @@
 package function;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class MockTabulatedFunction extends AbstractTabulatedFunction{
 
@@ -98,7 +99,24 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction{
 
     @Override
     public Iterator<Point> iterator() {
-        //TODO попка
-        return null;
+        return new Iterator<Point>() {
+            private int i = 0; // индекс
+
+            @Override
+            public boolean hasNext() {
+                return i < getCount();
+            }
+
+            @Override
+            public Point next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("No more elements available.");
+                }
+                // Создаем объект Point на основе xValues и yValues
+                Point point = new Point(arrayX[i], arrayY[i]);
+                i++; // увеличиваем индекс
+                return point;
+            };
+    };
     }
 }
