@@ -6,7 +6,7 @@ public class ConstantFunction implements MathFunction {
     private final double consta;
 
     //конструктор
-    ConstantFunction(double x) {
+    public ConstantFunction(double x) {
         this.consta = x;
     }
 
