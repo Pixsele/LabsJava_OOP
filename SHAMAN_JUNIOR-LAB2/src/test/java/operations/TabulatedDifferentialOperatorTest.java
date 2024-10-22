@@ -5,6 +5,8 @@ import function.LinkedListTabulatedFunction;
 import function.api.TabulatedFunction;
 import function.factory.ArrayTabulatedFunctionFactory;
 import function.factory.LinkedListTabulatedFunctionFactory;
+import concurrent.SynchronizedTabulatedFunction;
+import function.UnitFunction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,6 +64,41 @@ class TabulatedDifferentialOperatorTest {
             assertEquals(xValues[i], function.getX(i));
             assertEquals(yValues[i], function.getY(i), maxEpsilon);
         }
+    }
+
+    @Test
+    public void testDeriveSynchronouslyWithSynchronizedFunction() {
+        // Создаём табулированную функцию
+        TabulatedFunction function = new LinkedListTabulatedFunction(new UnitFunction(), 1, 10, 10);
+
+        // Оборачиваем в синхронизированную обёртку
+        SynchronizedTabulatedFunction synchronizedFunction = new SynchronizedTabulatedFunction(function);
+
+        // Создаем оператор для дифференцирования
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator();
+
+        // Вычисляем производную в синхронизированном контексте
+        TabulatedFunction derivative = operator.deriveSynchronously(synchronizedFunction);
+
+        // Проверяем результаты (например, в данном случае результат известен)
+        assertNotNull(derivative);
+        assertEquals(derivative.getCount(), 10);
+    }
+
+    @Test
+    public void testDeriveSynchronouslyWithRegularFunction() {
+        // Создаём обычную табулированную функцию
+        TabulatedFunction function = new LinkedListTabulatedFunction(new UnitFunction(), 1, 10, 10);
+
+        // Создаем оператор для дифференцирования
+        TabulatedDifferentialOperator operator = new TabulatedDifferentialOperator();
+
+        // Вычисляем производную в синхронизированном контексте
+        TabulatedFunction derivative = operator.deriveSynchronously(function);
+
+        // Проверяем результаты (например, в данном случае результат известен)
+        assertNotNull(derivative);
+        assertEquals(derivative.getCount(), 10);
     }
 
     @Test
