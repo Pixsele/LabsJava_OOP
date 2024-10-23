@@ -11,6 +11,10 @@ public class IntegralTask implements Callable<Double> {
 
     public IntegralTask(TabulatedFunction function, double a, double b) {
 
+        if(a > b){
+            throw new IllegalArgumentException("a can not be > b");
+        }
+
         if (function == null){
             throw new IllegalArgumentException("Function is null");
         }
@@ -21,15 +25,18 @@ public class IntegralTask implements Callable<Double> {
     }
 
     public double solveByTrapezoidalRule(int n){
+        if(n <= 0){
+            throw new IllegalArgumentException("n can not be <= 0");
+        }
 
         double h = (b - a)/n;
-        double result = 0.5 * (function.apply(a) + function.apply(b));
+        double result = 0.0;
 
-        for(int i = 1;i < n;i++){
-            double newx = a + i * h;
-            result += function.apply(newx);
+        for(int i = 0;i < n;i++){
+            double x0 = a + i * h;
+            double x1 = a + (i+1) * h;
+            result+= (function.apply(x0) + function.apply(x1)) * h/ 2;
         }
-        result = result * h;
 
         return result;
     }

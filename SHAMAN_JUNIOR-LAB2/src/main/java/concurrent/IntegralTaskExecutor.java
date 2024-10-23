@@ -1,6 +1,5 @@
-package operations;
+package concurrent;
 
-import concurrent.IntegralTask;
 import function.api.TabulatedFunction;
 
 import java.util.ArrayList;
@@ -10,12 +9,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class TabulatedIntegralOperator {
+public class IntegralTaskExecutor {
 
     private final ExecutorService executor;
     private final int countThreads;
 
-    public TabulatedIntegralOperator(int countThreads){
+    public IntegralTaskExecutor(){
+        this.countThreads = Runtime.getRuntime().availableProcessors() - 1;
+        this.executor = Executors.newFixedThreadPool(countThreads);
+    }
+
+
+    public IntegralTaskExecutor(int countThreads){
         this.executor = Executors.newFixedThreadPool(countThreads);
         this.countThreads = countThreads;
     }
@@ -23,13 +28,13 @@ public class TabulatedIntegralOperator {
     public double itegrate(TabulatedFunction function) throws ExecutionException, InterruptedException {
         double result = 0;
 
-        double delta = (function.leftBound() - function.rightBound())/countThreads;
+        double delta = Math.abs((function.rightBound() - function.leftBound()))/countThreads;
 
         List<Future<Double>> futures = new ArrayList<>();
 
         for(int i = 0;i < countThreads;i++){
 
-            double a = function.rightBound() + i * delta;
+            double a = function.leftBound() + i * delta;
             double b = a + delta;
             IntegralTask integral = new IntegralTask(function,a,b);
 
