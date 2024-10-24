@@ -6,8 +6,9 @@ import java.util.concurrent.Callable;
 
 public class IntegralTask implements Callable<Double> {
 
-    private TabulatedFunction function;
-    private double a,b;
+    private final TabulatedFunction function;
+    private final double a;
+    private final double b;
 
     public IntegralTask(TabulatedFunction function, double a, double b) {
 
