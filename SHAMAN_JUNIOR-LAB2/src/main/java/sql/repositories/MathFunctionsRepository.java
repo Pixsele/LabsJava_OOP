@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface MathFunctionsRepository extends JpaRepository<MathFunctionsEntity,Long> {
-    List<MathFunctionsEntity>  findByFunctionName(String functionName);
 }

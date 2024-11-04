@@ -50,10 +50,4 @@ public class MathFunctionsContoreller {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<MathFunctionsDTO>> searchByName(@RequestParam String name){
-            List<MathFunctionsDTO> response = mathFunctionsService.getByName(name);
-            return ResponseEntity.ok(response);
-    }
 }

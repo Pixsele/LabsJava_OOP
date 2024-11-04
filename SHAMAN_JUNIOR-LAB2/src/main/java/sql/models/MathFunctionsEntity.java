@@ -1,9 +1,7 @@
 package sql.models;
 
 
-import function.api.MathFunction;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -13,57 +11,68 @@ public class MathFunctionsEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name = "function_name")
-    private String functionName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "function_type")
-    private String functionType;
+    @Column(name = "x_to")
+    private Double xTo;
 
-    @Column(name = "creation_time")
-    private LocalDateTime creationTime = LocalDateTime.now();
+    @Column(name = "x_from")
+    private Double xFrom;
+
+    @Column(name = "count")
+    private Integer count;
 
     @OneToMany(mappedBy = "function", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ResultsByParametrEntity> resultsByParametrList;
+    private List<PointEntity> points;
 
-    public String getFunction_name() {
-        return functionName;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setFunction_name(String function_name) {
-        this.functionName = function_name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getFunction_type() {
-        return functionType;
+    public String getName() {
+        return name;
     }
 
-    public void setFunction_type(String function_type) {
-        this.functionType = function_type;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public LocalDateTime getCreation_time() {
-        return creationTime;
+    public Double getxTo() {
+        return xTo;
     }
 
-    public void setCreation_time(LocalDateTime creation_time) {
-        this.creationTime = creation_time;
+    public void setxTo(Double xTo) {
+        this.xTo = xTo;
     }
 
-    public List<ResultsByParametrEntity> getResultsByParametrList() {
-        return resultsByParametrList;
+    public Double getxFrom() {
+        return xFrom;
     }
 
-    public void setResultsByParametrList(List<ResultsByParametrEntity> resultsByParametr) {
-        this.resultsByParametrList = resultsByParametr;
+    public void setxFrom(Double xFrom) {
+        this.xFrom = xFrom;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public List<PointEntity> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<PointEntity> points) {
+        this.points = points;
     }
 }

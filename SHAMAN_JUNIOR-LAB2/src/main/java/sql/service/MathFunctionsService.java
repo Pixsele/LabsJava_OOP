@@ -28,7 +28,7 @@ public class MathFunctionsService {
         return convertToDto(createdentity);
     }
 
-    public MathFunctionsDTO read(long id) {
+    public MathFunctionsDTO read(Long id) {
         return mathFunctionsRepository.findById(id).map(this::convertToDto).orElse(null);
     }
 
@@ -58,17 +58,18 @@ public class MathFunctionsService {
         return null;
     }
 
-    public List<MathFunctionsDTO> getByName(String name){
-        return mathFunctionsRepository.findByFunctionName(name).stream().map(this::convertToDto).collect(Collectors.toList());
-    }
+//    public List<MathFunctionsDTO> getByName(String name){
+//        return mathFunctionsRepository.findByFunctionName(name).stream().map(this::convertToDto).collect(Collectors.toList());
+//    }
 
     private MathFunctionsDTO convertToDto(MathFunctionsEntity entity){
         MathFunctionsDTO dto_obj = new MathFunctionsDTO();
 
         dto_obj.setId(entity.getId());
-        dto_obj.setFunctionName(entity.getFunction_name());
-        dto_obj.setFunctionType(entity.getFunction_type());
-        dto_obj.setCreationTime(entity.getCreation_time());
+        dto_obj.setName(entity.getName());
+        dto_obj.setxTo(entity.getxTo());
+        dto_obj.setxFrom(entity.getxFrom());
+        dto_obj.setCount(entity.getCount());
 
         return dto_obj;
     }
@@ -77,9 +78,10 @@ public class MathFunctionsService {
         MathFunctionsEntity entity = new MathFunctionsEntity();
 
         entity.setId(dto_obj.getId());
-        entity.setFunction_name(dto_obj.getFunctionName());
-        entity.setFunction_type(dto_obj.getFunctionType());
-        entity.setCreation_time(dto_obj.getCreationTime());
+        entity.setName(dto_obj.getName());
+        entity.setxTo(dto_obj.getxTo());
+        entity.setxFrom(dto_obj.getxFrom());
+        entity.setCount(dto_obj.getCount());
 
         return entity;
     }

@@ -1,42 +1,49 @@
 package sql.DTO;
 
-import java.time.LocalDateTime;
-
 public class MathFunctionsDTO {
-    private long id;
-    private String functionName;
-    private String functionType;
-    private LocalDateTime creationTime;
+    private Long id;
+    private String name;
+    private Double xTo;
+    private Double xFrom;
+    private Integer count;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFunctionName() {
-        return functionName;
+    public String getName() {
+        return name;
     }
 
-    public void setFunctionName(String functionName) {
-        this.functionName = functionName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFunctionType() {
-        return functionType;
+    public Double getxTo() {
+        return xTo;
     }
 
-    public void setFunctionType(String functionType) {
-        this.functionType = functionType;
+    public void setxTo(Double xTo) {
+        this.xTo = xTo;
     }
 
-    public LocalDateTime getCreationTime() {
-        return creationTime;
+    public Double getxFrom() {
+        return xFrom;
     }
 
-    public void setCreationTime(LocalDateTime creationTime) {
-        this.creationTime = creationTime;
+    public void setxFrom(Double xFrom) {
+        this.xFrom = xFrom;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }
