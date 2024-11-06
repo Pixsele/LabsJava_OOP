@@ -5,9 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sql.DTO.MathFunctionsDTO;
 import sql.DTO.PointDTO;
+import sql.models.MathFunctionsEntity;
 import sql.models.PointEntity;
 import sql.repositories.MathFunctionsRepository;
 import sql.repositories.PointRepository;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PointService {
@@ -75,5 +80,22 @@ public class PointService {
             return convertToDto(pointRepository.getById(id));
         }
         return null;
+    }
+
+    public List<PointDTO> searchByFunctionName(String functionName) {
+        List<MathFunctionsEntity> functions = mathFunctionsRepository.findByNameContainingIgnoreCase(functionName);
+        List<PointEntity> points = functions.stream()
+                .flatMap(function -> pointRepository.findByFunction(function).stream())
+                .collect(Collectors.toList());
+
+        return sortAndMap(points);
+    }
+
+    private List<PointDTO> sortAndMap(List<PointEntity> points) {
+        Comparator<PointEntity> comparator = Comparator.comparing(PointEntity::getX);
+        return points.stream()
+                .sorted(comparator)
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }

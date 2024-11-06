@@ -8,4 +8,7 @@ import java.util.List;
 
 @Repository
 public interface MathFunctionsRepository extends JpaRepository<MathFunctionsEntity,Long> {
+    MathFunctionsEntity findByName(String name);
+    List<MathFunctionsEntity> findByNameContainingIgnoreCase(String name);
+
 }

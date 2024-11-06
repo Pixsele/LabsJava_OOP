@@ -9,6 +9,7 @@ import sql.DTO.MathFunctionsDTO;
 import sql.models.MathFunctionsEntity;
 import sql.repositories.MathFunctionsRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,9 +59,6 @@ public class MathFunctionsService {
         return null;
     }
 
-//    public List<MathFunctionsDTO> getByName(String name){
-//        return mathFunctionsRepository.findByFunctionName(name).stream().map(this::convertToDto).collect(Collectors.toList());
-//    }
 
     private MathFunctionsDTO convertToDto(MathFunctionsEntity entity){
         MathFunctionsDTO dto_obj = new MathFunctionsDTO();
@@ -85,4 +83,34 @@ public class MathFunctionsService {
 
         return entity;
     }
+
+    // Сортировка по имени
+    public List<MathFunctionsDTO> sortByName(List<MathFunctionsDTO> functions) {
+        return functions.stream()
+                .sorted(Comparator.comparing(MathFunctionsDTO::getName))
+                .collect(Collectors.toList());
+    }
+
+    public List<MathFunctionsEntity> findsByName(String name) {
+        return mathFunctionsRepository.findAll().stream().filter(function -> function.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+    }
+
+    public MathFunctionsDTO findByName(String name) {
+        MathFunctionsEntity function = mathFunctionsRepository.findByName(name);
+        if (function != null) {
+            return new MathFunctionsDTO(function.getId(), function.getName(), function.getxFrom(), function.getxTo(), function.getCount());
+        }
+        return null;
+    }
+
+    public List<MathFunctionsDTO> searchByRange(Double xFrom, Double xTo) {
+        List<MathFunctionsDTO> result = mathFunctionsRepository.findAll().stream()
+                .filter(function -> function.getxFrom() >= xFrom && function.getxTo() <= xTo)
+                .map(function -> new MathFunctionsDTO(function.getId(), function.getName(), function.getxFrom(), function.getxTo(), function.getCount()))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+
 }
