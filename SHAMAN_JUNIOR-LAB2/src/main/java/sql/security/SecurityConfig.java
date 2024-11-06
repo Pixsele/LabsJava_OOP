@@ -2,6 +2,8 @@ package sql.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -30,16 +32,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .csrf().disable()
+                .csrf()
+                .ignoringAntMatchers("/user/register")// Отключаем CSRF для регистрации
+                .ignoringAntMatchers("/user/login")
+                .and()
                 .authorizeRequests()
-                .antMatchers("/user/register").permitAll() // Разрешаем доступ к регистрации для всех
-                .antMatchers("/user/home").permitAll() // Разрешаем доступ к /home для всех
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+                .antMatchers(HttpMethod.POST, "/user/register").permitAll() // Доступ к регистрации для всех
+                .antMatchers(HttpMethod.POST, "/user/login").permitAll()
+                .anyRequest().authenticated() // Остальные запросы требуют аутентификации
                 .and()
-                .formLogin()
+                .formLogin() // Настройки формы входа
+                .permitAll()
                 .and()
-                .logout().permitAll();
+                .logout()
+                .permitAll();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

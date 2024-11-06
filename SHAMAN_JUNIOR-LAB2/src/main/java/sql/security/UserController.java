@@ -2,6 +2,10 @@ package sql.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,21 +17,19 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @GetMapping("/home")
-    public String userHome() {
-        return "Добро пожаловать, пользователь!";
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestBody UserDTO userDto) {
-        // Проверьте, нет ли пользователя с таким же именем
         if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             return "Пользователь с таким именем уже существует";
         }
@@ -36,10 +38,26 @@ public class UserController {
         entity.setUsername(userDto.getUsername());
         entity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         entity.setCreationTime(LocalDateTime.now());
-        entity.setRoles(userDto.getRoles());  // Установите роль, переданную в запросе
+        entity.setRoles(userDto.getRoles());
 
         userRepository.save(entity);
         return "Пользователь успешно зарегистрирован";
+    }
+
+
+    @PostMapping("/login")
+    public String loginUser(@RequestBody UserDTO userDto) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            String token = jwtUtil.generateToken(userDto.getUsername());
+            return "Bearer " + token;  // Возвращаем токен
+        } catch (Exception e) {
+            return "Ошибка входа: неверное имя пользователя или пароль";
+        }
     }
 
 }
