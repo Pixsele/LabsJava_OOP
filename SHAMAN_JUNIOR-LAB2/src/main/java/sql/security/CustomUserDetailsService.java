@@ -24,7 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public void saveUser(UserEntity user) {
-        // Кодируем пароль перед сохранением
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }

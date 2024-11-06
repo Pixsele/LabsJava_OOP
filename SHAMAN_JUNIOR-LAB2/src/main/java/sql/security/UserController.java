@@ -38,7 +38,7 @@ public class UserController {
         entity.setUsername(userDto.getUsername());
         entity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         entity.setCreationTime(LocalDateTime.now());
-        entity.setRoles(userDto.getRoles());
+        entity.setRole(userDto.getRole());
 
         userRepository.save(entity);
         return "Пользователь успешно зарегистрирован";

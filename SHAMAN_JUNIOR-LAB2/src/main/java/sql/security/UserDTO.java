@@ -6,9 +6,7 @@ import java.util.Set;
 public class UserDTO {
     private String username;
     private String password;
-    private String passwordConfirm;
-    private LocalDateTime createdAt;
-    private Set<Role> roles;
+    private Role role;
 
     public String getUsername() {
         return username;
@@ -26,27 +24,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
+    public Role getRole() {
+        return role;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
