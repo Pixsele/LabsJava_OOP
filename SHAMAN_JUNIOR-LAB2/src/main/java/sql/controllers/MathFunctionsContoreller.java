@@ -26,7 +26,6 @@ public class MathFunctionsContoreller {
         return ResponseEntity.ok(response);
     }
 
-    //TODO
     @GetMapping("/{id}")
     public ResponseEntity<MathFunctionsDTO> read(@PathVariable long id){
         MathFunctionsDTO response = mathFunctionsService.read(id);
@@ -49,5 +48,14 @@ public class MathFunctionsContoreller {
         else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public  ResponseEntity<List<MathFunctionsDTO>> findDyName(@RequestParam String name){
+        List<MathFunctionsDTO> functions = mathFunctionsService.findsByName(name);
+        if(functions.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(functions);
     }
 }

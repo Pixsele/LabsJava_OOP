@@ -7,6 +7,12 @@ public class MathFunctionsDTO {
     private Double xFrom;
     private Integer count;
 
+    public MathFunctionsDTO() {
+    }
+
+    public MathFunctionsDTO(Long id, String name, Double aDouble, Double aDouble1, Integer count) {
+    }
+
     public Long getId() {
         return id;
     }

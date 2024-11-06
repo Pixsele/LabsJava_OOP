@@ -53,7 +53,7 @@ public class UserController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String token = jwtUtil.generateToken(userDto.getUsername());
+            String token = jwtUtil.generateToken(userDto.getUsername(), userDto.getRole());
             return "Bearer " + token;  // Возвращаем токен
         } catch (Exception e) {
             return "Ошибка входа: неверное имя пользователя или пароль";

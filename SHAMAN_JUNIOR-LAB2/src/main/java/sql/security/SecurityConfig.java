@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,29 +30,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder); // Указываем энкодер для паролей
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder); // Указываем энкодер для паролей
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .ignoringAntMatchers("/user/register")// Отключаем CSRF для регистрации
-                .ignoringAntMatchers("/user/login")
-                .and()
+                .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user/register").permitAll() // Доступ к регистрации для всех
                 .antMatchers(HttpMethod.POST, "/user/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/functions/**").authenticated()
-                .antMatchers(HttpMethod.POST, "/functions").authenticated()
                 .anyRequest().authenticated() // Остальные запросы требуют аутентификации
                 .and()
-                .formLogin() // Настройки формы входа
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Отключаем создание сессий
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
     }

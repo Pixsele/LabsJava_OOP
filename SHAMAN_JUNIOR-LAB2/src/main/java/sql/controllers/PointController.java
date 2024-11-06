@@ -4,8 +4,12 @@ package sql.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sql.DTO.MathFunctionsDTO;
 import sql.DTO.PointDTO;
+import sql.service.MathFunctionsService;
 import sql.service.PointService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/point")
@@ -24,7 +28,6 @@ public class PointController {
         return ResponseEntity.ok(response);
     }
 
-    //TODO
     @GetMapping("/{id}")
     public ResponseEntity<PointDTO> read(@PathVariable long id){
         PointDTO response = pointService.read(id);
@@ -47,5 +50,16 @@ public class PointController {
         else{
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PointDTO>> findPointsByFunction(@RequestParam Long id) {
+        List<PointDTO> points = pointService.findByFunction(id);
+
+        if (points == null || points.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content если точек нет
+        }
+
+        return ResponseEntity.ok(points); // Возвращаем 200 OK с точками
     }
 }

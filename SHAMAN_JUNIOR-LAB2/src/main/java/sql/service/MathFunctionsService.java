@@ -9,6 +9,7 @@ import sql.DTO.MathFunctionsDTO;
 import sql.models.MathFunctionsEntity;
 import sql.repositories.MathFunctionsRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,9 +59,6 @@ public class MathFunctionsService {
         return null;
     }
 
-//    public List<MathFunctionsDTO> getByName(String name){
-//        return mathFunctionsRepository.findByFunctionName(name).stream().map(this::convertToDto).collect(Collectors.toList());
-//    }
 
     private MathFunctionsDTO convertToDto(MathFunctionsEntity entity){
         MathFunctionsDTO dto_obj = new MathFunctionsDTO();
@@ -84,5 +82,9 @@ public class MathFunctionsService {
         entity.setCount(dto_obj.getCount());
 
         return entity;
+    }
+
+    public List<MathFunctionsDTO> findsByName(String name) {
+        return this.mathFunctionsRepository.findByName(name).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 }
