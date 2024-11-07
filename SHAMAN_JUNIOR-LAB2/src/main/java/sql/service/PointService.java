@@ -92,21 +92,4 @@ public class PointService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
-    public List<PointDTO> searchByFunctionName(String functionName) {
-        List<MathFunctionsEntity> functions = mathFunctionsRepository.findByNameContainingIgnoreCase(functionName);
-        List<PointEntity> points = functions.stream()
-                .flatMap(function -> pointRepository.findByFunction(function).stream())
-                .collect(Collectors.toList());
-
-        return sortAndMap(points);
-    }
-
-    private List<PointDTO> sortAndMap(List<PointEntity> points) {
-        Comparator<PointEntity> comparator = Comparator.comparing(PointEntity::getX);
-        return points.stream()
-                .sorted(comparator)
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
 }
