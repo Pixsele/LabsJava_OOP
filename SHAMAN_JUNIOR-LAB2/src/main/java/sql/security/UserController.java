@@ -2,6 +2,7 @@ package sql.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,7 +47,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public String loginUser(@RequestBody UserDTO userDto) {
+    public ResponseEntity<JwtResponse> loginUser(@RequestBody UserDTO userDto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword())
@@ -54,9 +55,9 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtUtil.generateToken(userDto.getUsername(), userDto.getRole());
-            return "Bearer " + token;  // Возвращаем токен
+            return ResponseEntity.ok(new JwtResponse(token)) ; // Возвращаем токен
         } catch (Exception e) {
-            return "Ошибка входа: неверное имя пользователя или пароль";
+            return ResponseEntity.notFound().build();
         }
     }
 

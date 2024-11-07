@@ -74,7 +74,7 @@ public class PointService {
         PointEntity entity = new PointEntity();
 
         entity.setId(dto_obj.getId());
-        entity.setFunction(mathFunctionsRepository.findById(dto_obj.getId()).orElse(null));
+        entity.setFunction(mathFunctionsRepository.findById(dto_obj.getFunction()).orElse(null));
         entity.setX(dto_obj.getX());
         entity.setY(dto_obj.getY());
 
