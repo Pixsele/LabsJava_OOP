@@ -30,7 +30,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String username = jwtUtil.extractUsername(token);
             Role role = jwtUtil.extractRole(token);
 
-            // Преобразуем роль в SimpleGrantedAuthority и добавляем в контекст
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.name());
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     username, null, Collections.singleton(authority));
@@ -45,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // Убираем "Bearer "
+            return bearerToken.substring(7);
         }
         return null;
     }

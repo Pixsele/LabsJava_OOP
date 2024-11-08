@@ -9,7 +9,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your_secret_key";  // Лучше хранить в конфигурации
+    private final String SECRET_KEY = "your_secret_key";// Лучше хранить в конфигурации
+
+
 
     public String generateToken(String username,Role role) {
         return Jwts.builder()
@@ -42,7 +44,7 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody()
                 .getExpiration()
-                .before(new Date());
+                .before(new Date(System.currentTimeMillis() - 60*1000));
     }
 
     // Извлечение всех заявок (Claims)
@@ -51,5 +53,9 @@ public class JwtUtil {
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    public String getKey(){
+        return SECRET_KEY;
     }
 }
