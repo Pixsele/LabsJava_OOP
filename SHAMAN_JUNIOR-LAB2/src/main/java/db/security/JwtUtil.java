@@ -31,7 +31,7 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    // Извлечение ролей из токена
+
     public Role extractRole(String token) {
         Claims claims = extractAllClaims(token);
         String roleName = claims.get("role", String.class);
@@ -47,7 +47,7 @@ public class JwtUtil {
                 .before(new Date(System.currentTimeMillis() - 60*1000));
     }
 
-    // Извлечение всех заявок (Claims)
+
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)

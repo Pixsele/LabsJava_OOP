@@ -55,7 +55,7 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtUtil.generateToken(userDto.getUsername(), userDto.getRole());
-            return ResponseEntity.ok(new JwtResponse(token)) ; // Возвращаем токен
+            return ResponseEntity.ok(new JwtResponse(token)) ;
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

@@ -55,9 +55,9 @@ public class PointController {
         List<PointDTO> points = pointService.findByFunction(id);
 
         if (points == null || points.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content если точек нет
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(points); // Возвращаем 200 OK с точками
+        return ResponseEntity.ok(points);
     }
 }
