@@ -1,0 +1,1 @@
+DELETE FROM public.functions WHERE id = 2;
