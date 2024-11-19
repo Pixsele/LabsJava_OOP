@@ -2,17 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Главное меню</title>
 </head>
 <body>
-<h1>Welcome to the Home Page!</h1>
-<div>
+<h1>Главное меню</h1>
+<ul>
+    <li><a href="/settings" target="_self">Настройки фабрики</a></li>
+    <li><a href="/tabulated-function-array" target="_self">Создать табулированную функцию</a></li>
+    <li><a href="/tabulated-function-mathfunc" target="_self">Другая функция</a></li>
+</ul>
 
-    <a href="/tabulated-function">"Tabulated_func"</a>
-
-</div>
-
+<dialog id="settingsModal">
+    <form action="/settings" method="post">
+        <label for="factoryType">Выберите фабрику:</label>
+        <select name="factoryType" id="factoryType">
+            <option value="array" ${selectedFactory == 'array' ? 'selected' : ''}>Фабрика на основе массива</option>
+            <option value="linkedlist" ${selectedFactory == 'linkedlist' ? 'selected' : ''}>Фабрика на основе связного списка</option>
+        </select>
+        <button type="submit">Сохранить</button>
+        <button type="button" onclick="this.parentNode.close()">Закрыть</button>
+    </form>
+</dialog>
+<a href="#" onclick="document.getElementById('settingsModal').showModal()">Открыть настройки</a>
 </body>
 </html>
+

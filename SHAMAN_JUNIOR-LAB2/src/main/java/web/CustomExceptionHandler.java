@@ -3,6 +3,7 @@ package web;
 
 
 import exceptions.ArrayIsNotSortedException;
+import exceptions.DifferentLengthOfArraysException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,8 +20,23 @@ public class CustomExceptionHandler {
 
         String page = "/";
         //TODO
-        if(Objects.equals(request.getRequestURI(), "/tabulated-function/create")){
-            page = "tabulated-function-form";
+        if(Objects.equals(request.getRequestURI(), "/tabulated-function-array/create")){
+            page = "tabulated-function-array";
+        }
+
+        model.addAttribute("errorTitle","Ошибка");
+        model.addAttribute("errorMessage",exception.getMessage());
+
+        return page;
+    }
+
+    @ExceptionHandler(DifferentLengthOfArraysException.class)
+    public String handleDifferentLengthOfArraysException(DifferentLengthOfArraysException exception, Model model, HttpServletRequest request){
+
+        String page = "/";
+        //TODO
+        if(Objects.equals(request.getRequestURI(), "/tabulated-function-array/create")){
+            page = "tabulated-function-array";
         }
 
         model.addAttribute("errorTitle","Ошибка");

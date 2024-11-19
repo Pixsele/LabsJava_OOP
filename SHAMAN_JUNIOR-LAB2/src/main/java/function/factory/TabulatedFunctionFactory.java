@@ -2,10 +2,13 @@ package function.factory;
 
 import function.StrictTabulatedFunction;
 import function.UnmodifiableTabulatedFunction;
+import function.api.MathFunction;
 import function.api.TabulatedFunction;
 
 public interface TabulatedFunctionFactory {
     TabulatedFunction create(double[] xValues, double[] yValues);
+
+    TabulatedFunction create(MathFunction source, double xFrom, double xTo, int count);
 
     default TabulatedFunction createStrict(double[] xValues, double[] yValues){
         return new StrictTabulatedFunction(create(xValues,yValues));

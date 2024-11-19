@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Создать табулированную функцию</title>
+  <style>
+    /* Стили для затемнения фона */
+    .modal-overlay {
+      display: none; /* По умолчанию модальное окно скрыто */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    /* Стили модального окна */
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .modal button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background-color: #45a049;
+    }
+
+    /* Показ модального окна */
+    .modal-overlay.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<h2>Создание табулированной функции</h2>
+
+<form action="/tabulated-function-mathfunc/create" method="post">
+  <label for="function">Выберите функцию:</label><br>
+  <select id="function" name="function">
+    <option th:each="entry : ${functionMap}"
+            th:value="${entry.key}"
+            th:text="${entry.key}">
+    </option>
+  </select><br><br>
+
+  <label for="xFrom">Начало интервала:</label><br>
+  <input type="number" id="xFrom" name="xFrom" step="0.01" required><br><br>
+
+  <label for="xTo">Конец интервала:</label><br>
+  <input type="number" id="xTo" name="xTo" step="0.01" required><br><br>
+
+  <label for="count">Количество точек:</label><br>
+  <input type="number" id="count" name="count" min="2" required><br><br>
+
+  <button type="submit">Создать</button>
+</form>
+
+<br>
+<a href="/">Вернуться в главное меню</a>
+</body>
+
+<!-- Модальное окно усепеха -->
+<div class="modal-overlay" th:classappend="${showModal} ? 'active'">
+  <div class="modal">
+    <h2>Успех!</h2>
+    <p th:text="${success}">Функция успешно создана!</p>
+    <form action="/tabulated-function-mathfunc" method="get">
+      <button type="submit">Ок</button>
+    </form>
+  </div>
+</div>
+<!-- Модальное окно Ошибки -->
+<div th:if="${errorMessage}"
+     style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+  <div style="background: white; padding: 20px; border-radius: 5px; width: 50%; text-align: center;">
+    <h1 th:text="${errorTitle}"></h1>
+    <p th:text="${errorMessage}"></p>
+    <form action="/tabulated-function-mathfunc" method="get">
+      <button type="submit">Ок</button>
+    </form>
+  </div>
+</div>
+
+</html>

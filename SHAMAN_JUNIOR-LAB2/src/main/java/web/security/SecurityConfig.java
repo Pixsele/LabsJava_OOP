@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login") // Указание кастомной страницы логина
-                .defaultSuccessUrl("/home", true) // Куда перенаправлять после успешного входа
+                .defaultSuccessUrl("/", true) // Куда перенаправлять после успешного входа
                 .permitAll()
                 .and()
                 .logout()
