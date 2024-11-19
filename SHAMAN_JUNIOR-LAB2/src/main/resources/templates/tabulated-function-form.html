@@ -60,10 +60,11 @@
     <button type="submit">Сгенерировать таблицу</button>
 </form>
 
-<hr>
+<hr> <!--ЧЕРТА-->
 
 <!-- Таблица для ввода значений x и y -->
 <form action="/tabulated-function/create" method="post" th:if="${pointCount > 0}">
+    <input type = "hidden" name = "currentPage" value = "/tabulated-function/create">
     <table border="1">
         <thead>
         <tr>
@@ -87,11 +88,22 @@
     <button type="submit">Создать</button>
 </form>
 </body>
-<!-- Модальное окно -->
+<!-- Модальное окно усепеха -->
 <div class="modal-overlay" th:classappend="${showModal} ? 'active'">
     <div class="modal">
         <h2>Успех!</h2>
         <p th:text="${success}">Функция успешно создана!</p>
+        <form action="/tabulated-function" method="get">
+            <button type="submit">Ок</button>
+        </form>
+    </div>
+</div>
+<!-- Модальное окно  Ошибки -->
+<div th:if="${errorMessage}"
+     style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 5px; width: 50%; text-align: center;">
+        <h1 th:text="${errorTitle}"></h1>
+        <p th:text="${errorMessage}"></p>
         <form action="/tabulated-function" method="get">
             <button type="submit">Ок</button>
         </form>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ошибка</title>
+  <style>
+    /* Стили для модального окна */
+    #errorModal {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 20px;
+        border-radius: 5px;
+    }
+    #errorModal h3 {
+        margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+<!-- Модальное окно с сообщением об ошибке -->
+<div id="errorModal">
+  <h3 th:text="${errorTitle}">Произошла ошибка!</h3>
+  <p th:text="${errorMessage}">Текст ошибки</p>
+
+  <!-- Скрытая форма для возврата на ту же страницу -->
+  <form action="#" method="get" th:action="@{${page}}">
+    <button type="submit">Закрыть</button>
+  </form>
+</div>
+</body>
+</html>
+
