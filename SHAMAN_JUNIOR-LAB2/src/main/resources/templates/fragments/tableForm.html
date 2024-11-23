@@ -1,0 +1,16 @@
+<div>
+    <form action="/tabulated-operations/createFunction" method="post">
+        <input type="hidden" name="target" th:value="${target}">
+        <table>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+            <tr th:each="i : ${#numbers.sequence(1, points)}">
+                <td><input type="number" name="x" step="0.01"  /></td>
+                <td><input type="number" name="y" step="0.01"/></td>
+            </tr>
+        </table>
+        <button type="submit">Создать пупу</button>
+    </form>
+</div>

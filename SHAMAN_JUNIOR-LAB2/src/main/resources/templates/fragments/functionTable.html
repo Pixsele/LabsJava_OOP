@@ -1,0 +1,14 @@
+<table border="1">
+    <thead>
+    <tr>
+        <th>X</th>
+        <th>Y</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="i, x, y : ${function}">
+        <td><input type="number" name="x" th:value="${x}" readonly></td>
+        <td><input type="number" name="y" th:value="${y}" th:readonly="${target == 'result'}"></td>
+    </tr>
+    </tbody>
+</table>

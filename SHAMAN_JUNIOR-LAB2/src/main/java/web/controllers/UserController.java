@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import web.security.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -84,5 +85,31 @@ public class UserController {
 
         userRepository.save(newUser);
         return ResponseEntity.ok("Пользователь успешно зарегистрирован");
+    }
+
+    @GetMapping("/reg")
+    public String register(Model model) {
+        return "registration";
+    }
+
+    @PostMapping("/registere")
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String password,
+                               @RequestParam String role,
+                               Model model) {
+        if (userRepository.findByUsername(username).isPresent()) {
+            model.addAttribute("message", "Пользователь с таким именем уже существует");
+            return "registration"; // возвращаем страницу регистрации с ошибкой
+        }
+
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setRole(Role.valueOf(role));
+        newUser.setCreationTime(LocalDateTime.now());
+
+        userRepository.save(newUser);
+        model.addAttribute("message", "Пользователь успешно зарегистрирован");
+        return "registration"; // возвращаем страницу регистрации с успешным сообщением
     }
 }

@@ -1,22 +1,34 @@
 package web.controllers;
 
+import function.factory.ArrayTabulatedFunctionFactory;
+import function.factory.LinkedListTabulatedFunctionFactory;
+import function.factory.TabulatedFunctionFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class SettingsController {
 
-    @PostMapping("/settings")
-    public String updateSettings(@RequestParam("factoryType") String factoryType) {
 
-        String type;
+    @PostMapping("/settings")
+    public String updateSettings(@RequestParam("factoryType") String factoryType, HttpSession session) {
+
+        TabulatedFunctionFactory factory = null;
 
         if ("array".equals(factoryType)) {
-            type = "array";
+            factory = new ArrayTabulatedFunctionFactory();
         } else if ("linkedlist".equals(factoryType)) {
-            type = "linkedlist";
+            factory = new LinkedListTabulatedFunctionFactory();
         }
+
+        session.setAttribute("FACTORY_KEY", factory);
+
+        System.out.println(session.getAttribute("FACTORY_KEY").getClass().getSimpleName());
         return "home";
     }
 }

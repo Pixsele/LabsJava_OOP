@@ -132,6 +132,28 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     }
 
     @Override
+    public double[] getXValues() {
+        double[] xValues = new double[count];
+        int i = 0;
+        for(Point point : this){
+            xValues[i] = point.x;
+        };
+
+        return xValues;
+    }
+
+    @Override
+    public double[] getYValues() {
+        double[] yValues = new double[count];
+        int i = 0;
+        for(Point point : this){
+            yValues[i] = point.y;
+        };
+
+        return yValues;
+    }
+
+    @Override
     public double getX(int index) {
         return getNode(index).x;
     }

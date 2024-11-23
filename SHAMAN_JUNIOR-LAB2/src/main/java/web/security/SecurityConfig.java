@@ -13,6 +13,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
+    }
+
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable() // Для разработки. В продакшене лучше включить!
@@ -23,7 +29,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login") // Указание кастомной страницы логина
-                .defaultSuccessUrl("/", true) // Куда перенаправлять после успешного входа
+                .successHandler(loginSuccessHandler())
                 .permitAll()
                 .and()
                 .logout()

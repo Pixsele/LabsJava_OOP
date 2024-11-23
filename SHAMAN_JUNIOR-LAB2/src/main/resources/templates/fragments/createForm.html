@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Табулированные функции</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div>
+    <p th:text=" 'Текущая фабрика - ' + ${factory}"></p>
+</div>
+<div >
+  <form onsubmit="submitForm(event)">
+    <input type="hidden" name="target" th:value="${target}">
+    <label for="points">Количество точек:</label>
+    <input type="number" name="points" id="points" required>
+    <button type="submit">Сгенерировать таблицу</button>
+  </form>
+</div>
+
+</body>
+</html>

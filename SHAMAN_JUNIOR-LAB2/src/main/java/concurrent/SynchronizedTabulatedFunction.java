@@ -72,6 +72,16 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
     }
 
     @Override
+    public double[] getXValues() {
+        return function.getXValues();
+    }
+
+    @Override
+    public double[] getYValues() {
+        return function.getYValues();
+    }
+
+    @Override
     public double apply(double x) {
         synchronized (function){
             return function.apply(x);

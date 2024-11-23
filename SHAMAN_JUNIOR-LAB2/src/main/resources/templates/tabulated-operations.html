@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Модальное окно</title>
+</head>
+<body>
+
+<!-- Операнд 1 -->
+<h3>Операнд 1</h3>
+<div id="operand1Content">
+    <div th:if="${operand1Func != null}">
+        <h4>Таблица функции:</h4>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="i : ${#numbers.sequence(0, count1 - 1)}">
+                    <td><input type="number" th:value="${function1.getXValues()[i]}" ></td>
+                    <td><input type="number" th:value="${function1.getYValues()[i]}" ></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${operand1Func == null}">
+        <p>Отсутствует функция</p>
+    </div>
+    <button onclick="openModal('operand1')">Создать функцию</button>
+    <button>Сохранить</button>
+    <button>Загрузить</button>
+</div>
+
+<!-- Операнд 2 -->
+<h3>Операнд 2</h3>
+<div id="operand2Content">
+    <div th:if="${operand2Func != null}">
+        <h4>Таблица функции:</h4>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="i : ${#numbers.sequence(0, count2 - 1)}">
+                <td><input type="number" th:value="${function2.getXValues()[i]}" ></td>
+                <td><input type="number" th:value="${function2.getYValues()[i]}" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${operand2Func == null}">
+        <p>Отсутствует функция</p>
+    </div>
+    <button onclick="openModal('operand2')">Создать функцию</button>
+    <button>Сохранить</button>
+    <button>Загрузить</button>
+</div>
+
+<!-- Результат сложения -->
+<h3>Результат сложения</h3>
+<div id="resultContent"></div>
+
+
+<!-- Модальное окно -->
+<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+    <div id="modalContent"></div>
+    <button onclick="closeModal()">Закрыть</button>
+</div>
+
+<script>
+    function openModal(target) {
+        console.log(target);
+
+        fetch(`/tabulated-operations/createForm?target=${target}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки модального окна');
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('modalContent').innerHTML = html;
+                document.getElementById('modal').style.display = 'block';
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function submitForm(event) {
+        const form = event.target;
+
+        const target = form.querySelector('input[name="target"]').value; // Извлекаем значение hidden-поля
+
+
+        event.preventDefault();
+        const formData = new FormData(form);
+
+
+        const url = `/tabulated-operations/generateTable?target=${encodeURIComponent(target)}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('modalContent').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+    }
+</script>
+</body>
+</html>

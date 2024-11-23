@@ -53,6 +53,16 @@ public class UnmodifiableTabulatedFunction implements TabulatedFunction {
     }
 
     @Override
+    public double[] getXValues() {
+        return function.getXValues();
+    }
+
+    @Override
+    public double[] getYValues() {
+        return function.getYValues();
+    }
+
+    @Override
     public double apply(double x) {
         return function.apply(x);
     }

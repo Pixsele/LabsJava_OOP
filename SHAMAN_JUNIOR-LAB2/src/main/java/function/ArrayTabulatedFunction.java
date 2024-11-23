@@ -94,11 +94,11 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         yValues[index] = value;
     }
 
-    public double[] getxValues() {
+    public double[] getXValues() {
         return xValues;
     }
 
-    public double[] getyValues() {
+    public double[] getYValues() {
         return yValues;
     }
 

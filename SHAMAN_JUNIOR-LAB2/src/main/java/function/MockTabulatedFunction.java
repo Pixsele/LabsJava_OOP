@@ -98,6 +98,16 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction{
     }
 
     @Override
+    public double[] getXValues() {
+        return new double[0];
+    }
+
+    @Override
+    public double[] getYValues() {
+        return new double[0];
+    }
+
+    @Override
     public Iterator<Point> iterator() {
         return new Iterator<Point>() {
             private int i = 0; // индекс

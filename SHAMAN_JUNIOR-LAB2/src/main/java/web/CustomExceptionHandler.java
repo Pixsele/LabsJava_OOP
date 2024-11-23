@@ -27,7 +27,7 @@ public class CustomExceptionHandler {
         model.addAttribute("errorTitle","Ошибка");
         model.addAttribute("errorMessage",exception.getMessage());
 
-        return page;
+        return request.getHeader("Referer");
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)
@@ -42,6 +42,6 @@ public class CustomExceptionHandler {
         model.addAttribute("errorTitle","Ошибка");
         model.addAttribute("errorMessage",exception.getMessage());
 
-        return page;
+        return request.getHeader("Referer");
     }
 }
