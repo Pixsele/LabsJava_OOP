@@ -5,7 +5,6 @@
 </head>
 <body>
 
-<!-- Операнд 1 -->
 <h3>Операнд 1</h3>
 <div id="operand1Content">
     <div th:if="${operand1Func != null}">
@@ -30,10 +29,9 @@
     </div>
     <button onclick="openModal('operand1')">Создать функцию</button>
     <button>Сохранить</button>
-    <button>Загрузить</button>
+    <button onclick="openFunctionList('operand1')">Загрузить</button>
 </div>
 
-<!-- Операнд 2 -->
 <h3>Операнд 2</h3>
 <div id="operand2Content">
     <div th:if="${operand2Func != null}">
@@ -58,13 +56,74 @@
     </div>
     <button onclick="openModal('operand2')">Создать функцию</button>
     <button>Сохранить</button>
+    <button onclick="openFunctionList('operand2')">Загрузить</button>
+</div>
+
+<div>
+    <form action="/tabulated-operations/doOperation" method="post">
+        <div class="operation-selector">
+            <label for="operation">Выберите операцию:</label>
+            <select id="operation" name="operation" required>
+                <option value="add">Сложение</option>
+                <option value="subtract">Вычитание</option>
+                <option value="multiply">Умножение</option>
+                <option value="divide">Деление</option>
+            </select>
+        </div>
+        <button type="submit">Выполнить</button>
+    </form>
+</div>
+<!-- Результат сложения -->
+<h3>Результат сложения</h3>
+<div id="resultContent">
+    <div th:if="${result != null}">
+        <h4>Таблица функции:</h4>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="i : ${#numbers.sequence(0, count3 - 1)}">
+                <td><input type="number" th:value="${resultFunc.getXValues()[i]}" ></td>
+                <td><input type="number" th:value="${resultFunc.getYValues()[i]}" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${result == null}">
+        <p>Отсутствует функция</p>
+    </div>
+    <button>Сохранить</button>
     <button>Загрузить</button>
 </div>
 
-<!-- Результат сложения -->
-<h3>Результат сложения</h3>
-<div id="resultContent"></div>
 
+<!-- Модальное окно -->
+<div id="modalFunction" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+    <div id="modalContentFunction">
+        <h3>Выберите функцию</h3>
+        <table border="1" width="100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя функции</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="function : ${functions}" class="function-row"
+                th:onclick="|selectFunction(this, '${function.id}', modalTarget)|">
+                <td th:text="${function.getId()}"></td>
+                <td th:text="${function.getName()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button id="loadButton" onclick="loadFunction()">Загрузить</button>
+        <button onclick="closeFunctionList()">Закрыть</button>
+    </div>
+</div>
 
 <!-- Модальное окно -->
 <div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
@@ -117,6 +176,53 @@
             })
             .catch(error => {
                 console.error('Ошибка:', error);
+            });
+    }
+
+    let modalTarget = '';
+    let selectFunctionId = null;
+
+    function openFunctionList(target) {
+        modalTarget = target;
+        document.getElementById('modalFunction').style.display = 'block';
+    }
+    function closeFunctionList() {
+        document.getElementById('modalFunction').style.display = 'none';
+    }
+
+    function selectFunction(row, id, target) {
+
+        console.log(row, id, target);
+        console.log(target);
+        // Снимаем выделение со всех строк
+        const rows = document.querySelectorAll('.function-row');
+        rows.forEach(r => r.classList.remove('selected'));
+
+        // Выделяем выбранную строку
+        row.classList.add('selected');
+
+        selectFunctionId = id;
+
+        console.log(selectFunctionId);
+    }
+
+    function loadFunction() {
+        if (!selectFunctionId || !modalTarget) {
+            console.error("Выберите функцию и цель перед загрузкой.");
+            return;
+        }
+        const url = `/tabulated-operations/load?target=${encodeURIComponent(modalTarget)}&id=${encodeURIComponent(selectFunctionId)}`;
+
+        fetch(url, {
+            method: 'POST',
+        })
+            .then(response => response.text())
+            .then(html => {
+                closeFunctionList();
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке функции:', error);
             });
     }
 </script>
