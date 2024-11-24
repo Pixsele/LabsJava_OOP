@@ -10,6 +10,7 @@ import function.factory.ArrayTabulatedFunctionFactory;
 import function.factory.TabulatedFunctionFactory;
 import operations.TabulatedFunctionOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -155,6 +156,14 @@ public class TabulatedOperationsController {
 
         TabulatedFunction result = new ArrayTabulatedFunction(x,y);
         session.setAttribute(target+"Func", result);
+        return "redirect:/tabulated-operations";
+    }
+
+
+    @PostMapping("/save")
+    public String save(@RequestParam("target") String saveTarget, @RequestParam("funcName") String funcName, Model model, HttpSession session) {
+
+
         return "redirect:/tabulated-operations";
     }
 }

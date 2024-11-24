@@ -28,7 +28,7 @@
         <p>Отсутствует функция</p>
     </div>
     <button onclick="openModal('operand1')">Создать функцию</button>
-    <button>Сохранить</button>
+    <button onclick="openSave('operand1')">Сохранить</button>
     <button onclick="openFunctionList('operand1')">Загрузить</button>
 </div>
 
@@ -131,6 +131,17 @@
     <button onclick="closeModal()">Закрыть</button>
 </div>
 
+<div id="modalSave" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+    <div id="modalContentSave">
+        <form onsubmit="saveFunction(event)">
+            <label for="funcName">Название функции:</label>
+            <input type="text" name="funcName" id="funcName" required>
+            <button type="submit">Cохранить</button>
+        </form>
+    </div>
+    <button onclick="closeSave()">Закрыть</button>
+</div>
+
 <script>
     function openModal(target) {
         console.log(target);
@@ -224,6 +235,26 @@
             .catch(error => {
                 console.error('Ошибка при загрузке функции:', error);
             });
+    }
+
+    let saveTarget = '';
+    function openSave(target){
+        saveTarget = target;
+        document.getElementById('modalSave').style.display = 'block';
+    }
+
+    function closeSave() {
+        document.getElementById('modalSave').style.display = 'none';
+    }
+
+    function saveFunction(event) {
+
+        event.preventDefault();
+        const funcName = document.getElementById('funcName').value;
+
+        fetch(`/tabulated-operations/save?target=${encodeURIComponent(saveTarget)}&funcName=${encodeURIComponent(funcName)}`, {
+            method: 'POST'
+        })
     }
 </script>
 </body>
