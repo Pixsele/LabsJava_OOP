@@ -4,11 +4,16 @@ package web;
 
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
+import exceptions.LoadFunctionExecption;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @ControllerAdvice
@@ -43,5 +48,14 @@ public class CustomExceptionHandler {
         model.addAttribute("errorMessage",exception.getMessage());
 
         return request.getHeader("Referer");
+    }
+
+    @ExceptionHandler(LoadFunctionExecption.class)
+    public ResponseEntity<Map<String, String>> handleLoadFunctionExecption(LoadFunctionExecption exception, Model model, HttpServletRequest request){
+        Map<String, String> response = new HashMap<>();
+        response.put("error", exception.getMessage());
+        response.put("showError", "true");
+        System.out.println("popppp123123123123123p");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

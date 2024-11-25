@@ -76,20 +76,34 @@ function loadFunction() {
         console.error("Выберите функцию и цель перед загрузкой.");
         return;
     }
+
     const url = `/tabulated-operations/load?target=${encodeURIComponent(modalTarget)}&id=${encodeURIComponent(selectFunctionId)}`;
 
-    fetch(url, {
-        method: 'POST',
-    })
-        .then(response => response.text())
-        .then(html => {
-            closeFunctionList();
-            window.location.reload();
+    fetch(url, { method: 'POST' })
+        .then(response => {
+            if (!response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+        .then(data => {
+            if (data && data.error) {
+                const errorForm = document.getElementById('errorForm');
+                if (errorForm) {
+                    errorForm.style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                    closeFunctionList();
+                }
+            } else {
+                closeFunctionList();
+                window.location.reload();
+            }
         })
         .catch(error => {
             console.error('Ошибка при загрузке функции:', error);
         });
 }
+
 
 let saveTarget = '';
 function openSave(target){
@@ -111,8 +125,8 @@ function saveFunction(event) {
     window.location.reload();
 }
 
-function openAnother(redirectTarget){
-    fetch(`/tabulated-function-mathfunc/modal?redirectTarget=${encodeURIComponent(redirectTarget)}`)
+function openAnother(redirectTarget,target){
+    fetch(`/tabulated-function-mathfunc/modal?redirectTarget=${encodeURIComponent(redirectTarget)}&target=${encodeURIComponent(target)}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка загрузки модального окна');

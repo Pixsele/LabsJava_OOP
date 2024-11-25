@@ -80,7 +80,7 @@
     <button onclick="openModal('operand1')">Создать функцию</button>
     <button onclick="openSave('operand1')">Сохранить</button>
     <button onclick="openFunctionList('operand1')">Загрузить</button>
-    <button onclick="openAnother('tabulated-operations')">Открыть</button>
+    <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
 </div>
 
 <h3>Операнд 2</h3>
@@ -108,6 +108,7 @@
     <button onclick="openModal('operand2')">Создать функцию</button>
     <button onclick="openSave('operand2')">Сохранить</button>
     <button onclick="openFunctionList('operand2')">Загрузить</button>
+    <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
 </div>
 
 <div>
@@ -198,14 +199,8 @@
     <button onclick="closeSave()">Закрыть</button>
 </div>
 
-<div th:if="${errorMessage}"
-     style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-    <div style="background: white; padding: 20px; border-radius: 5px; width: 50%; text-align: center;">
-        <p th:text="${errorMessage}"></p>
-        <form action="/tabulated-function-array" method="get">
-            <button type="submit">Ок</button>
-        </form>
-    </div>
-</div>
+
+<div th:replace="fragments/errorForm"></div>
+
 </body>
 </html>

@@ -4,52 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Создать табулированную функцию</title>
-  <style>
-    /* Стили для затемнения фона */
-    .modal-overlay {
-      display: none; /* По умолчанию модальное окно скрыто */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-    }
-
-    /* Стили модального окна */
-    .modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      z-index: 1001;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    .modal button {
-      margin-top: 10px;
-      padding: 5px 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .modal button:hover {
-      background-color: #45a049;
-    }
-
-    /* Показ модального окна */
-    .modal-overlay.active {
-      display: block;
-    }
-  </style>
 </head>
 <body>
 
@@ -73,17 +27,5 @@
     document.getElementById("errorForm").style.display = "block";
   </script>
 </div>
-
 </body>
-<!-- Модальное окно Ошибки -->
-<div th:if="${errorMessage}"
-     style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
-  <div style="background: white; padding: 20px; border-radius: 5px; width: 50%; text-align: center;">
-    <h1 th:text="${errorTitle}"></h1>
-    <p th:text="${errorMessage}"></p>
-    <form action="/tabulated-function-mathfunc" method="get">
-      <button type="submit">Ок</button>
-    </form>
-  </div>
-</div>
 </html>

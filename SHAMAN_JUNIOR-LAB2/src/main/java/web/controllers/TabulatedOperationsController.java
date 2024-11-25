@@ -4,6 +4,7 @@ import database.models.MathFunctionsEntity;
 import database.models.PointEntity;
 import database.repositories.MathFunctionsRepository;
 import exceptions.ArrayIsNotSortedException;
+import exceptions.LoadFunctionExecption;
 import function.ArrayTabulatedFunction;
 import function.api.TabulatedFunction;
 import function.factory.TabulatedFunctionFactory;
@@ -136,8 +137,6 @@ public class TabulatedOperationsController {
                     result = service.devide(func1, func2);
                     break;
             }
-        }else{
-            throw new IllegalArgumentException("Invalid operand");
         }
 
         session.setAttribute("resultFunc", result);
@@ -153,23 +152,26 @@ public class TabulatedOperationsController {
         MathFunctionsEntity loadFunc = mathFunctionsRepository.findById(id).orElse(null);
 
         List<PointEntity> list = loadFunc.getPoints();
+        if(list.size() >= 2){
+            double[] x = new double[list.size()];
+            double[] y = new double[list.size()];
 
-        double[] x = new double[list.size()];
-        double[] y = new double[list.size()];
+            int i = 0;
+            for(PointEntity point : list) {
+                System.out.println(point.getId());
+                x[i] = point.getX();
+                System.out.println(point.getX());
+                y[i] = point.getY();
+                System.out.println(point.getY());
+                i++;
+            }
 
-        int i = 0;
-        for(PointEntity point : list) {
-            System.out.println(point.getId());
-            x[i] = point.getX();
-            System.out.println(point.getX());
-            y[i] = point.getY();
-            System.out.println(point.getY());
-            i++;
+            TabulatedFunction result = new ArrayTabulatedFunction(x,y);
+            session.setAttribute(target+"Func", result);
+            return "redirect:/tabulated-operations";
+        }else{
+            throw new LoadFunctionExecption("Function have < 2 points");
         }
-
-        TabulatedFunction result = new ArrayTabulatedFunction(x,y);
-        session.setAttribute(target+"Func", result);
-        return "redirect:/tabulated-operations";
     }
 
 
