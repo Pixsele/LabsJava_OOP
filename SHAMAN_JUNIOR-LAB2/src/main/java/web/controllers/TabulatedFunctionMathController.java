@@ -39,7 +39,8 @@ public class TabulatedFunctionMathController {
     }
 
     @GetMapping("/modal")
-    public String showModalForm(@RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
+    public String showModalForm(@RequestParam("redirectTarget") String redirectTarget,
+                                @RequestParam("target") String target, Model model, HttpSession session) {
         if(session.getAttribute("FACTORY_KEY") != null) {
             tableFunctionFactory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
         }
@@ -52,6 +53,7 @@ public class TabulatedFunctionMathController {
 
         model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
         model.addAttribute("redirectTarget", redirectTarget);
+        model.addAttribute("target", target);
         return "fragments/modalFormMathFunc";
     }
 
@@ -73,6 +75,10 @@ public class TabulatedFunctionMathController {
         model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
         System.out.println("food");
 
+        if(true){
+            throw new IllegalArgumentException("popka");
+        }
+
         return "tabulated-function-mathfunc";
     }
 
@@ -83,12 +89,12 @@ public class TabulatedFunctionMathController {
                                  @RequestParam("count") int count,
                                  @RequestParam("redirectTarget") String redirectTarget,
                                  @RequestParam("target") String target,
-                                 Model model){
+                                 Model model, HttpSession session){
 
         Map<String, MathFunction> functions = MathFunctionProvider.mathFunctions();
 
         TabulatedFunction func = tableFunctionFactory.create(functions.get(functionName),xFrom,xTo,count);
-
+        session.setAttribute(target+"Func",func);
         System.out.println(redirectTarget);
 
         return "redirect:/"+redirectTarget;
