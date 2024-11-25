@@ -1,21 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Вход в систему</title>
+    <style>body {
+        background-color: #f2c4e0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Tahoma, sans-serif;
+    }
+
+    .login-container {
+        position: relative;
+        background-color: #2e2e2e;
+        padding: 30px 40px;
+        border-radius: 20px;
+        color: #d9ff6b;
+        text-align: center;
+        width: 450px;
+        height: 290px;
+    }
+
+    .login-container h1 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+        width: 80%;
+        padding: 15px 15px;
+        margin-bottom: 15px;
+        margin-right: 0px;
+        border: none;
+        border-radius: 20px;
+        background-color: #f0ffd4;
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    .login-container label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+        color: #d9ff6b;
+        font-size: 16px;
+    }
+
+    .login-container a {
+        display: block;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #ffffff;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .login-container a:hover {
+        text-decoration: underline;
+    }
+
+    .login-container button {
+        margin-top: 10px;
+        position: static; /* Абсолютное позиционирование */
+        width: 150px;
+        height: 45px;
+        text-align: center;
+        padding: 10px;
+        background-color: #d9ff6b;
+        border: none;
+        border-radius: 20px;
+        font-family: Tahoma, sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        color: #2e2e2e;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+        background-color: #c4e65a;
+    }
+    </style>
+
 </head>
 <body>
-<h2>Login</h2>
-<form action="/login" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br><br>
+<div class="login-container">
+    <h1>Вход в систему:</h1>
+    <form action="/login" method="post">
+        <label for="username"></label>
+        <input type="text" id="username" name="username" placeholder="Логин" required><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+        <label for="password"></label>
+        <input type="password" id="password" name="password" placeholder="Пароль" required><br>
 
-    <button type="submit">Login</button>
-</form>
+        <a href="#">У меня нет аккаунта</a>
+        <button type="submit">Войти</button>
+    </form>
+</div>
 </body>
 </html>
