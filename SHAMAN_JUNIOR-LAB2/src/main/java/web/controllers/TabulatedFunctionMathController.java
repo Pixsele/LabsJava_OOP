@@ -1,6 +1,7 @@
 package web.controllers;
 
 
+import exceptions.ArrayIsNotSortedException;
 import function.api.MathFunction;
 import function.api.TabulatedFunction;
 import function.factory.ArrayTabulatedFunctionFactory;
@@ -37,6 +38,23 @@ public class TabulatedFunctionMathController {
         return "tabulated-function-mathfunc";
     }
 
+    @GetMapping("/modal")
+    public String showModalForm(@RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
+        if(session.getAttribute("FACTORY_KEY") != null) {
+            tableFunctionFactory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
+        }
+        else{
+            tableFunctionFactory = new ArrayTabulatedFunctionFactory();
+        }
+
+        model.addAttribute("factory", tableFunctionFactory.getClass().getSimpleName());
+
+
+        model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
+        model.addAttribute("redirectTarget", redirectTarget);
+        return "fragments/modalFormMathFunc";
+    }
+
     @PostMapping("/create")
     public String createFunction(@RequestParam("function") String functionName,
                                  @RequestParam("xFrom") double xFrom ,
@@ -51,7 +69,28 @@ public class TabulatedFunctionMathController {
 
         model.addAttribute("success","Успех");
         model.addAttribute("showModal",true);
+        model.addAttribute("factory", tableFunctionFactory.getClass().getSimpleName());
+        model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
+        System.out.println("food");
+
         return "tabulated-function-mathfunc";
     }
 
+    @PostMapping("/createModal")
+    public String createModalFunction(@RequestParam("function") String functionName,
+                                 @RequestParam("xFrom") double xFrom ,
+                                 @RequestParam("xTo") double xTo,
+                                 @RequestParam("count") int count,
+                                 @RequestParam("redirectTarget") String redirectTarget,
+                                 @RequestParam("target") String target,
+                                 Model model){
+
+        Map<String, MathFunction> functions = MathFunctionProvider.mathFunctions();
+
+        TabulatedFunction func = tableFunctionFactory.create(functions.get(functionName),xFrom,xTo,count);
+
+        System.out.println(redirectTarget);
+
+        return "redirect:/"+redirectTarget;
+    }
 }

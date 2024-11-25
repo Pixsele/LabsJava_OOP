@@ -14,20 +14,20 @@ import java.util.Objects;
 @ControllerAdvice
 public class CustomExceptionHandler {
 
-
     @ExceptionHandler(ArrayIsNotSortedException.class)
     public String handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request){
 
         String page = "/";
-        //TODO
-        if(Objects.equals(request.getRequestURI(), "/tabulated-function-array/create")){
-            page = "tabulated-function-array";
+
+        if(Objects.equals(request.getRequestURI(), "/tabulated-operations/createFunction")){
+            System.out.println("zalupa");
+            page = "tabulated-operations";
         }
 
-        model.addAttribute("errorTitle","Ошибка");
-        model.addAttribute("errorMessage",exception.getMessage());
-
-        return request.getHeader("Referer");
+        model.addAttribute("errorMessage", exception.getMessage());
+        model.addAttribute("showError", true);
+        System.out.println("poppppp");
+        return "tabulated-function-mathfunc";
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)

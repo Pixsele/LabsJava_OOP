@@ -1,0 +1,11 @@
+<div id="errorForm" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+    <div id="errorContent"></div>
+    <p id="successMessage">Ошибка</p>
+    <p th:text="${errorMessage}"></p>
+    <button onclick="closeModal()">Закрыть</button>
+</div>
+<script>
+    function closeModal() {
+        document.getElementById("errorForm").style.display = "none";
+    }
+</script>

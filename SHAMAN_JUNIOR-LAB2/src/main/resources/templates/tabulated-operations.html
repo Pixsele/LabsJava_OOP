@@ -1,7 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script th:src="@{/js/scripts.js}" type="text/javascript"></script>
+
+
     <title>Модальное окно</title>
+
+    <style>
+        /* Стили для затемнения фона */
+        .modalE-overlay {
+            display: none; /* По умолчанию модальное окно скрыто */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        /* Стили модального окна */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .modal button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #45a049;
+        }
+
+        /* Показ модального окна */
+        .modal-overlay.active {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,6 +80,7 @@
     <button onclick="openModal('operand1')">Создать функцию</button>
     <button onclick="openSave('operand1')">Сохранить</button>
     <button onclick="openFunctionList('operand1')">Загрузить</button>
+    <button onclick="openAnother('tabulated-operations')">Открыть</button>
 </div>
 
 <h3>Операнд 2</h3>
@@ -55,7 +106,7 @@
         <p>Отсутствует функция</p>
     </div>
     <button onclick="openModal('operand2')">Создать функцию</button>
-    <button>Сохранить</button>
+    <button onclick="openSave('operand2')">Сохранить</button>
     <button onclick="openFunctionList('operand2')">Загрузить</button>
 </div>
 
@@ -76,7 +127,7 @@
 <!-- Результат сложения -->
 <h3>Результат сложения</h3>
 <div id="resultContent">
-    <div th:if="${result != null}">
+    <div th:if="${resultFunc != null}">
         <h4>Таблица функции:</h4>
         <table border="1">
             <thead>
@@ -93,11 +144,10 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${result == null}">
+    <div th:if="${resultFunc == null}">
         <p>Отсутствует функция</p>
     </div>
-    <button>Сохранить</button>
-    <button>Загрузить</button>
+    <button onclick="openSave('result')">Сохранить</button>
 </div>
 
 
@@ -142,120 +192,20 @@
     <button onclick="closeSave()">Закрыть</button>
 </div>
 
-<script>
-    function openModal(target) {
-        console.log(target);
+<div id="modalAnother" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+    <div id="modalContentAnother">
+    </div>
+    <button onclick="closeSave()">Закрыть</button>
+</div>
 
-        fetch(`/tabulated-operations/createForm?target=${target}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка загрузки модального окна');
-                }
-                return response.text();
-            })
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-                document.getElementById('modal').style.display = 'block';
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-
-    function submitForm(event) {
-        const form = event.target;
-
-        const target = form.querySelector('input[name="target"]').value; // Извлекаем значение hidden-поля
-
-
-        event.preventDefault();
-        const formData = new FormData(form);
-
-
-        const url = `/tabulated-operations/generateTable?target=${encodeURIComponent(target)}`;
-        fetch(url, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('modalContent').innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-            });
-    }
-
-    let modalTarget = '';
-    let selectFunctionId = null;
-
-    function openFunctionList(target) {
-        modalTarget = target;
-        document.getElementById('modalFunction').style.display = 'block';
-    }
-    function closeFunctionList() {
-        document.getElementById('modalFunction').style.display = 'none';
-    }
-
-    function selectFunction(row, id, target) {
-
-        console.log(row, id, target);
-        console.log(target);
-        // Снимаем выделение со всех строк
-        const rows = document.querySelectorAll('.function-row');
-        rows.forEach(r => r.classList.remove('selected'));
-
-        // Выделяем выбранную строку
-        row.classList.add('selected');
-
-        selectFunctionId = id;
-
-        console.log(selectFunctionId);
-    }
-
-    function loadFunction() {
-        if (!selectFunctionId || !modalTarget) {
-            console.error("Выберите функцию и цель перед загрузкой.");
-            return;
-        }
-        const url = `/tabulated-operations/load?target=${encodeURIComponent(modalTarget)}&id=${encodeURIComponent(selectFunctionId)}`;
-
-        fetch(url, {
-            method: 'POST',
-        })
-            .then(response => response.text())
-            .then(html => {
-                closeFunctionList();
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error('Ошибка при загрузке функции:', error);
-            });
-    }
-
-    let saveTarget = '';
-    function openSave(target){
-        saveTarget = target;
-        document.getElementById('modalSave').style.display = 'block';
-    }
-
-    function closeSave() {
-        document.getElementById('modalSave').style.display = 'none';
-    }
-
-    function saveFunction(event) {
-
-        event.preventDefault();
-        const funcName = document.getElementById('funcName').value;
-
-        fetch(`/tabulated-operations/save?target=${encodeURIComponent(saveTarget)}&funcName=${encodeURIComponent(funcName)}`, {
-            method: 'POST'
-        })
-    }
-</script>
+<div th:if="${errorMessage}"
+     style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+    <div style="background: white; padding: 20px; border-radius: 5px; width: 50%; text-align: center;">
+        <p th:text="${errorMessage}"></p>
+        <form action="/tabulated-function-array" method="get">
+            <button type="submit">Ок</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

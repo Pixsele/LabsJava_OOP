@@ -3,20 +3,22 @@ package web.controllers;
 import database.models.MathFunctionsEntity;
 import database.models.PointEntity;
 import database.repositories.MathFunctionsRepository;
+import exceptions.ArrayIsNotSortedException;
 import function.ArrayTabulatedFunction;
-import function.Point;
 import function.api.TabulatedFunction;
-import function.factory.ArrayTabulatedFunctionFactory;
 import function.factory.TabulatedFunctionFactory;
 import operations.TabulatedFunctionOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.exceptions.TemplateInputException;
+import web.DTO.MathFunctionsDTO;
+import web.DTO.PointDTO;
+import web.service.MathFunctionsService;
+import web.service.PointService;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +28,15 @@ public class TabulatedOperationsController {
 
     @Autowired
     private MathFunctionsRepository mathFunctionsRepository;
+
+    private final MathFunctionsService mathFunctionsService;
+    private final PointService pointService;
+
+    @Autowired
+    public TabulatedOperationsController(MathFunctionsService mathFunctionsService, PointService pointService) {
+        this.mathFunctionsService = mathFunctionsService;
+        this.pointService = pointService;
+    }
 
     @GetMapping
     public String showForm(Model model, HttpSession session) {
@@ -51,14 +62,14 @@ public class TabulatedOperationsController {
             model.addAttribute("count2", func.getCount());
         }
 
-        if(session.getAttribute("result") == null) {
-            model.addAttribute("result",null);
+        if(session.getAttribute("resultFunc") == null) {
+            model.addAttribute("resultFunc",null);
         }
         else{
-            TabulatedFunction resultFunc = (TabulatedFunction) session.getAttribute("result");
-            model.addAttribute("result",session.getAttribute("result"));
-            model.addAttribute("resultFunc",resultFunc);
-            model.addAttribute("count3", resultFunc.getCount());
+            TabulatedFunction result = (TabulatedFunction) session.getAttribute("resultFunc");
+            model.addAttribute("resultFunc",session.getAttribute("resultFunc"));
+            model.addAttribute("result",result);
+            model.addAttribute("count3", result.getCount());
         }
 
         model.addAttribute("functions",mathFunctionsRepository.findAll());
@@ -87,16 +98,18 @@ public class TabulatedOperationsController {
 
         TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
 
-        TabulatedFunction function = factory.create(x,y);
 
-        model.addAttribute("function", function);
+            TabulatedFunction function = factory.create(x,y);
+            model.addAttribute("function", function);
 
-        if(Objects.equals(target, "operand1,operand1")) {
-            session.setAttribute("operand1Func", function);
-        }
-        else if(Objects.equals(target, "operand2,operand2")) {
-            session.setAttribute("operand2Func", function);
-        }
+            if(Objects.equals(target, "operand1,operand1")) {
+                session.setAttribute("operand1Func", function);
+            }
+            else if(Objects.equals(target, "operand2,operand2")) {
+                session.setAttribute("operand2Func", function);
+            }
+
+
         return "redirect:/tabulated-operations";
     }
 
@@ -127,7 +140,7 @@ public class TabulatedOperationsController {
             throw new IllegalArgumentException("Invalid operand");
         }
 
-        session.setAttribute("result", result);
+        session.setAttribute("resultFunc", result);
         return "redirect:/tabulated-operations";
     }
 
@@ -163,6 +176,27 @@ public class TabulatedOperationsController {
     @PostMapping("/save")
     public String save(@RequestParam("target") String saveTarget, @RequestParam("funcName") String funcName, Model model, HttpSession session) {
 
+        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
+        if(func == null) {
+            throw new IllegalArgumentException("Function is empty");
+        }
+
+        MathFunctionsDTO dto = new MathFunctionsDTO();
+        dto.setName(funcName);
+        dto.setxTo(func.rightBound());
+        dto.setxFrom(func.leftBound());
+        dto.setCount(func.getCount());
+
+        Long idResult = mathFunctionsService.create(dto).getId();
+
+        for(int i = 0; i < func.getCount(); i++) {
+            PointDTO point = new PointDTO();
+            point.setFunction(idResult);
+            point.setX(func.getX(i));
+            point.setY(func.getY(i));
+
+            pointService.create(point);
+        }
 
         return "redirect:/tabulated-operations";
     }

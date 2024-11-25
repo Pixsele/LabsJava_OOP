@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,43 +52,29 @@
   </style>
 </head>
 <body>
-<h2>Создание табулированной функции</h2>
-<p th:text=" 'Текущая фабрика - ' + ${factory}"></p>
+
 <form action="/tabulated-function-mathfunc/create" method="post">
-  <label for="function">Выберите функцию:</label><br>
-  <select id="function" name="function">
-    <option th:each="entry : ${functionMap}"
-            th:value="${entry.key}"
-            th:text="${entry.key}">
-    </option>
-  </select><br><br>
-
-  <label for="xFrom">Начало интервала:</label><br>
-  <input type="number" id="xFrom" name="xFrom" step="0.01" required><br><br>
-
-  <label for="xTo">Конец интервала:</label><br>
-  <input type="number" id="xTo" name="xTo" step="0.01" required><br><br>
-
-  <label for="count">Количество точек:</label><br>
-  <input type="number" id="count" name="count" min="2" required><br><br>
-
-  <button type="submit">Создать</button>
+  <div id="form" th:replace="fragments/createFormMathFunc"></div>
 </form>
 
 <br>
 <a href="/">Вернуться в главное меню</a>
-</body>
 
-<!-- Модальное окно усепеха -->
-<div class="modal-overlay" th:classappend="${showModal} ? 'active'">
-  <div class="modal">
-    <h2>Успех!</h2>
-    <p th:text="${success}">Функция успешно создана!</p>
-    <form action="/tabulated-function-mathfunc" method="get">
-      <button type="submit">Ок</button>
-    </form>
-  </div>
+<div th:if="${showModal}">
+  <div th:replace="fragments/successForm"></div>
+  <script>
+    document.getElementById("successForm").style.display = "block";
+  </script>
 </div>
+
+<div th:if="${showError}">
+  <div th:replace="fragments/errorForm"></div>
+  <script>
+    document.getElementById("errorForm").style.display = "block";
+  </script>
+</div>
+
+</body>
 <!-- Модальное окно Ошибки -->
 <div th:if="${errorMessage}"
      style="background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
@@ -100,5 +86,4 @@
     </form>
   </div>
 </div>
-
 </html>

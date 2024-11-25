@@ -1,0 +1,22 @@
+<input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
+<h2>Создание табулированной функции</h2>
+<p th:text=" 'Текущая фабрика - ' + ${factory}"></p>
+
+<label for="function">Выберите функцию:</label><br>
+<select id="function" name="function">
+  <option th:each="entry : ${functionMap}"
+          th:value="${entry.key}"
+          th:text="${entry.key}">
+  </option>
+</select><br><br>
+
+<label for="xFrom">Начало интервала:</label><br>
+<input type="number" id="xFrom" name="xFrom" step="0.01" required><br><br>
+
+<label for="xTo">Конец интервала:</label><br>
+<input type="number" id="xTo" name="xTo" step="0.01" required><br><br>
+
+<label for="count">Количество точек:</label><br>
+<input type="number" id="count" name="count" min="2" required><br><br>
+
+<button type="submit">Создать</button>
