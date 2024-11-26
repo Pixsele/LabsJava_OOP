@@ -75,9 +75,6 @@ public class TabulatedFunctionMathController {
         model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
         System.out.println("food");
 
-        if(true){
-            throw new IllegalArgumentException("popka");
-        }
 
         return "tabulated-function-mathfunc";
     }

@@ -71,7 +71,7 @@ public class UserController {
 
 
 
-    @PostMapping("/register")
+    @PostMapping("/reg")
     public ResponseEntity<String> registerUser(@RequestBody UserDTO userDto) {
         if (userRepository.findByUsername(userDto.getUsername()).isPresent()) {
             return ResponseEntity.badRequest().body("Пользователь с таким именем уже существует");
@@ -87,7 +87,7 @@ public class UserController {
         return ResponseEntity.ok("Пользователь успешно зарегистрирован");
     }
 
-    @GetMapping("/reg")
+    @GetMapping("/register")
     public String register(Model model) {
         return "registration";
     }
@@ -95,7 +95,6 @@ public class UserController {
     @PostMapping("/registere")
     public String registerUser(@RequestParam String username,
                                @RequestParam String password,
-                               @RequestParam String role,
                                Model model) {
         if (userRepository.findByUsername(username).isPresent()) {
             model.addAttribute("message", "Пользователь с таким именем уже существует");
@@ -105,7 +104,7 @@ public class UserController {
         UserEntity newUser = new UserEntity();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
-        newUser.setRole(Role.valueOf(role));
+        newUser.setRole(Role.ADMIN);
         newUser.setCreationTime(LocalDateTime.now());
 
         userRepository.save(newUser);

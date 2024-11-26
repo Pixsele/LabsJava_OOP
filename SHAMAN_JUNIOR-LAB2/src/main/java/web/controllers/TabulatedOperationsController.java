@@ -79,39 +79,41 @@ public class TabulatedOperationsController {
     }
 
     @GetMapping("/createForm")
-    public String createForm(@RequestParam String target, Model model, HttpSession session) {
+    public String createForm(@RequestParam String target, @RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
         model.addAttribute("target", target);
-        model.addAttribute("factory",session.getAttribute("FACTORY_KEY").getClass().getSimpleName());
+        model.addAttribute("redirectTarget", redirectTarget);
+        model.addAttribute("factory", session.getAttribute("FACTORY_KEY").getClass().getSimpleName());
         return "fragments/createForm"; // Форма для создания функции
     }
 
     @PostMapping("/generateTable")
-    public String generateTable(@RequestParam int points, @RequestParam String target, Model model) {
+    public String generateTable(@RequestParam int points, @RequestParam String target, @RequestParam("redirectTarget") String redirectTarget, Model model) {
         model.addAttribute("points", points);
         model.addAttribute("target", target);
+        model.addAttribute("redirectTarget", redirectTarget);
         //TODO
         System.out.println("Generating table");
+        System.out.println(redirectTarget);
+
         return "fragments/tableForm"; // Форма с таблицей
     }
 
     @PostMapping("/createFunction")
-    public String createFunction(@RequestParam String target, @RequestParam double[] x, @RequestParam double[] y, Model model, HttpSession session) {
+    public String createFunction(@RequestParam String target, @RequestParam double[] x,@RequestParam("redirectTarget") String redirectTarget, @RequestParam double[] y, Model model, HttpSession session) {
 
         TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
-
 
             TabulatedFunction function = factory.create(x,y);
             model.addAttribute("function", function);
 
-            if(Objects.equals(target, "operand1,operand1")) {
+            if(Objects.equals(target, "operand1")) {
                 session.setAttribute("operand1Func", function);
             }
             else if(Objects.equals(target, "operand2,operand2")) {
                 session.setAttribute("operand2Func", function);
             }
 
-
-        return "redirect:/tabulated-operations";
+        return "redirect:/"+redirectTarget;
     }
 
     @PostMapping("/doOperation")

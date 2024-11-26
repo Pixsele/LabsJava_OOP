@@ -21,7 +21,7 @@
             <option value="linkedlist" ${selectedFactory == 'linkedlist' ? 'selected' : ''}>Фабрика на основе связного списка</option>
         </select>
         <button type="submit">Сохранить</button>
-        <button type="button" onclick="this.parentNode.close()">Закрыть</button>
+        <button type="button" onclick="document.getElementById('settingsModal').style = 'none'">Закрыть</button>
     </form>
 </dialog>
 <a href="#" onclick="document.getElementById('settingsModal').showModal()">Открыть настройки</a>

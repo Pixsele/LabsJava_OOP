@@ -1,7 +1,7 @@
-function openModal(target) {
+function openModal(target,redirectTarget) {
     console.log(target);
 
-    fetch(`/tabulated-operations/createForm?target=${target}`)
+    fetch(`/tabulated-operations/createForm?target=${target}&redirectTarget=${redirectTarget}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка загрузки модального окна');
@@ -24,13 +24,13 @@ function submitForm(event) {
     const form = event.target;
 
     const target = form.querySelector('input[name="target"]').value; // Извлекаем значение hidden-поля
-
+    const redirectTarget = form.querySelector('input[name = "redirectTarget"]').value;
 
     event.preventDefault();
     const formData = new FormData(form);
 
-
-    const url = `/tabulated-operations/generateTable?target=${encodeURIComponent(target)}`;
+    console.log(redirectTarget+'123');
+    const url = `/tabulated-operations/generateTable`;
     fetch(url, {
         method: 'POST',
         body: formData
@@ -110,6 +110,7 @@ function openSave(target){
     saveTarget = target;
     document.getElementById('modalSave').style.display = 'block';
 }
+
 function closeSave() {
     document.getElementById('modalSave').style.display = 'none';
 }
