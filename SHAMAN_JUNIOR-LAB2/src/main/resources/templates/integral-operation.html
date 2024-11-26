@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <script th:src="@{/js/scripts.js}" type="text/javascript"></script>
-    <title>Модальное окно</title>
+    <title>Diff</title>
     <style>
         body{
             font-family: Tahoma, sans-serif;
@@ -40,17 +40,17 @@
             background: #1b40f8;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
             z-index: 1001;
         }
 
     </style>
 </head>
 <body>
-<h3>Операнд 1</h3>
-<div id="operand1Content">
-    <div th:if="${operand1Func != null}">
+<h3>Функция</h3>
+<div id="integralContent">
+    <div th:if="${integralFunc != null}">
         <h4>Таблица функции:</h4>
         <table border="1">
             <thead>
@@ -60,92 +60,34 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:each="i : ${#numbers.sequence(0, count1 - 1)}">
-                    <td><input type="number" th:value="${function1.getXValues()[i]}" ></td>
-                    <td><input type="number" th:value="${function1.getYValues()[i]}" ></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${operand1Func == null}">
-        <p>Отсутствует функция</p>
-    </div>
-    <button onclick="openModal('operand1','tabulated-operations')">Создать функцию</button>
-    <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
-    <button onclick="openFunctionList('operand1')">Загрузить</button>
-    <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
-</div>
-
-<h3>Операнд 2</h3>
-<div id="operand2Content">
-    <div th:if="${operand2Func != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, count2 - 1)}">
-                <td><input type="number" th:value="${function2.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${function2.getYValues()[i]}" ></td>
+            <tr th:each="i : ${#numbers.sequence(0, countOfIntegral - 1)}">
+                <td><input type="number" th:value="${integralFunc.getXValues()[i]}" ></td>
+                <td><input type="number" th:value="${integralFunc.getYValues()[i]}" ></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <div th:if="${operand2Func == null}">
+    <div th:if="${integralFunc == null}">
         <p>Отсутствует функция</p>
     </div>
-    <button onclick="openModal('operand2')">Создать функцию</button>
-    <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
-    <button onclick="openFunctionList('operand2')">Загрузить</button>
-    <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
+    <button onclick="openModal('integral','integral')">Создать функцию</button>
+    <button onclick="openSave('integral')" th:attr="disabled=${integralFunc == null}">Сохранить</button>
+    <button onclick="openFunctionList('integral')">Загрузить</button>
+    <button onclick="openAnother('integral','integral')">Открыть</button>
 </div>
-
 <div>
-    <form action="/tabulated-operations/doOperation" method="post">
-        <div class="operation-selector">
-            <label for="operation">Выберите операцию:</label>
-            <select id="operation" name="operation" required>
-                <option value="add">Сложение</option>
-                <option value="subtract">Вычитание</option>
-                <option value="multiply">Умножение</option>
-                <option value="divide">Деление</option>
-            </select>
-        </div>
-        <button type="submit">Выполнить</button>
+    <form action="/integral/calculate" method="post">
+        <input type="number" id="threadCount" name="threadCount" value="1" min="1" max="100" required>
+        <button type="submit" th:attr="disabled=${integralFunc == null}">Выполнить</button>
     </form>
 </div>
-<!-- Результат сложения -->
-<h3>Результат сложения</h3>
-<div id="resultContent">
-    <div th:if="${resultFunc != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, count3 - 1)}">
-                <td><input type="number" th:value="${resultFunc.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${resultFunc.getYValues()[i]}" ></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${resultFunc == null}">
-        <p>Отсутствует функция</p>
-    </div>
-    <button onclick="openSave('result')" th:attr="disabled=${resultFunc == null}">Сохранить</button>
+<div th:if="${integralResult != null}">
+    <p th:text="${integralResult}"></p>
+</div>
+<div th:if="${integralResult == null}">
+    <p>Нет результата</p>
 </div>
 
-
-<!-- Модальное окно -->
 <div id="modalFunction" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
     <div id="modalContentFunction">
         <h3>Выберите функцию</h3>
@@ -175,7 +117,7 @@
     <button type="button" onclick="document.getElementById('modal').style.display = 'none'">Закрыть</button>
 </div>
 
-<div id="modalSave">
+<div id="modalSave" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
     <div id="modalContentSave">
         <form onsubmit="saveFunction(event)">
             <label for="funcName">Название функции:</label>
@@ -202,7 +144,6 @@
 </div>
 
 <div th:replace="fragments/errorForm"></div>
-
 
 </body>
 </html>

@@ -4,6 +4,7 @@ package web.controllers;
 import database.repositories.MathFunctionsRepository;
 import function.api.TabulatedFunction;
 import function.factory.TabulatedFunctionFactory;
+import operations.TabulatedDifferentialOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,8 +42,33 @@ public class DifferentialOperatorController {
             model.addAttribute("countOfDiff", func.getCount());
         }
 
+        if(session.getAttribute("resultDiffFunc") == null) {
+            model.addAttribute("resultDiffFunc",null);
+        }
+        else{
+            TabulatedFunction func = (TabulatedFunction) session.getAttribute("resultDiffFunc");
+
+            model.addAttribute("resultDiffFunc",session.getAttribute("resultDiffFunc"));
+            model.addAttribute("resultDiffFunc",func);
+            model.addAttribute("countOfResultDiff", func.getCount());
+        }
+
         model.addAttribute("functions",mathFunctionsRepository.findAll());
 
         return "differential-operation";
+    }
+
+    @PostMapping("/doDiff")
+    public String doDiffOperator(Model model,HttpSession session){
+
+        TabulatedFunction func = (TabulatedFunction) session.getAttribute("diffFunc");
+
+        TabulatedDifferentialOperator service = new TabulatedDifferentialOperator((TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY"));
+
+        TabulatedFunction result = service.derive(func);
+        System.out.println(result);
+        session.setAttribute("resultDiffFunc",result);
+
+        return "redirect:/differential-operation";
     }
 }

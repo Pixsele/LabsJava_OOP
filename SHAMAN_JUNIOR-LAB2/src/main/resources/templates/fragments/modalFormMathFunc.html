@@ -4,35 +4,147 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Модальное окно с формой</title>
+  <style>
+    /* Заголовок страницы */
+    #pageTitle {
+      font-size: 24px;
+      color: #d9ff6b; /* Зеленый цвет */
+      text-align: center;
+      margin-bottom: 20px;
+      text-decoration: underline;
+    }
+
+    /* Параграф с текущей фабрикой */
+    #currentFactory {
+      font-size: 14px;
+      color: #ffffff; /* Белый текст */
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Метка для выбора функции */
+    #functionLabel {
+      font-size: 14px;
+      color: #d9ff6b; /* Зеленый цвет */
+      margin-bottom: 5px;
+      display: block;
+      text-align: left;
+    }
+
+    /* Выпадающий список для выбора функции */
+    #function {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f0ffd4; /* Светло-зеленый фон */
+      font-size: 14px;
+    }
+
+    /* Метка для поля "Начало интервала" */
+    #xFromLabel {
+      font-size: 14px;
+      color: #d9ff6b; /* Зеленый цвет */
+      margin-bottom: 5px;
+      display: block;
+      text-align: left;
+    }
+
+    /* Поле "Начало интервала" */
+    #xFrom {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #ffffff; /* Белый фон */
+    }
+
+    /* Метка для поля "Конец интервала" */
+    #xToLabel {
+      font-size: 14px;
+      color: #d9ff6b; /* Зеленый цвет */
+      margin-bottom: 5px;
+      display: block;
+      text-align: left;
+    }
+
+    /* Поле "Конец интервала" */
+    #xTo {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #ffffff; /* Белый фон */
+    }
+
+    /* Метка для поля "Количество точек" */
+    #countLabel {
+      font-size: 14px;
+      color: #d9ff6b; /* Зеленый цвет */
+      margin-bottom: 5px;
+      display: block;
+      text-align: left;
+    }
+
+    /* Поле "Количество точек" */
+    #count {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #ffffff; /* Белый фон */
+    }
+
+    /* Кнопка "Создать" */
+    #createButton {
+      background-color: #d9ff6b; /* Зеленый фон */
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      color: #2e2e2e; /* Темный текст */
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    /* Ховер-эффект для кнопки */
+    #createButton:hover {
+      background-color: #c4e65a; /* Более насыщенный зеленый при наведении */
+    }
+
+  </style>
 </head>
 <body>
-<!-- Кнопка для открытия модального окна -->
+<div>
+  <form action="/tabulated-function-mathfunc/createModal" method="post">
+    <input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
+    <input type="hidden" name="target" th:value="${target}">
+    <h2 id="pageTitle">Создание табулированной функции</h2>
+    <p id="currentFactory" th:text="'Текущая фабрика - ' + ${factory}"></p>
 
-<!-- Модальное окно -->
-<div class="modal-overlay" id="modal">
-  <div class="modal-window">
-    <h2>Создание табулированной функции</h2>
-    <form action="/tabulated-function-mathfunc/createModal" method="post">
-      <p th:text="'Текущая фабрика - ' + ${factory}"></p>
+    <label id="functionLabel" for="function">Выберите функцию:</label>
+    <select id="function" name="function">
+      <option th:each="entry : ${functionMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
+    </select>
 
-      <label for="function">Выберите функцию:</label>
-      <select id="function" name="function">
-        <option th:each="entry : ${functionMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
-      </select>
+    <label id="xFromLabel" for="xFrom">Начало интервала:</label>
+    <input type="number" id="xFrom" name="xFrom" step="0.01" required>
 
-      <label for="xFrom">Начало интервала:</label>
-      <input type="number" id="xFrom" name="xFrom" step="0.01" required>
+    <label id="xToLabel" for="xTo">Конец интервала:</label>
+    <input type="number" id="xTo" name="xTo" step="0.01" required>
 
-      <label for="xTo">Конец интервала:</label>
-      <input type="number" id="xTo" name="xTo" step="0.01" required>
+    <label id="countLabel" for="count">Количество точек:</label>
+    <input type="number" id="count" name="count" min="2" required>
 
-      <label for="count">Количество точек:</label>
-      <input type="number" id="count" name="count" min="2" required>
-
-      <div class="button-group">
-        <button type="submit" class="create-btn">Создать</button>
-        <button type="button" class="close-btn" id="closeModal">Закрыть</button>
-      </div>
-    </form>
-  </div>
+    <button id="createButton" type="submit">Создать</button>
+  </form>
+  <button onclick="closeAnother()">Закрыть</button>
 </div>

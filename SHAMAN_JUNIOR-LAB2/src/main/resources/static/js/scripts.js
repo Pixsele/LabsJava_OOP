@@ -147,8 +147,7 @@ function saveFunction(event) {
 function openAnother(redirectTarget,target){
         const modalContent = document.getElementById('modalContentAnother');
         const modal = document.getElementById('modalAnother');
-        const overlay = document.getElementById('modalOverlay'); // Общий overlay для всех модальных окон
-
+        const overlay = document.getElementById('modalOverlay');
 
         fetch(`/tabulated-function-mathfunc/modal?redirectTarget=${encodeURIComponent(redirectTarget)}&target=${encodeURIComponent(target)}`)
         .then(response => {
@@ -158,13 +157,10 @@ function openAnother(redirectTarget,target){
             return response.text();
         })
         .then(html => {
-            console.log('Полученный HTML:', html); // Отладка
-            console.log('Содержимое модального окна:', modalContent.innerHTML);
-            modalContent.innerHTML = html; // Загрузка содержимого в модальное окно
-            console.log('Содержимое модального окна:', modalContent.innerHTML);
+            modalContent.innerHTML = html;
 
-            modal.classList.add('active'); // Показ модального окна
-            overlay.classList.add('active'); // Показ overlay
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
         })
         .catch(error => {
             console.error(error);
@@ -173,6 +169,7 @@ function openAnother(redirectTarget,target){
 
 function closeAnother(){
     document.getElementById('modalAnother').style.display = 'none';
+    document.getElementById('modalOverlay').style.display ='none';
 }
 
 function close(){
