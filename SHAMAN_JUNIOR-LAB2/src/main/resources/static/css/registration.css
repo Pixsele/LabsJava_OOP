@@ -1,0 +1,79 @@
+body {
+    background-color: #f2c4e0;
+    display: flex; /* Для выравнивания контейнера по центру */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Tahoma, sans-serif;
+}
+
+.registration-container {
+    position: relative;
+    background-color: #d9ff6b;
+    padding: 30px 40px; /* Внутренние отступы */
+    border-radius: 20px; /* Скругленные углы */
+    text-align: center;
+    width: 450px;
+    height: 290px;
+}
+
+.registration-container h1 {
+    color: #2e2e2e;
+    font-size: 24px;
+}
+
+/* Поля ввода */
+.registration-container input[type="text"]{
+    width: 380px; /* Полная ширина внутри контейнера */
+    padding: 15px 15px; /* Внутренние отступы */
+    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-right: 0; /* Внешние отступы сверху и снизу */
+    border: none; /* Убираем рамку */
+    border-radius: 20px; /* Скругленные углы */
+    background-color: #ffffff; /* Белый фон */
+    font-size: 14px; /* Размер текста */
+    box-sizing: border-box; /* Учет padding в ширине */
+}
+.registration-container input[type="password"] {
+    width: 380px; /* Полная ширина внутри контейнера */
+    padding: 15px 15px; /* Внутренние отступы */
+    margin-bottom: 15px;
+    margin-right: 0; /* Внешние отступы сверху и снизу */
+    border: none; /* Убираем рамку */
+    border-radius: 20px; /* Скругленные углы */
+    background-color: #ffffff; /* Белый фон */
+    font-size: 14px; /* Размер текста */
+    box-sizing: border-box; /* Учет padding в ширине */
+}
+
+/* Стили для кнопки */
+.registration-container button {
+    margin-top: 10px; /* Отступ сверху */
+    width: 200px;
+    height: 45px;
+    padding: 10px; /* Внутренние отступы */
+    background-color: #2e2e2e; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    border: none; /* Убираем границу */
+    border-radius: 20px; /* Скругленные углы */
+    font-size: 16px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    cursor: pointer; /* Курсор руки */
+    transition: background-color 0.3s ease; /* Анимация при наведении */
+}
+
+/* Смена цвета кнопки при наведении */
+.registration-container button:hover {
+    background-color: #555555; /* Серый цвет */
+}
+
+/* Стили для текста меток (label) */
+.registration-container label {
+    display: block; /* Метка занимает всю строку */
+    text-align: left; /* Выравнивание текста по левому краю */
+    font-size: 14px;
+    margin-bottom: 5px; /* Отступ от метки до поля */
+    color: #2e2e2e; /* Темный цвет текста */
+}

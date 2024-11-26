@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/registration.css}" />
   <title>Регистрация</title>
 </head>
 <body>
 
 <div class="registration-container">
-  <h2>Регистрация пользователя</h2>
+  <h2>Регистрация:</h2>
 
   <!-- Форма для отправки данных на сервер -->
   <form action="/registere" method="POST">
     <div class="form-group">
-      <label for="username">Имя пользователя:</label>
-      <input type="text" id="username" name="username" required placeholder="Введите имя пользователя">
+      <label for="username"></label>
+      <input type="text" id="username" name="username" required placeholder="Придумайте логин">
     </div>
     <div class="form-group">
-      <label for="password">Пароль:</label>
-      <input type="password" id="password" name="password" required placeholder="Введите пароль">
+      <label for="password"></label>
+      <input type="password" id="password" name="password" required placeholder="Придумайте пароль">
     </div>
     <div class="form-group">
       <button type="submit">Зарегистрироваться</button>
