@@ -8,9 +8,12 @@
 <body>
 <h1>Главное меню</h1>
 <ul>
-    <li><a href="/tabulated-function-array" target="_self">Создать табулированную функцию</a></li>
-    <li><a href="/tabulated-function-mathfunc" target="_self">Другая функция</a></li>
-    <li><a href="/tabulated-operations">Операции</a></li>
+    <li><a href="/tabulated-operations">Простейшие операции над функциями</a></li>
+    <li><a href="#"></a>Дифференцирование функций</li>
+    <li><a href="#"></a>Высчитать интеграл</li>
+    <li><a href="#"></a>График</li>
+    <li><a href="#"></a>Создание сложной функции</li>
+    <li><a href="#"></a>Настройки фабрики</li>
 </ul>
 
 <dialog id="settingsModal">
@@ -21,7 +24,10 @@
             <option value="linkedlist" ${selectedFactory == 'linkedlist' ? 'selected' : ''}>Фабрика на основе связного списка</option>
         </select>
         <button type="submit">Сохранить</button>
-        <button type="button" onclick="document.getElementById('settingsModal').style = 'none'">Закрыть</button>
+        <button type="button" onclick="document.getElementById('settingsModal').style.display = 'none'; window.location.reload();">
+            Закрыть
+        </button>
+
     </form>
 </dialog>
 <a href="#" onclick="document.getElementById('settingsModal').showModal()">Открыть настройки</a>

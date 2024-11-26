@@ -17,6 +17,7 @@ function openModal(target,redirectTarget) {
         });
 }
 function closeModal() {
+    console.log("ppppp");
     document.getElementById('modal').style.display = 'none';
 }
 
@@ -106,9 +107,9 @@ function loadFunction() {
             if (data && data.error) {
                 const errorForm = document.getElementById('errorForm');
                 if (errorForm) {
+                    closeFunctionList();
                     errorForm.style.display = 'block';
                     document.getElementById('errorMessage').textContent = data.error;
-                    closeFunctionList();
                 }
             } else {
                 closeFunctionList();
@@ -116,7 +117,7 @@ function loadFunction() {
             }
         })
         .catch(error => {
-            console.error('Ошибка при загрузке функции:', error);
+            console.error('Ошибка при загрузке функции');
         });
 }
 
@@ -159,6 +160,10 @@ function openAnother(redirectTarget,target){
         });
 }
 
-function close(target){
-    document.getElementById(target).style.display = 'none';
+function closeAnother(){
+    document.getElementById('modalAnother').style.display = 'none';
+}
+
+function close(){
+    document.getElementById('modal').style.display = 'none';
 }

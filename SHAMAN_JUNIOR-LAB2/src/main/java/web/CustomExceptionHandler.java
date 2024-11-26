@@ -4,6 +4,7 @@ package web;
 
 import exceptions.ArrayIsNotSortedException;
 import exceptions.DifferentLengthOfArraysException;
+import exceptions.InconsistentFunctionsException;
 import exceptions.LoadFunctionExecption;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,4 +58,14 @@ public class CustomExceptionHandler {
         response.put("showError", "true");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InconsistentFunctionsException.class)
+    public String handleInconsistentFunctionsException(InconsistentFunctionsException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+
+        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
+        redirectAttributes.addAttribute("showError", true);
+
+        return "redirect:/tabulated-operations";
+    }
+
 }

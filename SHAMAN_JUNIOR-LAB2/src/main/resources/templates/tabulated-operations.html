@@ -78,7 +78,7 @@
         <p>Отсутствует функция</p>
     </div>
     <button onclick="openModal('operand1','tabulated-operations')">Создать функцию</button>
-    <button onclick="openSave('operand1')">Сохранить</button>
+    <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
     <button onclick="openFunctionList('operand1')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
 </div>
@@ -106,7 +106,7 @@
         <p>Отсутствует функция</p>
     </div>
     <button onclick="openModal('operand2')">Создать функцию</button>
-    <button onclick="openSave('operand2')">Сохранить</button>
+    <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
     <button onclick="openFunctionList('operand2')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
 </div>
@@ -148,7 +148,8 @@
     <div th:if="${resultFunc == null}">
         <p>Отсутствует функция</p>
     </div>
-    <button onclick="openSave('result')">Сохранить</button>
+    <button onclick="openSave('result')" th:attr="disabled=${resultFunc == null}">Сохранить</button>
+
 </div>
 
 
@@ -179,7 +180,7 @@
 <!-- Модальное окно -->
 <div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
     <div id="modalContent"></div>
-    <button onclick="closeModal()">Закрыть</button>
+    <button type="button" onclick="document.getElementById('modal').style.display = 'none'">Закрыть</button>
 </div>
 
 <div id="modalSave" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
@@ -196,7 +197,7 @@
 <div id="modalAnother" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
     <div id="modalContentAnother">
     </div>
-    <button onclick="closeSave()">Закрыть</button>
+    <button onclick="closeAnother()">Закрыть</button>
 </div>
 
 <div th:if="${showError}">
@@ -205,6 +206,9 @@
         document.getElementById('errorForm').style.display = 'block';
     </script>
 </div>
+
+<div th:replace="fragments/errorForm"></div>
+
 
 </body>
 </html>
