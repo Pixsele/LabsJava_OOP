@@ -199,8 +199,12 @@
     <button onclick="closeSave()">Закрыть</button>
 </div>
 
-
-<div th:replace="fragments/errorForm"></div>
+<div th:if="${showError}">
+    <div th:replace="fragments/errorForm"></div>
+    <script>
+        document.getElementById('errorForm').style.display = 'block';
+    </script>
+</div>
 
 </body>
 </html>

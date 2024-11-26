@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -20,19 +21,18 @@ import java.util.Objects;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(ArrayIsNotSortedException.class)
-    public String handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request){
+    public String handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
         String page = "/";
 
         if(Objects.equals(request.getRequestURI(), "/tabulated-operations/createFunction")){
-            System.out.println("zalupa");
             page = "tabulated-operations";
         }
 
-        model.addAttribute("errorMessage", exception.getMessage());
-        model.addAttribute("showError", true);
+        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
+        redirectAttributes.addAttribute("showError", true);
         System.out.println("poppppp");
-        return "tabulated-function-mathfunc";
+        return "redirect:/"+page;
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)
@@ -55,7 +55,6 @@ public class CustomExceptionHandler {
         Map<String, String> response = new HashMap<>();
         response.put("error", exception.getMessage());
         response.put("showError", "true");
-        System.out.println("popppp123123123123123p");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

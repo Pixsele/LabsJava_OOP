@@ -40,7 +40,12 @@ public class TabulatedOperationsController {
     }
 
     @GetMapping
-    public String showForm(Model model, HttpSession session) {
+    public String showForm(Model model, HttpSession session, @RequestParam(required = false) String showError,@RequestParam(required = false) String errorMessage) {
+
+        if(showError != null) {
+            model.addAttribute("showError", showError);
+            model.addAttribute("errorMessage", errorMessage);
+        }
 
         if(session.getAttribute("operand1Func") == null) {
             model.addAttribute("operand1Func",null);

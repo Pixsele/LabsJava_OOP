@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeRequests()
                 //TODO запросы убрать
-                .antMatchers("/login", "/register","/css/**").permitAll() // Разрешить доступ без аутентификации
+                .antMatchers("/login", "/register","/css/**","/registere").permitAll() // Разрешить доступ без аутентификации
                 .anyRequest().authenticated() // Остальные запросы требуют аутентификации
                 .and()
                 .formLogin()

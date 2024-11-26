@@ -24,23 +24,39 @@ function submitForm(event) {
     const form = event.target;
 
     const target = form.querySelector('input[name="target"]').value; // Извлекаем значение hidden-поля
-    const redirectTarget = form.querySelector('input[name = "redirectTarget"]').value;
+    const redirectTarget = form.querySelector('input[name="redirectTarget"]').value;
 
-    event.preventDefault();
+    event.preventDefault(); // Предотвращаем стандартное поведение формы
     const formData = new FormData(form);
 
-    console.log(redirectTarget+'123');
     const url = `/tabulated-operations/generateTable`;
+
     fetch(url, {
         method: 'POST',
         body: formData
     })
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    // Если ответ неудачный, пытаемся получить данные ошибки
+                    throw new Error(data.error || "Ошибка при генерации таблицы.");
+                });
+            }
+            return response.text(); // Если успешный, получаем HTML
+        })
         .then(html => {
+            // Успешная обработка ответа
             document.getElementById('modalContent').innerHTML = html;
         })
         .catch(error => {
-            console.error('Ошибка:', error);
+            console.error('Ошибка при генерации таблицы:', error);
+
+            // Отображение ошибки в модальном окне
+            const errorForm = document.getElementById('errorForm');
+            if (errorForm) {
+                errorForm.style.display = 'block';
+                document.getElementById('errorMessage').textContent = error.message;
+            }
         });
 }
 
