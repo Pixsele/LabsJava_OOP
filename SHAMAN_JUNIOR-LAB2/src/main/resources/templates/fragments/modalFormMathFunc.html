@@ -1,4 +1,38 @@
-<form action="/tabulated-function-mathfunc/createModal" method="post">
-  <p>popa</p>
-  <div th:replace="fragments/createFormMathFunc"></div>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Модальное окно с формой</title>
+</head>
+<body>
+<!-- Кнопка для открытия модального окна -->
+
+<!-- Модальное окно -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-window">
+    <h2>Создание табулированной функции</h2>
+    <form action="/tabulated-function-mathfunc/createModal" method="post">
+      <p th:text="'Текущая фабрика - ' + ${factory}"></p>
+
+      <label for="function">Выберите функцию:</label>
+      <select id="function" name="function">
+        <option th:each="entry : ${functionMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
+      </select>
+
+      <label for="xFrom">Начало интервала:</label>
+      <input type="number" id="xFrom" name="xFrom" step="0.01" required>
+
+      <label for="xTo">Конец интервала:</label>
+      <input type="number" id="xTo" name="xTo" step="0.01" required>
+
+      <label for="count">Количество точек:</label>
+      <input type="number" id="count" name="count" min="2" required>
+
+      <div class="button-group">
+        <button type="submit" class="create-btn">Создать</button>
+        <button type="button" class="close-btn" id="closeModal">Закрыть</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -129,6 +129,7 @@ function openSave(target){
 }
 
 function closeSave() {
+    console.log('loofff');
     document.getElementById('modalSave').style.display = 'none';
 }
 
@@ -144,7 +145,12 @@ function saveFunction(event) {
 }
 
 function openAnother(redirectTarget,target){
-    fetch(`/tabulated-function-mathfunc/modal?redirectTarget=${encodeURIComponent(redirectTarget)}&target=${encodeURIComponent(target)}`)
+        const modalContent = document.getElementById('modalContentAnother');
+        const modal = document.getElementById('modalAnother');
+        const overlay = document.getElementById('modalOverlay'); // Общий overlay для всех модальных окон
+
+
+        fetch(`/tabulated-function-mathfunc/modal?redirectTarget=${encodeURIComponent(redirectTarget)}&target=${encodeURIComponent(target)}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка загрузки модального окна');
@@ -152,8 +158,13 @@ function openAnother(redirectTarget,target){
             return response.text();
         })
         .then(html => {
-            document.getElementById('modalContentAnother').innerHTML = html;
-            document.getElementById('modalAnother').style.display = 'block';
+            console.log('Полученный HTML:', html); // Отладка
+            console.log('Содержимое модального окна:', modalContent.innerHTML);
+            modalContent.innerHTML = html; // Загрузка содержимого в модальное окно
+            console.log('Содержимое модального окна:', modalContent.innerHTML);
+
+            modal.classList.add('active'); // Показ модального окна
+            overlay.classList.add('active'); // Показ overlay
         })
         .catch(error => {
             console.error(error);
@@ -166,4 +177,62 @@ function closeAnother(){
 
 function close(){
     document.getElementById('modal').style.display = 'none';
+}
+
+function create() {
+    const form = document.getElementById('createFunctionForm');
+    const target = document.getElementById('targetField').value;
+    const redirectTarget = document.getElementById('redirectTargetField').value;
+
+    // Собираем значения x и y из таблицы
+    const xValues = [];
+    const yValues = [];
+    const rows = form.querySelectorAll('table tr');
+
+    rows.forEach(row => {
+        const xInput = row.querySelector('input[name="x"]');
+        const yInput = row.querySelector('input[name="y"]');
+        if (xInput && yInput) {
+            xValues.push(parseFloat(xInput.value) + 0.01); // Преобразуем в числа с добавлением 0.01
+            yValues.push(parseFloat(yInput.value) + 0.01); // Преобразуем в числа с добавлением 0.01
+        }
+    });
+
+    const data = {
+        target: target,
+        redirectTarget: redirectTarget,
+        x: xValues,
+        y: yValues
+    };
+
+    // Отправляем запрос с использованием fetch
+    fetch('/tabulated-operations/createFunction', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',  // Указываем, что отправляем JSON
+        },
+        body: JSON.stringify(data),  // Преобразуем объект данных в строку JSON
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                return response.json(); // Обрабатываем ошибку, если есть
+            }
+        })
+        .then(data => {
+            if (data && data.error) {
+                // Обрабатываем ошибку
+                console.error('123123')
+                const errorForm = document.getElementById('errorForm');
+                if (errorForm) {
+                    errorForm.style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке функции', error);
+        });
+
 }

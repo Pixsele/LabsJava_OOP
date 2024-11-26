@@ -22,18 +22,19 @@ import java.util.Objects;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(ArrayIsNotSortedException.class)
-    public String handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Map<String, String>> handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+//
+//        String page = "/";
+//        String redirectTarget = request.getParameter("redirectTarget");
+//
+//        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
+//        redirectAttributes.addAttribute("showError", true);
+//        return "redirect:/"+redirectTarget;
 
-        String page = "/";
-
-        if(Objects.equals(request.getRequestURI(), "/tabulated-operations/createFunction")){
-            page = "tabulated-operations";
-        }
-
-        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
-        redirectAttributes.addAttribute("showError", true);
-        System.out.println("poppppp");
-        return "redirect:/"+page;
+        Map<String, String> response = new HashMap<>();
+        response.put("error", exception.getMessage());
+        response.put("showError", "true");
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)

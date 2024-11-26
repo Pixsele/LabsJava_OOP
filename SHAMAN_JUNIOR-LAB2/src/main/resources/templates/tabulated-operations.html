@@ -2,59 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <script th:src="@{/js/scripts.js}" type="text/javascript"></script>
-
-
     <title>Модальное окно</title>
-
     <style>
-        /* Стили для затемнения фона */
-        .modalE-overlay {
-            display: none; /* По умолчанию модальное окно скрыто */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        /* Стили модального окна */
         .modal {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
-            border-radius: 8px;
-            text-align: center;
+            background: white;
+            z-index: 1001; /* Убедитесь, что выше, чем у overlay */
         }
 
-        .modal button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
 
-        .modal button:hover {
-            background-color: #45a049;
+            .modal {
+            display: none; /* По умолчанию скрыто */
         }
 
-        /* Показ модального окна */
-        .modal-overlay.active {
-            display: block;
+        .modal.active {
+            display: block; /* При активации становится видимым */
         }
+
     </style>
 </head>
 <body>
-
 <h3>Операнд 1</h3>
 <div id="operand1Content">
     <div th:if="${operand1Func != null}">
@@ -194,10 +173,21 @@
     <button onclick="closeSave()">Закрыть</button>
 </div>
 
-<div id="modalAnother" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+<!--<div id="modalAnother" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">-->
+<!--    <div id="modalContentAnother">-->
+<!--    </div>-->
+<!--    <button onclick="closeAnother()">Закрыть</button>-->
+<!--</div>-->
+
+<!-- Overlay для всех модальных окон -->
+<div id="modalOverlay" class="modal-overlay" onclick=""></div>
+
+<!-- Модальное окно -->
+<div id="modalAnother" class="modal">
     <div id="modalContentAnother">
+        <!-- Динамически загружаемый контент -->
     </div>
-    <button onclick="closeAnother()">Закрыть</button>
+    <button onclick="closeModal('modalAnother')">Закрыть</button>
 </div>
 
 <div th:if="${showError}">

@@ -10,6 +10,9 @@ import function.api.TabulatedFunction;
 import function.factory.TabulatedFunctionFactory;
 import operations.TabulatedFunctionOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import web.service.PointService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -104,21 +108,35 @@ public class TabulatedOperationsController {
     }
 
     @PostMapping("/createFunction")
-    public String createFunction(@RequestParam String target, @RequestParam double[] x,@RequestParam("redirectTarget") String redirectTarget, @RequestParam double[] y, Model model, HttpSession session) {
+    public ResponseEntity<?> createFunction(@RequestBody Map<String, Object> formData, Model model, HttpSession session) {
+        // Преобразуем данные в нужные типы
+        String target = (String) formData.get("target");
+
+        double[] x = ((List<Double>) formData.get("x")).stream().mapToDouble(Double::doubleValue).toArray();
+        double[] y = ((List<Double>) formData.get("y")).stream().mapToDouble(Double::doubleValue).toArray();
+
+        for(int i = 0;i<x.length;i++){
+            x[i] -= 0.01;
+            y[i] -= 0.01;
+        }
 
         TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
 
-            TabulatedFunction function = factory.create(x,y);
-            model.addAttribute("function", function);
+        TabulatedFunction function = factory.create(x, y);
+        model.addAttribute("function", function);
 
-            if(Objects.equals(target, "operand1")) {
-                session.setAttribute("operand1Func", function);
-            }
-            else if(Objects.equals(target, "operand2,operand2")) {
-                session.setAttribute("operand2Func", function);
-            }
+        if (Objects.equals(target, "operand1")) {
+            session.setAttribute("operand1Func", function);
+        } else if (Objects.equals(target, "operand2")) {
+            session.setAttribute("operand2Func", function);
+        } else if (Objects.equals(target, "diff")) {
+            session.setAttribute("diffFunc", function);
+        }
 
-        return "redirect:/"+redirectTarget;
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.LOCATION, "/tabulated-operations")
+                .build();
+
     }
 
     @PostMapping("/doOperation")
