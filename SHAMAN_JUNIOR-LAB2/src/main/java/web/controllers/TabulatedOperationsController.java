@@ -44,11 +44,13 @@ public class TabulatedOperationsController {
     }
 
     @GetMapping
-    public String showForm(Model model, HttpSession session, @RequestParam(required = false) String showError,@RequestParam(required = false) String errorMessage) {
-
-        if(showError != null) {
+    public String showForm(Model model, HttpSession session, @RequestParam(required = false) boolean showError,@RequestParam(required = false) String errorMessage,
+                           @RequestParam(required = false) String redirectTarget) {
+        System.out.println(showError);
+        if(showError) {
             model.addAttribute("showError", showError);
             model.addAttribute("errorMessage", errorMessage);
+            model.addAttribute("redirectTarget", redirectTarget);
         }
 
         if(session.getAttribute("operand1Func") == null) {
@@ -108,17 +110,7 @@ public class TabulatedOperationsController {
     }
 
     @PostMapping("/createFunction")
-    public ResponseEntity<?> createFunction(@RequestBody Map<String, Object> formData, Model model, HttpSession session) {
-        // Преобразуем данные в нужные типы
-        String target = (String) formData.get("target");
-
-        double[] x = ((List<Double>) formData.get("x")).stream().mapToDouble(Double::doubleValue).toArray();
-        double[] y = ((List<Double>) formData.get("y")).stream().mapToDouble(Double::doubleValue).toArray();
-
-        for(int i = 0;i<x.length;i++){
-            x[i] -= 0.01;
-            y[i] -= 0.01;
-        }
+    public String createFunction(@RequestParam String target, @RequestParam("redirectTarget") String redirectTarget,@RequestParam double[] x,@RequestParam double[] y, Model model, HttpSession session) {
 
         TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
 
@@ -133,9 +125,7 @@ public class TabulatedOperationsController {
             session.setAttribute("diffFunc", function);
         }
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .header(HttpHeaders.LOCATION, "/tabulated-operations")
-                .build();
+        return "redirect:/"+redirectTarget;
 
     }
 

@@ -22,19 +22,20 @@ import java.util.Objects;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(ArrayIsNotSortedException.class)
-    public ResponseEntity<Map<String, String>> handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-//
-//        String page = "/";
-//        String redirectTarget = request.getParameter("redirectTarget");
-//
-//        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
-//        redirectAttributes.addAttribute("showError", true);
-//        return "redirect:/"+redirectTarget;
+    public String handleArrayIsNotSortedException(ArrayIsNotSortedException exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
-        Map<String, String> response = new HashMap<>();
-        response.put("error", exception.getMessage());
-        response.put("showError", "true");
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        String page = "/";
+        String redirectTarget = request.getParameter("redirectTarget");
+
+        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
+        redirectAttributes.addAttribute("showError", true);
+        redirectAttributes.addAttribute("redirectTarget", redirectTarget);
+        return "redirect:/"+redirectTarget;
+
+//        Map<String, String> response = new HashMap<>();
+//        response.put("error", exception.getMessage());
+//        response.put("showError", "true");
+//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)

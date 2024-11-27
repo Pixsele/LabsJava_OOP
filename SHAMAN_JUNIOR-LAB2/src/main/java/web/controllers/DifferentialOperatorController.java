@@ -24,9 +24,9 @@ public class DifferentialOperatorController {
     private MathFunctionsRepository mathFunctionsRepository;
 
     @GetMapping
-    public String differentialOperator(Model model, HttpSession session,@RequestParam(required = false) String showError,@RequestParam(required = false) String errorMessage) {
+    public String differentialOperator(Model model, HttpSession session,@RequestParam(required = false) boolean showError,@RequestParam(required = false) String errorMessage) {
 
-        if(showError != null) {
+        if(showError) {
             model.addAttribute("showError", showError);
             model.addAttribute("errorMessage", errorMessage);
         }
