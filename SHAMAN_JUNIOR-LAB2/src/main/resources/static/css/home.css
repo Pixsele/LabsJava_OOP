@@ -275,6 +275,12 @@
     border: none;
     margin-right: 5px;
     color: black;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submit:hover {
+    background-color: #c4e65a;
 }
 
 #button{
@@ -287,4 +293,10 @@
     background-color: #ff66b3;
     border: none;
     color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#button:hover {
+    background-color: #e45ba0;
 }
