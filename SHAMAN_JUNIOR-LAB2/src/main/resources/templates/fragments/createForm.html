@@ -29,7 +29,7 @@
       <input type="hidden" name="target" th:value="${target}">
       <input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
       <label for="points">Количество точек:</label>
-      <input type="number" name="points" id="points" required>
+      <input type="number" name="points" id="points" min="1" required>
       <button type="submit">Сгенерировать таблицу</button>
     </form>
   </div>

@@ -1,5 +1,6 @@
 package function;
 
+import exceptions.RemoveIncorrectPoint;
 import function.api.MathFunction;
 import org.junit.jupiter.api.Test;
 import java.util.Iterator;
@@ -153,8 +154,8 @@ class ArrayTabulatedFunctionTest {
         assertEquals(1.0, function.getY(0));
         assertEquals(4.0, function.getY(1));
 
-        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(-1));
-        assertThrows(IndexOutOfBoundsException.class, () -> function.remove(4));
+        assertThrows(RemoveIncorrectPoint.class, () -> function.remove(-1));
+        assertThrows(RemoveIncorrectPoint.class, () -> function.remove(4));
         function.remove(0);
         function.remove(0);
         assertThrows(IllegalStateException.class, () -> function.remove(0));

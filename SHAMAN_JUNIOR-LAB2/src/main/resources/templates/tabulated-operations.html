@@ -29,7 +29,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            display: none; /* По умолчанию скрыт */
+            display: none;
             z-index: 1000;
         }
 
@@ -42,8 +42,8 @@
             background: #1b40f8;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
             z-index: 1001;
         }
         #modalEdit {
@@ -55,8 +55,8 @@
             background: #1b40f8;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
             z-index: 1001;
         }
 
@@ -70,7 +70,7 @@
             padding: 20px;
             border: none;
             border-radius: 25px;
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            width: 400px;
             z-index: 1001;
         }
 
@@ -81,7 +81,7 @@
             padding: 20px;
             border: none;
             border-radius: 25px;
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            width: 400px;
             height: 230px;
             z-index: 1001;
             position: fixed;
@@ -103,6 +103,21 @@
             border-radius: 25px;
             height: 40px;
             width: 150px;
+        }
+
+        #modalFunction {
+            display: none;
+            transform: translate(-50%, -50%);
+            background: #2e2e2e;
+            padding: 20px;
+            border: none;
+            border-radius: 25px;
+            width: 400px;
+            height: 230px;
+            z-index: 1001;
+            position: fixed;
+            top: 50%;
+            left: 50%;
         }
 
     </style>
@@ -236,7 +251,7 @@
 <!-- Модальное окно -->
 <div id="modal">
     <div id="modalContent"></div>
-    <button id="closeButtomCreateFunction" type="button" onclick="document.getElementById('modal').style.display = 'none'">Закрыть</button>
+    <button id="closeButtomCreateFunction" type="button" onclick="closeModal()">Закрыть</button>
 </div>
 
 <div id="modalSave">

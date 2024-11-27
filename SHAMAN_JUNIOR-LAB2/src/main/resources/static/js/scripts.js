@@ -1,6 +1,5 @@
 function openModal(target,redirectTarget) {
-    console.log(target);
-
+    document.getElementById("modalOverlay").style.display = 'block';
     fetch(`/tabulated-operations/createForm?target=${target}&redirectTarget=${redirectTarget}`)
         .then(response => {
             if (!response.ok) {
@@ -17,17 +16,17 @@ function openModal(target,redirectTarget) {
         });
 }
 function closeModal() {
-    console.log("ppppp");
     document.getElementById('modal').style.display = 'none';
+    document.getElementById("modalOverlay").style.display = 'none';
 }
 
 function submitForm(event) {
     const form = event.target;
 
-    const target = form.querySelector('input[name="target"]').value; // Извлекаем значение hidden-поля
+    const target = form.querySelector('input[name="target"]').value
     const redirectTarget = form.querySelector('input[name="redirectTarget"]').value;
 
-    event.preventDefault(); // Предотвращаем стандартное поведение формы
+    event.preventDefault();
     const formData = new FormData(form);
 
     const url = `/tabulated-operations/generateTable`;
@@ -39,20 +38,16 @@ function submitForm(event) {
         .then(response => {
             if (!response.ok) {
                 return response.json().then(data => {
-                    // Если ответ неудачный, пытаемся получить данные ошибки
                     throw new Error(data.error || "Ошибка при генерации таблицы.");
                 });
             }
-            return response.text(); // Если успешный, получаем HTML
+            return response.text();
         })
         .then(html => {
-            // Успешная обработка ответа
             document.getElementById('modalContent').innerHTML = html;
         })
         .catch(error => {
-            console.error('Ошибка при генерации таблицы:', error);
 
-            // Отображение ошибки в модальном окне
             const errorForm = document.getElementById('errorForm');
             if (errorForm) {
                 errorForm.style.display = 'block';
@@ -67,10 +62,12 @@ let selectFunctionId = null;
 function openFunctionList(target) {
     modalTarget = target;
     document.getElementById('modalFunction').style.display = 'block';
+    document.getElementById("modalOverlay").style.display = 'block';
 }
 
 function closeFunctionList() {
     document.getElementById('modalFunction').style.display = 'none';
+    document.getElementById("modalOverlay").style.display = 'none';
 }
 
 function selectFunction(row, id, target) {
@@ -127,11 +124,12 @@ let saveTarget = '';
 function openSave(target){
     saveTarget = target;
     document.getElementById('modalSave').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
 }
 
 function closeSave() {
-    console.log('loofff');
     document.getElementById('modalSave').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'none';
 }
 
 function saveFunction(event) {
@@ -237,18 +235,17 @@ function create() {
 
 let editTarget = '';
 function openEdit(target){
-    console.log(target);
     editTarget = target;
     document.getElementById('modalEdit').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
 }
 
 function closeEdit(){
     document.getElementById('modalEdit').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'none';
 }
 
 function editFunc(event){
-
-
     event.preventDefault();
     const x = document.getElementById('xValue').value;
     const y = document.getElementById('yValue').value;
@@ -286,6 +283,7 @@ function openRemove(target,redirectTarget){
     removeTarget = target;
     redirectRemoveTarget = redirectTarget;
     document.getElementById('modalRemove').style.display = 'block';
+    document.getElementById('modalOverlay').style.display = 'block';
 }
 
 function removeFunc(event){
@@ -326,4 +324,5 @@ function removeFunc(event){
 
 function closeRemove(){
     document.getElementById('modalRemove').style.display = 'none';
+    document.getElementById('modalOverlay').style.display = 'none';
 }

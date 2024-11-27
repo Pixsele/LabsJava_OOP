@@ -116,7 +116,17 @@ public class TabulatedOperationsController {
         TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
 
         TabulatedFunction function = factory.create(x, y);
+
         model.addAttribute("function", function);
+        double [] popa = function.getXValues();
+        double [] popa2 = function.getYValues();
+        System.out.println(function.getYValues());
+        System.out.println(function.getXValues()[0]);
+        System.out.println(function.getYValues()[0]);
+        System.out.println(function.getXValues()[1]);
+        System.out.println(function.getYValues()[1]);
+        System.out.println(function.getXValues()[2]);
+        System.out.println(function.getYValues()[2]);
 
         if (Objects.equals(target, "operand1")) {
             session.setAttribute("operand1Func", function);

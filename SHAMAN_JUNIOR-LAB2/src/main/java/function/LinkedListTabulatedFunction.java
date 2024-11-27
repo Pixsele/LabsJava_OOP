@@ -1,6 +1,5 @@
 package function;
 
-import com.sun.xml.internal.ws.developer.Serialization;
 import function.api.Insertable;
 import function.api.MathFunction;
 import function.api.Removable;
@@ -134,22 +133,21 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
     @Override
     public double[] getXValues() {
         double[] xValues = new double[count];
-        int i = 0;
-        for(Point point : this){
-            xValues[i] = point.x;
-        };
-
+        Node currentNode = head;
+        for(int i = 0;i<count;i++){
+            xValues[i] = currentNode.x;
+            currentNode = currentNode.next;
+        }
         return xValues;
     }
 
     @Override
     public double[] getYValues() {
         double[] yValues = new double[count];
-        int i = 0;
-        for(Point point : this){
-            yValues[i] = point.y;
-        };
-
+        Node currentNode = head;
+        for(int i = 0;i<count;i++){
+            yValues[i] = currentNode.y;
+        }
         return yValues;
     }
 
