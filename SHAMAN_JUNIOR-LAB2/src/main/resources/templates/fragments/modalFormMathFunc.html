@@ -11,14 +11,13 @@
       color: #d9ff6b; /* Зеленый цвет */
       text-align: center;
       margin-bottom: 20px;
-      text-decoration: underline;
     }
 
     /* Параграф с текущей фабрикой */
     #currentFactory {
       font-size: 14px;
       color: #ffffff; /* Белый текст */
-      text-align: center;
+      text-align: left;
       margin-bottom: 20px;
     }
 
@@ -37,67 +36,48 @@
       padding: 10px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 25px;
       background-color: #f0ffd4; /* Светло-зеленый фон */
       font-size: 14px;
-    }
-
-    /* Метка для поля "Начало интервала" */
-    #xFromLabel {
-      font-size: 14px;
-      color: #d9ff6b; /* Зеленый цвет */
-      margin-bottom: 5px;
-      display: block;
-      text-align: left;
+      -webkit-appearance: none; /* Убирает стандартную стрелку в Chrome, Safari */
+      -moz-appearance: none; /* Убирает стандартную стрелку в Firefox */
+      appearance: none; /* Убирает стандартную стрелку в современных браузерах */
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"%3E%3Cpath d="M0 0l5 6 5-6z" fill="%23000000"/%3E%3C/svg%3E'); /* Своя стрелка */
+      background-repeat: no-repeat;
+      background-position: calc(100% - 20px) center; /* Смещение стрелки левее (20px) */
+      background-size: 10px;
     }
 
     /* Поле "Начало интервала" */
     #xFrom {
-      width: 100%;
+      width: 359px;
       padding: 10px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 25px;
       font-size: 14px;
       background-color: #ffffff; /* Белый фон */
-    }
 
-    /* Метка для поля "Конец интервала" */
-    #xToLabel {
-      font-size: 14px;
-      color: #d9ff6b; /* Зеленый цвет */
-      margin-bottom: 5px;
-      display: block;
-      text-align: left;
     }
 
     /* Поле "Конец интервала" */
     #xTo {
-      width: 100%;
+      width: 359px;
       padding: 10px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 25px;
       font-size: 14px;
       background-color: #ffffff; /* Белый фон */
     }
 
-    /* Метка для поля "Количество точек" */
-    #countLabel {
-      font-size: 14px;
-      color: #d9ff6b; /* Зеленый цвет */
-      margin-bottom: 5px;
-      display: block;
-      text-align: left;
-    }
-
     /* Поле "Количество точек" */
     #count {
-      width: 100%;
+      width: 359px;
       padding: 10px;
       margin-bottom: 20px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 25px;
       font-size: 14px;
       background-color: #ffffff; /* Белый фон */
     }
@@ -106,9 +86,23 @@
     #createButton {
       background-color: #d9ff6b; /* Зеленый фон */
       border: none;
+      float: left;
       padding: 10px 20px;
-      border-radius: 5px;
+      border-radius: 25px;
       color: #2e2e2e; /* Темный текст */
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #closeButton{
+      background-color: #fd65bc;
+      border: none;
+      float: right;
+      padding: 10px 20px;
+      border-radius: 25px;
+      color: #ffffff; /* Белый текст */
       font-size: 14px;
       font-weight: bold;
       cursor: pointer;
@@ -120,6 +114,9 @@
       background-color: #c4e65a; /* Более насыщенный зеленый при наведении */
     }
 
+    #closeButton:hover {
+      background-color: #d84ca6;
+    }
   </style>
 </head>
 <body>
@@ -128,23 +125,23 @@
     <input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
     <input type="hidden" name="target" th:value="${target}">
     <h2 id="pageTitle">Создание табулированной функции</h2>
-    <p id="currentFactory" th:text="'Текущая фабрика - ' + ${factory}"></p>
+    <p id="currentFactory" th:utext="'Текущая фабрика: <br>' + ${factory}"></p>
 
     <label id="functionLabel" for="function">Выберите функцию:</label>
     <select id="function" name="function">
       <option th:each="entry : ${functionMap}" th:value="${entry.key}" th:text="${entry.key}"></option>
     </select>
 
-    <label id="xFromLabel" for="xFrom">Начало интервала:</label>
-    <input type="number" id="xFrom" name="xFrom" step="0.01" required>
+    <label id="xFromLabel" for="xFrom"></label>
+    <input type="number" id="xFrom" name="xFrom" step="0.01" placeholder="Начало интервала " required>
 
-    <label id="xToLabel" for="xTo">Конец интервала:</label>
-    <input type="number" id="xTo" name="xTo" step="0.01" required>
+    <label id="xToLabel" for="xTo"></label>
+    <input type="number" id="xTo" name="xTo" step="0.01" placeholder="Конец интервала " required>
 
-    <label id="countLabel" for="count">Количество точек:</label>
-    <input type="number" id="count" name="count" min="2" required>
+    <label id="countLabel" for="count"></label>
+    <input type="number" id="count" name="count" min="2" placeholder="Количество точек " required>
 
     <button id="createButton" type="submit">Создать</button>
   </form>
-  <button onclick="closeAnother()">Закрыть</button>
+  <button id="closeButton" onclick="closeAnother()">Закрыть</button>
 </div>
