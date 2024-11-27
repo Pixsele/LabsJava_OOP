@@ -244,7 +244,6 @@ function openEdit(target){
 
 function closeEdit(){
     document.getElementById('modalEdit').style.display = 'none';
-
 }
 
 function editFunc(event){
@@ -280,4 +279,50 @@ function editFunc(event){
         .catch(error => {
             console.error('Ошибка при загрузке функции');
         });
+}
+let removeTarget = '';
+let redirectRemoveTarget = '';
+function openRemove(target,redirectTarget){
+    removeTarget = target;
+    redirectRemoveTarget = redirectTarget;
+    document.getElementById('modalRemove').style.display = 'block';
+}
+
+function removeFunc(event){
+
+    event.preventDefault();
+    const x = document.getElementById('xToRemove').value;
+    console.log(x);
+
+    fetch(`/tabulated-operations/remove?target=${encodeURIComponent(removeTarget)}&x=${encodeURIComponent(x)}&redirectTarget=${encodeURIComponent(redirectRemoveTarget)}`, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.log('prikol')
+                return response.json();
+            }
+            return null;
+        })
+        .then(data => {
+            if (data && data.error) {
+                const errorForm = document.getElementById('errorForm');
+                if (errorForm) {
+                    closeRemove()
+                    errorForm.style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                }
+            } else {
+                closeRemove()
+                console.log('good')
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке функции');
+        });
+
+}
+
+function closeRemove(){
+    document.getElementById('modalRemove').style.display = 'none';
 }

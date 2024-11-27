@@ -77,4 +77,9 @@ public class UnmodifiableTabulatedFunction implements TabulatedFunction {
     public void insert(double x, double y) {
         function.insert(x,y);
     }
+
+    @Override
+    public void remove(int index) {
+        function.remove(index);
+    }
 }

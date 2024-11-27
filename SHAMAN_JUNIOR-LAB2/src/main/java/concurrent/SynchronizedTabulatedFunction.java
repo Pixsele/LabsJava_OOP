@@ -115,6 +115,12 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
 
         }
     }
+
+    @Override
+    public void remove(int index) {
+        function.remove(index);
+    }
+
     public interface Operation<T> {
         T apply(SynchronizedTabulatedFunction function);
     }

@@ -3,7 +3,7 @@ package function.api;
 import java.lang.Iterable;
 import function.Point;
 
-public interface TabulatedFunction extends MathFunction, Iterable<Point>, Insertable {
+public interface TabulatedFunction extends MathFunction, Iterable<Point>, Insertable, Removable {
 
     int getCount();
 

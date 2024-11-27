@@ -58,6 +58,20 @@
             z-index: 1001;
         }
 
+        #modalRemove {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1b40f8;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+            width: 400px; /* Устанавливаем фиксированную ширину */
+            z-index: 1001;
+        }
+
     </style>
 </head>
 <body>
@@ -117,6 +131,7 @@
     <button onclick="openFunctionList('operand2')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
     <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
+    <button onclick="openRemove('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null or count2 == 2 }">Удалить точку</button>
 </div>
 
 <div>
@@ -217,6 +232,17 @@
         </form>
     </div>
     <button onclick="closeEdit()">Закрыть</button>
+</div>
+
+<div id="modalRemove">
+    <div id="modalRemoveContent">
+        <form onsubmit="removeFunc(event)">
+            <label for="xToRemove">Какую точку изменить:</label>
+            <input type="number" name="xValue" id="xToRemove" required>
+            <button type="submit">Cохранить</button>
+        </form>
+    </div>
+    <button onclick="closeRemove()">Закрыть</button>
 </div>
 
 <!-- Overlay для всех модальных окон -->
