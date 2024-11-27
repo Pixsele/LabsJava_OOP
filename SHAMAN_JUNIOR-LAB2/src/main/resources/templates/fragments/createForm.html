@@ -4,19 +4,35 @@
 <head>
   <title>Табулированные функции</title>
   <meta charset="UTF-8">
+  <style>
+    #modalCreate{
+      background: #ff66b3;
+
+    }
+    #title{
+      font-weight: bold;
+      font-size: 24px;
+      color: #d9ff6b;
+      font-family: Tahoma, sans-serif;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-<div>
-    <p th:text=" 'Текущая фабрика - ' + ${factory}"></p>
-</div>
-<div >
-  <form onsubmit="submitForm(event)">
-    <input type="hidden" name="target" th:value="${target}">
-    <input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
-    <label for="points">Количество точек:</label>
-    <input type="number" name="points" id="points" required>
-    <button type="submit">Сгенерировать таблицу</button>
-  </form>
+<div id = "modalCreate">
+  <div><h1 id="title">Создание функции</h1></div>
+  <div>
+    <p th:utext=" 'Текущая фабрика: <br>' + ${factory}"></p>
+  </div>
+  <div >
+    <form onsubmit="submitForm(event)">
+      <input type="hidden" name="target" th:value="${target}">
+      <input type="hidden" name="redirectTarget" th:value="${redirectTarget}">
+      <label for="points">Количество точек:</label>
+      <input type="number" name="points" id="points" required>
+      <button type="submit">Сгенерировать таблицу</button>
+    </form>
+  </div>
 </div>
 </body>
 </html>

@@ -19,7 +19,7 @@
             display: none;
             z-index: 1001;
             width: 380px;
-            height: 440px;
+            height: 450px;
         }
 
         .modal-overlay {
@@ -66,12 +66,43 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #1b40f8;
+            background: #2e2e2e;
             padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+            border: none;
+            border-radius: 25px;
             width: 400px; /* Устанавливаем фиксированную ширину */
             z-index: 1001;
+        }
+
+        #modal {
+            display: none;
+            transform: translate(-50%, -50%);
+            background: #2e2e2e;
+            padding: 20px;
+            border: none;
+            border-radius: 25px;
+            width: 400px; /* Устанавливаем фиксированную ширину */
+            height: 230px;
+            z-index: 1001;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+        }
+
+        #closeButtomCreateFunction{
+            text-align: center;
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            background-color: #ff66b3;
+            color: white;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            border-radius: 25px;
+            height: 40px;
+            width: 150px;
         }
 
     </style>
@@ -203,9 +234,9 @@
 </div>
 
 <!-- Модальное окно -->
-<div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+<div id="modal">
     <div id="modalContent"></div>
-    <button type="button" onclick="document.getElementById('modal').style.display = 'none'">Закрыть</button>
+    <button id="closeButtomCreateFunction" type="button" onclick="document.getElementById('modal').style.display = 'none'">Закрыть</button>
 </div>
 
 <div id="modalSave">

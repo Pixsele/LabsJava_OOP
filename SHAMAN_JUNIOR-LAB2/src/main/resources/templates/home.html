@@ -198,7 +198,7 @@
             transition: background-color 0.3s ease;
         }
 
-        #calculate-integral button:hover {
+        #compute-integral button:hover {
             background-color: #e45ba0;
         }
 
@@ -235,6 +235,66 @@
             background-color: #c4e65a;
         }
 
+        #settingsModal{
+            background-color: #2e2e2e;
+            border-radius: 25px;
+            border: none;
+            width: 680px;
+            height: 40px;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: Tahoma, sans-serif;
+            color: #ccff66;
+        }
+
+        #factoryType{
+            width: 250px;
+            height: 40px;
+            border-radius: 25px;
+            margin-left: 5px;
+            margin-right: 10px;
+            border: none;
+            background-color: #f0ffd4; /* Светло-зеленый фон */
+            font-family: Tahoma, sans-serif;
+            font-size: 14px;
+            padding-left: 10px;
+            outline: none; /* Убираем обводку при фокусе */
+            box-shadow: none;
+            -webkit-appearance: none; /* Убирает стандартную стрелку в Chrome, Safari */
+            -moz-appearance: none; /* Убирает стандартную стрелку в Firefox */
+            appearance: none; /* Убирает стандартную стрелку в современных браузерах */
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"%3E%3Cpath d="M0 0l5 6 5-6z" fill="%23000000"/%3E%3C/svg%3E'); /* Своя стрелка */
+            background-repeat: no-repeat;
+            background-position: right 10px center; /* Стрелка справа по центру */
+            padding-right: 30px;
+            background-size: 11px;
+        }
+
+        #submit{
+            width: 110px;
+            height: 40px;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 25px;
+            background-color: #ccff66;
+            border: none;
+            margin-right: 5px;
+            color: black;
+        }
+
+        #button{
+            width: 110px;
+            height: 40px;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            border-radius: 25px;
+            background-color: #ff66b3;
+            border: none;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -246,7 +306,7 @@
     </div>
     <div class="bottom-row">
         <div class="differentiate-function" id="differentiate-function" onclick="window.location.href='/differential-operation'">Дифференцирование <br> функции <button>Открыть</button></div>
-        <div class="calculate-integral" id="compute-integral">Вычислить <br> интеграл <button onclick="window.location.href='/integral'">Открыть</button></div>
+        <div class="calculate-integral" id="compute-integral">Вычисление <br> интеграла <button onclick="window.location.href='/integral'">Открыть</button></div>
         <div class="factory-settings" id="factory-settings">Настройки <br> фабрики <button onclick="document.getElementById('settingsModal').showModal()">Изменить</button>
         </div>
     </div>
@@ -258,8 +318,8 @@
             <option value="array" ${selectedFactory == 'array' ? 'selected' : ''}>Фабрика на основе массива</option>
             <option value="linkedlist" ${selectedFactory == 'linkedlist' ? 'selected' : ''}>Фабрика на основе связного списка</option>
         </select>
-        <button type="submit">Сохранить</button>
-        <button type="button" onclick="document.getElementById('settingsModal').style.display = 'none'; window.location.reload();">
+        <button type="submit" id="submit">Сохранить</button>
+        <button type="button" id="button" onclick="document.getElementById('settingsModal').style.display = 'none'; window.location.reload();">
             Закрыть
         </button>
     </form>
