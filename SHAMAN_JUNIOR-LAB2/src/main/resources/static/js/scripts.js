@@ -314,6 +314,7 @@ function removeFunc(event){
                 }
             } else {
                 closeRemove()
+                window.location.reload();
                 console.log('good')
             }
         })

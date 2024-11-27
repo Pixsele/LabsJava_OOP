@@ -102,6 +102,7 @@
     <button onclick="openFunctionList('operand1')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
     <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
+    <button onclick="openRemove('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null or count1 == 2 }">Удалить точку</button>
 </div>
 
 <h3>Операнд 2</h3>
