@@ -14,11 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/tabulated-function-mathfunc")
 public class TabulatedFunctionMathController {
+
+    private final FunctionRepository functionRepository;
+
+    public TabulatedFunctionMathController(FunctionRepository functionRepository) {
+        this.functionRepository = functionRepository;
+    }
 
     private TabulatedFunctionFactory tableFunctionFactory;
 
@@ -40,7 +48,7 @@ public class TabulatedFunctionMathController {
 
     @GetMapping("/modal")
     public String showModalForm(@RequestParam("redirectTarget") String redirectTarget,
-                                @RequestParam("target") String target, Model model, HttpSession session) {
+                                @RequestParam("target") String target, Model model, HttpSession session) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(session.getAttribute("FACTORY_KEY") != null) {
             tableFunctionFactory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
         }
@@ -50,8 +58,9 @@ public class TabulatedFunctionMathController {
 
         model.addAttribute("factory", tableFunctionFactory.getClass().getSimpleName());
 
+        Map<String ,MathFunction> mapfunc = functionRepository.getFunctionMap();
 
-        model.addAttribute("functionMap",MathFunctionProvider.mathFunctions());
+        model.addAttribute("functionMap",mapfunc);
         model.addAttribute("redirectTarget", redirectTarget);
         model.addAttribute("target", target);
         return "fragments/modalFormMathFunc";
@@ -88,9 +97,9 @@ public class TabulatedFunctionMathController {
                                  @RequestParam("target") String target,
                                  Model model, HttpSession session){
 
-        Map<String, MathFunction> functions = MathFunctionProvider.mathFunctions();
+        MathFunction function = functionRepository.getFunction(functionName);
 
-        TabulatedFunction func = tableFunctionFactory.create(functions.get(functionName),xFrom,xTo,count);
+        TabulatedFunction func = tableFunctionFactory.create(function,xFrom,xTo,count);
         session.setAttribute(target+"Func",func);
         System.out.println(redirectTarget);
 
