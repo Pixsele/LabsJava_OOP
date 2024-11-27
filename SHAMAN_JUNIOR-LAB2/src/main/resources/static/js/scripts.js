@@ -68,6 +68,7 @@ function openFunctionList(target) {
     modalTarget = target;
     document.getElementById('modalFunction').style.display = 'block';
 }
+
 function closeFunctionList() {
     document.getElementById('modalFunction').style.display = 'none';
 }
@@ -232,4 +233,96 @@ function create() {
             console.error('Ошибка при загрузке функции', error);
         });
 
+}
+
+let editTarget = '';
+function openEdit(target){
+    console.log(target);
+    editTarget = target;
+    document.getElementById('modalEdit').style.display = 'block';
+}
+
+function closeEdit(){
+    document.getElementById('modalEdit').style.display = 'none';
+}
+
+function editFunc(event){
+
+
+    event.preventDefault();
+    const x = document.getElementById('xValue').value;
+    const y = document.getElementById('yValue').value;
+
+    console.log(x);
+    console.log(y);
+
+    fetch(`/tabulated-operations/edit?target=${encodeURIComponent(editTarget)}&x=${encodeURIComponent(x)}&y=${encodeURIComponent(y)}`, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+        .then(data => {
+            if (data && data.error) {
+                const errorForm = document.getElementById('errorForm');
+                if (errorForm) {
+                    errorForm.style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                }
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке функции');
+        });
+}
+let removeTarget = '';
+let redirectRemoveTarget = '';
+function openRemove(target,redirectTarget){
+    removeTarget = target;
+    redirectRemoveTarget = redirectTarget;
+    document.getElementById('modalRemove').style.display = 'block';
+}
+
+function removeFunc(event){
+
+    event.preventDefault();
+    const x = document.getElementById('xToRemove').value;
+    console.log(x);
+
+    fetch(`/tabulated-operations/remove?target=${encodeURIComponent(removeTarget)}&x=${encodeURIComponent(x)}&redirectTarget=${encodeURIComponent(redirectRemoveTarget)}`, {
+        method: 'POST'
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.log('prikol')
+                return response.json();
+            }
+            return null;
+        })
+        .then(data => {
+            if (data && data.error) {
+                const errorForm = document.getElementById('errorForm');
+                if (errorForm) {
+                    closeRemove()
+                    errorForm.style.display = 'block';
+                    document.getElementById('errorMessage').textContent = data.error;
+                }
+            } else {
+                closeRemove()
+                console.log('good')
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке функции');
+        });
+
+}
+
+function closeRemove(){
+    document.getElementById('modalRemove').style.display = 'none';
 }

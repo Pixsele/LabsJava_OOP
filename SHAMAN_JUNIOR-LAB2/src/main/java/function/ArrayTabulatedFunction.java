@@ -3,6 +3,7 @@ package function;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import exceptions.RemoveIncorrectPoint;
 import function.api.Insertable;
 import function.api.MathFunction;
 import function.api.Removable;
@@ -225,7 +226,7 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
         }
 
         if(index < 0 || index >= count){
-            throw new IndexOutOfBoundsException("Incorrect index");
+            throw new RemoveIncorrectPoint("Incorrect index");
         }
 
 

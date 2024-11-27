@@ -129,4 +129,14 @@ public class MockTabulatedFunction extends AbstractTabulatedFunction{
             };
     };
     }
+
+    @Override
+    public void insert(double x, double y) {
+        return;
+    }
+
+    @Override
+    public void remove(int index) {
+        return;
+    }
 }

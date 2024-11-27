@@ -5,6 +5,7 @@ import database.models.PointEntity;
 import database.repositories.MathFunctionsRepository;
 import exceptions.ArrayIsNotSortedException;
 import exceptions.LoadFunctionExecption;
+import exceptions.RemoveIncorrectPoint;
 import function.ArrayTabulatedFunction;
 import function.api.TabulatedFunction;
 import function.factory.TabulatedFunctionFactory;
@@ -123,6 +124,10 @@ public class TabulatedOperationsController {
             session.setAttribute("operand2Func", function);
         } else if (Objects.equals(target, "diff")) {
             session.setAttribute("diffFunc", function);
+        }else if(Objects.equals(target, "integral")) {
+            session.setAttribute("integralFunc", function);
+        }else if(Objects.equals(target, "graph")) {
+            session.setAttribute("graphFunc", function);
         }
 
         return "redirect:/"+redirectTarget;
@@ -214,6 +219,41 @@ public class TabulatedOperationsController {
 
             pointService.create(point);
         }
+
+        return "redirect:/tabulated-operations";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@RequestParam("target") String saveTarget, @RequestParam("x") double x, @RequestParam("y") double y, Model model, HttpSession session) {
+
+        System.out.println("Edit " + saveTarget);
+        System.out.println("x: " + x);
+        System.out.println("y: " + y);
+
+        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
+
+        func.insert(x,y);
+
+
+        session.setAttribute(saveTarget+"Func", func);
+        return "redirect:/tabulated-operations";
+    }
+
+    @PostMapping("/remove")
+    public String remove(@RequestParam("target") String saveTarget,
+                         @RequestParam("x") double x,
+                         @RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
+
+        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
+
+        int index = func.indexOfX(x);
+        if(index == -1) {
+            throw new RemoveIncorrectPoint("Incorrect point");
+        }
+
+        model.addAttribute("redirectTarget", redirectTarget);
+        func.remove(index);
+        session.setAttribute(saveTarget+"Func", func);
 
         return "redirect:/tabulated-operations";
     }
