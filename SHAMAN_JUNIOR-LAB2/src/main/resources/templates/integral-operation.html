@@ -45,6 +45,20 @@
             z-index: 1001;
         }
 
+        #modalEdit {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1b40f8;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+            width: 400px; /* Устанавливаем фиксированную ширину */
+            z-index: 1001;
+        }
+
     </style>
 </head>
 <body>
@@ -74,6 +88,7 @@
     <button onclick="openSave('integral')" th:attr="disabled=${integralFunc == null}">Сохранить</button>
     <button onclick="openFunctionList('integral')">Загрузить</button>
     <button onclick="openAnother('integral','integral')">Открыть</button>
+    <button onclick="openEdit('integral','integral')" th:attr="disabled=${integralFunc == null}">Вставить или изменить</button>
 </div>
 <div>
     <form action="/integral/calculate" method="post">
@@ -131,6 +146,19 @@
 <div id="modalAnother" class="modalAnother">
     <div id="modalContentAnother">
     </div>
+</div>
+
+<div id="modalEdit">
+    <div id="modalEditContent">
+        <form onsubmit="editFunc(event)">
+            <label for="xValue">Какую точку изменить:</label>
+            <input type="number" name="xValue" id="xValue" required>
+            <label for="yValue">На что изменить</label>
+            <input type="number" name="yValue" id="yValue" required>
+            <button type="submit">Cохранить</button>
+        </form>
+    </div>
+    <button onclick="closeEdit()">Закрыть</button>
 </div>
 
 <!-- Overlay для всех модальных окон -->

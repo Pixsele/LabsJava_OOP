@@ -123,6 +123,10 @@ public class TabulatedOperationsController {
             session.setAttribute("operand2Func", function);
         } else if (Objects.equals(target, "diff")) {
             session.setAttribute("diffFunc", function);
+        }else if(Objects.equals(target, "integral")) {
+            session.setAttribute("integralFunc", function);
+        }else if(Objects.equals(target, "graph")) {
+            session.setAttribute("graphFunc", function);
         }
 
         return "redirect:/"+redirectTarget;
@@ -215,6 +219,21 @@ public class TabulatedOperationsController {
             pointService.create(point);
         }
 
+        return "redirect:/tabulated-operations";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@RequestParam("target") String saveTarget, @RequestParam("x") double x, @RequestParam("y") double y, Model model, HttpSession session) {
+
+        System.out.println("Edit " + saveTarget);
+        System.out.println("x: " + x);
+        System.out.println("y: " + y);
+
+        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
+
+        func.insert(x,y);
+
+        session.setAttribute(saveTarget+"Func", func);
         return "redirect:/tabulated-operations";
     }
 }

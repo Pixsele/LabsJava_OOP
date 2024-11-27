@@ -72,4 +72,9 @@ public class UnmodifiableTabulatedFunction implements TabulatedFunction {
         return function.iterator();
 
     }
+
+    @Override
+    public void insert(double x, double y) {
+        function.insert(x,y);
+    }
 }

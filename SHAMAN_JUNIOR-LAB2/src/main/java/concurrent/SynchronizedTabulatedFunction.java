@@ -124,5 +124,10 @@ public class SynchronizedTabulatedFunction implements TabulatedFunction {
             return operation.apply(this);
         }
     }
+
+    @Override
+    public void insert(double x, double y) {
+        function.insert(x,y);
+    }
 }
 

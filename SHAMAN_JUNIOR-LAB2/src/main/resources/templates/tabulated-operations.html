@@ -44,6 +44,19 @@
             width: 400px; /* Устанавливаем фиксированную ширину */
             z-index: 1001;
         }
+        #modalEdit {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1b40f8;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+            width: 400px; /* Устанавливаем фиксированную ширину */
+            z-index: 1001;
+        }
 
     </style>
 </head>
@@ -74,6 +87,7 @@
     <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
     <button onclick="openFunctionList('operand1')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
+    <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
 </div>
 
 <h3>Операнд 2</h3>
@@ -102,6 +116,7 @@
     <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
     <button onclick="openFunctionList('operand2')">Загрузить</button>
     <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
+    <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
 </div>
 
 <div>
@@ -189,6 +204,19 @@
 <div id="modalAnother" class="modalAnother">
     <div id="modalContentAnother">
     </div>
+</div>
+
+<div id="modalEdit">
+    <div id="modalEditContent">
+        <form onsubmit="editFunc(event)">
+            <label for="xValue">Какую точку изменить:</label>
+            <input type="number" name="xValue" id="xValue" required>
+            <label for="yValue">На что изменить</label>
+            <input type="number" name="yValue" id="yValue" required>
+            <button type="submit">Cохранить</button>
+        </form>
+    </div>
+    <button onclick="closeEdit()">Закрыть</button>
 </div>
 
 <!-- Overlay для всех модальных окон -->

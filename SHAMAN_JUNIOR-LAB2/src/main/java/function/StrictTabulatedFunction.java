@@ -75,4 +75,9 @@ public class StrictTabulatedFunction implements TabulatedFunction {
     public Iterator<Point> iterator() {
         return function.iterator();
     }
+
+    @Override
+    public void insert(double x, double y) {
+        function.insert(x,y);
+    }
 }
