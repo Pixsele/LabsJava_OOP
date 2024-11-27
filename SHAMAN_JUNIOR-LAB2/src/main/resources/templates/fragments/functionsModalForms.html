@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style>
+      body{
+        font-family: Tahoma, sans-serif;
+      }
+      .modalAnother {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #2e2e2e;
+        border-radius: 30px;
+        padding: 20px;
+        border: 1px solid black;
+        display: none;
+        z-index: 1001;
+        width: 380px;
+        height: 450px;
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1000;
+      }
+
+      #modalSave {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1b40f8;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        z-index: 1001;
+      }
+      #modalEdit {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1b40f8;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        z-index: 1001;
+      }
+
+      #modalRemove {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #2e2e2e;
+        padding: 20px;
+        border: none;
+        border-radius: 25px;
+        width: 400px;
+        z-index: 1001;
+      }
+
+      #modal {
+        display: none;
+        transform: translate(-50%, -50%);
+        background: #2e2e2e;
+        padding: 20px;
+        border: none;
+        border-radius: 25px;
+        width: 400px;
+        height: 230px;
+        z-index: 1001;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+      }
+
+      #closeButtomCreateFunction{
+        text-align: center;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        background-color: #ff66b3;
+        color: white;
+        font-family: Tahoma, sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        border: none;
+        border-radius: 25px;
+        height: 40px;
+        width: 150px;
+      }
+
+      #modalFunction {
+        display: none;
+        transform: translate(-50%, -50%);
+        background: #2e2e2e;
+        padding: 20px;
+        border: none;
+        border-radius: 25px;
+        width: 400px;
+        height: 230px;
+        z-index: 1001;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+      }
+    </style>
+</head>
+<body>
+
+<div id="modalFunction" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+  <div id="modalContentFunction">
+    <h3>Выберите функцию</h3>
+    <table border="1" width="100%">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Имя функции</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="function : ${functions}" class="function-row"
+          th:onclick="|selectFunction(this, '${function.id}', modalTarget)|">
+        <td th:text="${function.getId()}"></td>
+        <td th:text="${function.getName()}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <button id="loadButton" onclick="loadFunction()">Загрузить</button>
+    <button onclick="closeFunctionList()">Закрыть</button>
+  </div>
+</div>
+
+<div id="modal">
+  <div id="modalContent"></div>
+  <button id="closeButtomCreateFunction" type="button" onclick="closeModal()">Закрыть</button>
+</div>
+
+<div id="modalSave">
+  <div id="modalContentSave">
+    <form onsubmit="saveFunction(event)">
+      <label for="funcName">Название функции:</label>
+      <input type="text" name="funcName" id="funcName" required>
+      <button type="submit">Cохранить</button>
+    </form>
+  </div>
+  <button onclick="closeSave()">Закрыть</button>
+</div>
+
+<div id="modalAnother" class="modalAnother">
+  <div id="modalContentAnother">
+  </div>
+</div>
+
+<div id="modalEdit">
+  <div id="modalEditContent">
+    <form onsubmit="editFunc(event)">
+      <label for="xValue">Какую точку изменить:</label>
+      <input type="number" name="xValue" id="xValue" required>
+      <label for="yValue">На что изменить</label>
+      <input type="number" name="yValue" id="yValue" required>
+      <button type="submit">Cохранить</button>
+    </form>
+  </div>
+  <button onclick="closeEdit()">Закрыть</button>
+</div>
+
+<div id="modalRemove">
+  <div id="modalRemoveContent">
+    <form onsubmit="removeFunc(event)">
+      <label for="xToRemove">Какую точку изменить:</label>
+      <input type="number" name="xValue" id="xToRemove" required>
+      <button type="submit">Cохранить</button>
+    </form>
+  </div>
+  <button onclick="closeRemove()">Закрыть</button>
+</div>
+
+<div id="modalOverlay" class="modal-overlay"></div>
+
+<div th:if="${showError}">
+  <div th:replace="fragments/errorForm"></div>
+  <script>
+    document.getElementById('errorForm').style.display = 'block';
+  </script>
+</div>
+
+<div th:replace="fragments/errorForm"></div>
+</body>
+</html>

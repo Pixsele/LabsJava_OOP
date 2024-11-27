@@ -7,19 +7,11 @@
 </head>
 <body>
 
-<form action="/tabulated-function-mathfunc/create" method="post">
-  <div id="form" th:replace="fragments/createFormMathFunc"></div>
-</form>
+
 
 <br>
 <a href="/">Вернуться в главное меню</a>
 
-<div th:if="${showModal}">
-  <div th:replace="fragments/successForm"></div>
-  <script>
-    document.getElementById("successForm").style.display = "block";
-  </script>
-</div>
 
 <div th:if="${showError}">
   <div th:replace="fragments/errorForm"></div>
