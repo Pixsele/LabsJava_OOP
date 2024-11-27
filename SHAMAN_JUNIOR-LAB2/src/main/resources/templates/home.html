@@ -138,6 +138,7 @@
 
         /* Секция "Дифференцирование функции" */
         #differentiate-function {
+            background-color: #f4ffcc;
             padding-left: 40px;
             text-align: left;
             padding-top: 70px;
@@ -239,14 +240,15 @@
 <body>
 <div class="main-container">
     <div class="top-row">
-        <div class="basic-operations" id="basic-operations">Базовые операции <br> над функциями <button>Создать</button></div>
-        <div class="complex-function" id="complex-function">Создание сложной <br> функции <button>Создать</button></div>
-        <div class="plot-graph" id="plot-graph">Построение <br> графика <button>Построить</button></div>
+        <div class="basic-operations" id="basic-operations">Базовые операции <br> над функциями <button onclick="window.location.href='/tabulated-operations'">Создать</button></div>
+        <div class="complex-function" id="complex-function">Создание сложной <br> функции <button onclick="window.location.href='/tabulated-operations'">Создать</button></div>
+        <div class="plot-graph" id="plot-graph">Построение <br> графика <button onclick="window.location.href='/graph'">Построить</button></div>
     </div>
     <div class="bottom-row">
-        <div class="differentiate-function" id="differentiate-function">Дифференцирование <br> функции <button>Открыть</button></div>
-        <div class="calculate-integral" id="compute-integral">Вычислить <br> интеграл <button>Открыть</button></div>
-        <div class="factory-settings" id="factory-settings">Настройки <br> фабрики <button>Изменить</button></div>
+        <div class="differentiate-function" id="differentiate-function" onclick="window.location.href='/differential-operation'">Дифференцирование <br> функции <button>Открыть</button></div>
+        <div class="calculate-integral" id="compute-integral">Вычислить <br> интеграл <button onclick="window.location.href='/integral'">Открыть</button></div>
+        <div class="factory-settings" id="factory-settings">Настройки <br> фабрики <button onclick="document.getElementById('settingsModal').showModal()">Изменить</button>
+        </div>
     </div>
 </div>
 <dialog id="settingsModal">
@@ -260,10 +262,8 @@
         <button type="button" onclick="document.getElementById('settingsModal').style.display = 'none'; window.location.reload();">
             Закрыть
         </button>
-
     </form>
 </dialog>
-<a href="#" onclick="document.getElementById('settingsModal').showModal()">Открыть настройки</a>
 </body>
 </html>
 
