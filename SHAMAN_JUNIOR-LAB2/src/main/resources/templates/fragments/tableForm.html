@@ -3,6 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        #rosa1 table {
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+            border-radius: 15px;
+            font-family: Tahoma, sans-serif;
+            overflow: hidden;
+            border: none;
+            position: relative;
+        }
+
+        #rosa1 th, #rosa1 td {
+            padding: 10px; /* Внутренние отступы */
+            text-align: center; /* Текст по левому краю */
+            border: 1px solid #e0e0e0; /* Светло-серая рамка */
+            background-clip: padding-box;
+        }
+
+        #rosa1 th {
+            background-color: #ff66b3; /* Фон заголовка таблицы — розовый */
+            color: white; /* Белый текст в заголовке */
+            font-weight: bold; /* Жирный текст */
+        }
+
+        #rosa1 tr:nth-child(even) {
+            background-color: #f2f2f2; /* Серый фон для четных строк */
+        }
+
+        #rosa1 tr:nth-child(odd) {
+            background-color: #fff; /* Белый фон для нечетных строк */
+        }
+
+        #rosa1 td:first-child {
+            text-align: center; /* Центровка первой колонки */
+        }
+
+        #rosa1 table tr:hover {
+            background-color: #f9c5f0; /* Слегка розовый цвет при наведении на строку */
+        }
+
+        #rosa1 thead th:first-child {
+            border-top-left-radius: 15px;
+        }
+        #rosa1 thead th:last-child {
+            border-top-right-radius: 15px;
+        }
+        #rosa1 tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 15px;
+        }
+        #rosa1 tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 15px;
+        }
+
+        button {
+            padding-left: 10px;
+            background-color: #ccff66;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            border: none;
+            height: 40px;
+            width: 130px;
+            border-radius: 25px;
+            color: #2e2e2e;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 5px;
+            margin-right: 15px;
+        }
+
+        button:hover {
+            background-color: #c4e65a;
+        }
+
+        button:disabled {
+            background-color: #c5d3a3;
+            cursor: not-allowed;
+        }
+
+        #closeCreateFunction{
+            text-align: center;
+            float: right;
+            margin-top: 5px;
+            margin-right: 12px;
+            margin-bottom: 10px;
+            background-color: #ff66b3;
+            color: white;
+            font-family: Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            border-radius: 25px;
+            height: 40px;
+            width: 130px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -10,8 +107,7 @@
     <form id="createFunctionForm" action="/arrayFunc/createFunction" method="post">
         <input type="hidden" name="target" th:value="${target}" id="targetField">
         <input type="hidden" name="redirectTarget" th:value="${redirectTarget}" id="redirectTargetField">
-        <p th:text="${target}"></p>
-        <table id="tableXYforCreate">
+        <table id="rosa1">
             <tr>
                 <th>X</th>
                 <th>Y</th>
@@ -21,7 +117,9 @@
                 <td><input type="number" name="y" step="0.01"/></td>
             </tr>
         </table>
-        <button type="submit">Создать пупу</button>
+        <button type="submit">Создать</button>
+        <button id="closeCreateFunction" type="button" onclick="closeModal()">Закрыть</button>
+
     </form>
 </div>
 </body>
