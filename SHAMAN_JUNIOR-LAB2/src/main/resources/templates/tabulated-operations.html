@@ -7,107 +7,191 @@
         body {
             font-family: Tahoma, sans-serif;
         }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(1, 1fr);
+            gap: 10px;
+            padding: 10px;
+            font-family: Tahoma, sans-serif;
+        }
+        #operand1Container{
+            background-color: #ffe6f0;
+            border-radius: 25px;
+            padding: 5px;
+            height: 100%;
+            min-height: 94vh;
+            text-align: center;
+        }
+        #operand1Title{
+            font-weight: bold;
+            font-size: 27px;
+            font-family: Tahoma, sans-serif;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+        #operand1Content button{
+            font-family: Tahoma, sans-serif;
+            background-color: #ff66b3;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            width: 55%;
+            height: 45px;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #operand1Content button:hover {
+            background-color: #e45ba0;
+        }
+
+        #operand2Container{
+            background-color: #ffe6f0;
+            border-radius: 25px;
+            padding: 5px;
+            height: 100%;
+            min-height: 94vh;
+            text-align: center;
+        }
+        #operand2Title{
+            font-weight: bold;
+            font-size: 27px;
+            font-family: Tahoma, sans-serif;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+        #operand2Content button{
+            font-family: Tahoma, sans-serif;
+            background-color: #ff66b3;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            width: 55%;
+            height: 45px;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #operand2Content button:hover {
+            background-color: #e45ba0;
+        }
     </style>
 </head>
 <body>
-<h3>Операнд 1</h3>
-<div id="operand1Content">
-    <div th:if="${operand1Func != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="i : ${#numbers.sequence(0, count1 - 1)}">
-                    <td><input type="number" th:value="${function1.getXValues()[i]}" ></td>
-                    <td><input type="number" th:value="${function1.getYValues()[i]}" ></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${operand1Func == null}">
-        <p>Отсутствует функция</p>
-    </div>
-    <button onclick="openModal('operand1','tabulated-operations')">Создать функцию</button>
-    <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
-    <button onclick="openFunctionList('operand1')">Загрузить</button>
-    <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
-    <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
-    <button onclick="openRemove('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null or count1 == 2 }">Удалить точку</button>
-</div>
-
-<h3>Операнд 2</h3>
-<div id="operand2Content">
-    <div th:if="${operand2Func != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, count2 - 1)}">
-                <td><input type="number" th:value="${function2.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${function2.getYValues()[i]}" ></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${operand2Func == null}">
-        <p>Отсутствует функция</p>
-    </div>
-    <button onclick="openModal('operand2')">Создать функцию</button>
-    <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
-    <button onclick="openFunctionList('operand2')">Загрузить</button>
-    <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
-    <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
-    <button onclick="openRemove('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null or count2 == 2 }">Удалить точку</button>
-</div>
-
-<div>
-    <form action="/tabulated-operations/doOperation" method="post">
-        <div class="operation-selector">
-            <label for="operation">Выберите операцию:</label>
-            <select id="operation" name="operation" required>
-                <option value="add">Сложение</option>
-                <option value="subtract">Вычитание</option>
-                <option value="multiply">Умножение</option>
-                <option value="divide">Деление</option>
-            </select>
+<div class="container">
+    <div id="operand1Container">
+        <h3 id="operand1Title">Операнд 1</h3>
+        <div id="operand1Content">
+            <button onclick="openModal('operand1','tabulated-operations')">Создать функцию</button>
+            <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
+            <button onclick="openFunctionList('operand1')">Загрузить</button>
+            <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
+            <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
+            <button onclick="openRemove('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null or count1 == 2 }">Удалить точку</button>
+            <div th:if="${operand1Func != null}">
+                <h4>Таблица функции:</h4>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, count1 - 1)}">
+                        <td><input type="number" th:value="${function1.getXValues()[i]}" ></td>
+                        <td><input type="number" th:value="${function1.getYValues()[i]}" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${operand1Func == null}">
+                <p>Функция отсутствует</p>
+            </div>
         </div>
-        <button type="submit">Выполнить</button>
-    </form>
-</div>
-<!-- Результат сложения -->
-<h3>Результат сложения</h3>
-<div id="resultContent">
-    <div th:if="${resultFunc != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, count3 - 1)}">
-                <td><input type="number" th:value="${resultFunc.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${resultFunc.getYValues()[i]}" ></td>
-            </tr>
-            </tbody>
-        </table>
     </div>
-    <div th:if="${resultFunc == null}">
-        <p>Отсутствует функция</p>
+    <div id="operand2Container">
+        <h3 id="operand2Title">Операнд 2</h3>
+        <div id="operand2Content">
+            <button onclick="openModal('operand2')">Создать функцию</button>
+            <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
+            <button onclick="openFunctionList('operand2')">Загрузить</button>
+            <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
+            <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
+            <button onclick="openRemove('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null or count2 == 2 }">Удалить точку</button>
+            <div th:if="${operand2Func != null}">
+                <h4>Таблица функции:</h4>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, count2 - 1)}">
+                        <td><input type="number" th:value="${function2.getXValues()[i]}" ></td>
+                        <td><input type="number" th:value="${function2.getYValues()[i]}" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${operand2Func == null}">
+                <p>Функция отсутствует</p>
+            </div>
+        </div>
     </div>
-    <button onclick="openSave('result')" th:attr="disabled=${resultFunc == null}">Сохранить</button>
+    <div id="resultContainer">
+        <!-- Результат сложения -->
+        <h3>Результат</h3>
+        <div>
+            <form action="/tabulated-operations/doOperation" method="post">
+                <div class="operation-selector">
+                    <label for="operation">Выберите операцию:</label>
+                    <select id="operation" name="operation" required>
+                        <option value="add">Сложение</option>
+                        <option value="subtract">Вычитание</option>
+                        <option value="multiply">Умножение</option>
+                        <option value="divide">Деление</option>
+                    </select>
+                </div>
+                <button type="submit">Выполнить</button>
+            </form>
+        </div>
+
+        <div id="resultContent">
+            <button onclick="openSave('result')" th:attr="disabled=${resultFunc == null}">Сохранить</button>
+            <div th:if="${resultFunc != null}">
+                <h4>Таблица функции:</h4>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, count3 - 1)}">
+                        <td><input type="number" th:value="${resultFunc.getXValues()[i]}" ></td>
+                        <td><input type="number" th:value="${resultFunc.getYValues()[i]}" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${resultFunc == null}">
+                <p>Отсутствует функция</p>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="fragments/functionsModalForms"></div>
 </body>
