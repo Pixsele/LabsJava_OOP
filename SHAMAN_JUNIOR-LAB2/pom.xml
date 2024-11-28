@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version> <!-- Совместимая версия для Java 8 -->
+        <version>2.7.17</version> <!-- Совместимая версия для Java 8 -->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
