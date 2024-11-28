@@ -139,4 +139,22 @@ class StrictTabulatedFunctionTest {
         assertEquals(strictTabulatedFunction1.getCount(), index1);
         assertEquals(strictTabulatedFunction2.getCount(), index2);
     }
+
+    @Test
+    void testRemoveInsert() {
+        double[] xArray = {1, 2, 4, 10};
+        double[] yArray = {2, 4.0, 9, 20};
+        StrictTabulatedFunction strictTabulatedFunction1 = new StrictTabulatedFunction(new LinkedListTabulatedFunction(xArray, yArray));
+
+        strictTabulatedFunction1.insert(11,12);
+        double[] xrefArray = {1, 2, 4, 10,11};
+        double[] yrefArray = {2, 4.0, 9, 20,12};
+
+        assertArrayEquals(xrefArray,strictTabulatedFunction1.getXValues());
+        assertArrayEquals(yrefArray,strictTabulatedFunction1.getYValues());
+
+        strictTabulatedFunction1.remove(4);
+        assertArrayEquals(xArray,strictTabulatedFunction1.getXValues());
+        assertArrayEquals(yArray,strictTabulatedFunction1.getYValues());
+    }
 }

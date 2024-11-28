@@ -95,6 +95,14 @@ class MockTabulatedFunctionTest {
     }
 
     @Test
+    void testtest(){
+        func.insert(1,2);
+        func.remove(3);
+        func.getXValues();
+        func.getYValues();
+    }
+
+    @Test
     public void testArrayIteratorWithWhile() {
         Iterator<Point> iterator = func.iterator();
         int index = 0;

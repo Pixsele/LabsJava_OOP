@@ -11,5 +11,8 @@ public class ConstantFunctionTest {
     assertEquals(constantFunction.getConstant(), constantFunction.apply(8), 0.001);
     assertEquals(constantFunction.getConstant(), constantFunction.apply(-15), 0.001);
     assertEquals(constantFunction.getConstant(), constantFunction.apply(0), 0.001);
+    ConstantFunction constantFunction2 = new ConstantFunction();
+    assertEquals(constantFunction.getConstant(), constantFunction.apply(8), 0.001);
+
 }
 }
