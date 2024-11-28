@@ -28,7 +28,6 @@ public class SettingsController {
 
         session.setAttribute("FACTORY_KEY", factory);
 
-        System.out.println(session.getAttribute("FACTORY_KEY").getClass().getSimpleName());
         return "home";
     }
 }

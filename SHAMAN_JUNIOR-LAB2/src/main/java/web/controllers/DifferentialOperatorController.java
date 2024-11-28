@@ -65,9 +65,10 @@ public class DifferentialOperatorController {
 
         TabulatedDifferentialOperator service = new TabulatedDifferentialOperator((TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY"));
 
-        TabulatedFunction result = service.derive(func);
-        System.out.println(result);
-        session.setAttribute("resultDiffFunc",result);
+        if(func != null){
+            TabulatedFunction result = service.derive(func);
+            session.setAttribute("resultDiffFunc",result);
+        }
 
         return "redirect:/differential-operation";
     }

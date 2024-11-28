@@ -35,6 +35,11 @@ class SynchronizedTabulatedFunctionTest {
         });
 
         assertEquals(2.0, synchronizedFunction.doSynchronously(f -> f.getY(5)), 0.001);
+
+        synchronizedFunction.insert(1,2);
+        synchronizedFunction.getXValues();
+        synchronizedFunction.getYValues();
+        synchronizedFunction.remove(1);
     }
 
     private TabulatedFunction function;

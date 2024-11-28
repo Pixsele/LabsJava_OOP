@@ -28,18 +28,12 @@ public class CustomExceptionHandler {
         redirectAttributes.addAttribute("showError", true);
         redirectAttributes.addAttribute("redirectTarget", redirectTarget);
         return "redirect:/"+redirectTarget;
-
-//        Map<String, String> response = new HashMap<>();
-//        response.put("error", exception.getMessage());
-//        response.put("showError", "true");
-//        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DifferentLengthOfArraysException.class)
     public String handleDifferentLengthOfArraysException(DifferentLengthOfArraysException exception, Model model, HttpServletRequest request){
 
         String page = "/";
-        //TODO
         if(Objects.equals(request.getRequestURI(), "/tabulated-function-array/create")){
             page = "tabulated-function-array";
         }
@@ -74,5 +68,4 @@ public class CustomExceptionHandler {
         response.put("showError", "true");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
-
 }

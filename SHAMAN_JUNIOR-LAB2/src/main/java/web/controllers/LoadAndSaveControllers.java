@@ -25,7 +25,7 @@ import java.util.List;
 public class LoadAndSaveControllers {
 
     @Autowired
-    private MathFunctionsRepository mathFunctionsRepository;
+    public MathFunctionsRepository mathFunctionsRepository;
 
     private final MathFunctionsService mathFunctionsService;
     private final PointService pointService;

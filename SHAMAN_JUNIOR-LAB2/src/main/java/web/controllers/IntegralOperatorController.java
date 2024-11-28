@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class IntegralOperatorController {
 
     @Autowired
-    private MathFunctionsRepository mathFunctionsRepository;
+    public MathFunctionsRepository mathFunctionsRepository;
 
     @GetMapping
     public String integral(Model model, HttpSession session, @RequestParam(required = false) String showError, @RequestParam(required = false) String errorMessage) {
