@@ -1,4 +1,4 @@
-package web.controllers;
+package web.core;
 
 import function.api.MathFunction;
 

@@ -1,6 +1,6 @@
 function openModal(target,redirectTarget) {
     document.getElementById("modalOverlay").style.display = 'block';
-    fetch(`/tabulated-operations/createForm?target=${target}&redirectTarget=${redirectTarget}`)
+    fetch(`/arrayFunc/createForm?target=${target}&redirectTarget=${redirectTarget}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Ошибка загрузки модального окна');
@@ -29,7 +29,7 @@ function submitForm(event) {
     event.preventDefault();
     const formData = new FormData(form);
 
-    const url = `/tabulated-operations/generateTable`;
+    const url = `/arrayFunc/generateTable`;
 
     fetch(url, {
         method: 'POST',
@@ -92,7 +92,7 @@ function loadFunction() {
         return;
     }
 
-    const url = `/tabulated-operations/load?target=${encodeURIComponent(modalTarget)}&id=${encodeURIComponent(selectFunctionId)}`;
+    const url = `/memory/load?target=${encodeURIComponent(modalTarget)}&id=${encodeURIComponent(selectFunctionId)}`;
 
     fetch(url, { method: 'POST' })
         .then(response => {
@@ -137,7 +137,7 @@ function saveFunction(event) {
     event.preventDefault();
     const funcName = document.getElementById('funcName').value;
 
-    fetch(`/tabulated-operations/save?target=${encodeURIComponent(saveTarget)}&funcName=${encodeURIComponent(funcName)}`, {
+    fetch(`/memory/save?target=${encodeURIComponent(saveTarget)}&funcName=${encodeURIComponent(funcName)}`, {
         method: 'POST'
     })
     window.location.reload();
@@ -253,7 +253,7 @@ function editFunc(event){
     console.log(x);
     console.log(y);
 
-    fetch(`/tabulated-operations/edit?target=${encodeURIComponent(editTarget)}&x=${encodeURIComponent(x)}&y=${encodeURIComponent(y)}`, {
+    fetch(`/editing/edit?target=${encodeURIComponent(editTarget)}&x=${encodeURIComponent(x)}&y=${encodeURIComponent(y)}`, {
         method: 'POST'
     })
         .then(response => {
@@ -292,7 +292,7 @@ function removeFunc(event){
     const x = document.getElementById('xToRemove').value;
     console.log(x);
 
-    fetch(`/tabulated-operations/remove?target=${encodeURIComponent(removeTarget)}&x=${encodeURIComponent(x)}&redirectTarget=${encodeURIComponent(redirectRemoveTarget)}`, {
+    fetch(`/editing/remove?target=${encodeURIComponent(removeTarget)}&x=${encodeURIComponent(x)}&redirectTarget=${encodeURIComponent(redirectRemoveTarget)}`, {
         method: 'POST'
     })
         .then(response => {

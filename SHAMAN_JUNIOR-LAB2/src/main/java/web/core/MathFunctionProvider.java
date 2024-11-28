@@ -1,4 +1,4 @@
-package web.controllers;
+package web.core;
 
 import function.ConstantFunction;
 import function.FunctionInfo;
@@ -28,10 +28,8 @@ public class MathFunctionProvider {
         List<AnnotatedFunctions> functions = new ArrayList<>();
 
         try {
-            // Находим классы в указанном пакете (нужна библиотека, например, Reflections)
             Reflections reflections = new Reflections(packageName);
 
-            // Получаем все классы с аннотацией FunctionInfo
             Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(FunctionInfo.class);
 
             for (Class<?> clazz : annotatedClasses) {

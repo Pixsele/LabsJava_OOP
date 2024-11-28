@@ -27,10 +27,8 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements
 
     // Конструктор с массивами xValues и yValues
     @JsonCreator
-    public ArrayTabulatedFunction(@JsonProperty(value = "xValues") double[] xValues, @JsonProperty(value = "yValues") double[] yValues) {
-        // Проверка на одинаковую длину массивов
+    public ArrayTabulatedFunction(@JsonProperty(value = "xvalues") double[] xValues, @JsonProperty(value = "yvalues") double[] yValues) {
         checkLengthIsTheSame(xValues, yValues);
-        // Проверка на отсортированность массива xValues
         checkSorted(xValues);
 
         if(xValues.length < 2 || yValues.length < 2){

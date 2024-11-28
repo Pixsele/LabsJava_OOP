@@ -35,17 +35,11 @@ public class TabulatedOperationsController {
     @Autowired
     private MathFunctionsRepository mathFunctionsRepository;
 
-    private final MathFunctionsService mathFunctionsService;
-    private final PointService pointService;
-
-    @Autowired
-    public TabulatedOperationsController(MathFunctionsService mathFunctionsService, PointService pointService) {
-        this.mathFunctionsService = mathFunctionsService;
-        this.pointService = pointService;
-    }
 
     @GetMapping
-    public String showForm(Model model, HttpSession session, @RequestParam(required = false) boolean showError,@RequestParam(required = false) String errorMessage,
+    public String showForm(Model model, HttpSession session,
+                           @RequestParam(required = false) boolean showError,
+                           @RequestParam(required = false) String errorMessage,
                            @RequestParam(required = false) String redirectTarget) {
         System.out.println(showError);
         if(showError) {
@@ -90,60 +84,6 @@ public class TabulatedOperationsController {
         return "tabulated-operations";
     }
 
-    @GetMapping("/createForm")
-    public String createForm(@RequestParam String target, @RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
-        model.addAttribute("target", target);
-        model.addAttribute("redirectTarget", redirectTarget);
-        model.addAttribute("factory", session.getAttribute("FACTORY_KEY").getClass().getSimpleName());
-        return "fragments/createForm"; // Форма для создания функции
-    }
-
-    @PostMapping("/generateTable")
-    public String generateTable(@RequestParam int points, @RequestParam String target, @RequestParam("redirectTarget") String redirectTarget, Model model) {
-        model.addAttribute("points", points);
-        model.addAttribute("target", target);
-        model.addAttribute("redirectTarget", redirectTarget);
-        //TODO
-        System.out.println("Generating table");
-        System.out.println(redirectTarget);
-
-        return "fragments/tableForm"; // Форма с таблицей
-    }
-
-    @PostMapping("/createFunction")
-    public String createFunction(@RequestParam String target, @RequestParam("redirectTarget") String redirectTarget,@RequestParam double[] x,@RequestParam double[] y, Model model, HttpSession session) {
-
-        TabulatedFunctionFactory factory = (TabulatedFunctionFactory) session.getAttribute("FACTORY_KEY");
-
-        TabulatedFunction function = factory.create(x, y);
-
-        model.addAttribute("function", function);
-        double [] popa = function.getXValues();
-        double [] popa2 = function.getYValues();
-        System.out.println(function.getYValues());
-        System.out.println(function.getXValues()[0]);
-        System.out.println(function.getYValues()[0]);
-        System.out.println(function.getXValues()[1]);
-        System.out.println(function.getYValues()[1]);
-        System.out.println(function.getXValues()[2]);
-        System.out.println(function.getYValues()[2]);
-
-        if (Objects.equals(target, "operand1")) {
-            session.setAttribute("operand1Func", function);
-        } else if (Objects.equals(target, "operand2")) {
-            session.setAttribute("operand2Func", function);
-        } else if (Objects.equals(target, "diff")) {
-            session.setAttribute("diffFunc", function);
-        }else if(Objects.equals(target, "integral")) {
-            session.setAttribute("integralFunc", function);
-        }else if(Objects.equals(target, "graph")) {
-            session.setAttribute("graphFunc", function);
-        }
-
-        return "redirect:/"+redirectTarget;
-
-    }
-
     @PostMapping("/doOperation")
     public String doOperation(@RequestParam String operation, Model model, HttpSession session) {
 
@@ -170,101 +110,6 @@ public class TabulatedOperationsController {
         }
 
         session.setAttribute("resultFunc", result);
-        return "redirect:/tabulated-operations";
-    }
-
-    @PostMapping("/load")
-    public String load(@RequestParam("target") String target, @RequestParam("id") Long id, Model model, HttpSession session) {
-        System.out.println("Loading " + target);
-
-        System.out.println(target);
-
-        MathFunctionsEntity loadFunc = mathFunctionsRepository.findById(id).orElse(null);
-
-        List<PointEntity> list = loadFunc.getPoints();
-        if(list.size() >= 2){
-            double[] x = new double[list.size()];
-            double[] y = new double[list.size()];
-
-            int i = 0;
-            for(PointEntity point : list) {
-                System.out.println(point.getId());
-                x[i] = point.getX();
-                System.out.println(point.getX());
-                y[i] = point.getY();
-                System.out.println(point.getY());
-                i++;
-            }
-
-            TabulatedFunction result = new ArrayTabulatedFunction(x,y);
-            session.setAttribute(target+"Func", result);
-            return "redirect:/tabulated-operations";
-        }else{
-            throw new LoadFunctionExecption("Function have < 2 points");
-        }
-    }
-
-
-    @PostMapping("/save")
-    public String save(@RequestParam("target") String saveTarget, @RequestParam("funcName") String funcName, Model model, HttpSession session) {
-
-        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
-        if(func == null) {
-            throw new IllegalArgumentException("Function is empty");
-        }
-
-        MathFunctionsDTO dto = new MathFunctionsDTO();
-        dto.setName(funcName);
-        dto.setxTo(func.rightBound());
-        dto.setxFrom(func.leftBound());
-        dto.setCount(func.getCount());
-
-        Long idResult = mathFunctionsService.create(dto).getId();
-
-        for(int i = 0; i < func.getCount(); i++) {
-            PointDTO point = new PointDTO();
-            point.setFunction(idResult);
-            point.setX(func.getX(i));
-            point.setY(func.getY(i));
-
-            pointService.create(point);
-        }
-
-        return "redirect:/tabulated-operations";
-    }
-
-    @PostMapping("/edit")
-    public String edit(@RequestParam("target") String saveTarget, @RequestParam("x") double x, @RequestParam("y") double y, Model model, HttpSession session) {
-
-        System.out.println("Edit " + saveTarget);
-        System.out.println("x: " + x);
-        System.out.println("y: " + y);
-
-        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
-
-        func.insert(x,y);
-
-
-        session.setAttribute(saveTarget+"Func", func);
-        return "redirect:/tabulated-operations";
-    }
-
-    @PostMapping("/remove")
-    public String remove(@RequestParam("target") String saveTarget,
-                         @RequestParam("x") double x,
-                         @RequestParam("redirectTarget") String redirectTarget, Model model, HttpSession session) {
-
-        TabulatedFunction func = (TabulatedFunction) session.getAttribute(saveTarget+"Func");
-
-        int index = func.indexOfX(x);
-        if(index == -1) {
-            throw new RemoveIncorrectPoint("Incorrect point");
-        }
-
-        model.addAttribute("redirectTarget", redirectTarget);
-        func.remove(index);
-        session.setAttribute(saveTarget+"Func", func);
-
         return "redirect:/tabulated-operations";
     }
 }
