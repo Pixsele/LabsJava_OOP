@@ -147,6 +147,7 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
         Node currentNode = head;
         for(int i = 0;i<count;i++){
             yValues[i] = currentNode.y;
+            currentNode = currentNode.next;
         }
         return yValues;
     }
