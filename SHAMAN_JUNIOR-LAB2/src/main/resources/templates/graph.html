@@ -38,7 +38,16 @@
 
 </div>
 <div>
-    <form
+    <form action="/graph/apply" method="post">
+        <input type="number" id="xToApply" name="xToApply" required>
+        <button type="submit" th:attr="disabled=${graphFunc == null}">Выполнить</button>
+    </form>
+</div>
+<div th:if="${graphResult != null}">
+    <p th:text="${graphResult}"></p>
+</div>
+<div th:if="${graphResult == null}">
+    <p>Нет результата</p>
 </div>
 <div id="functionGraphContainer">
     <canvas id="functionGraph"></canvas>

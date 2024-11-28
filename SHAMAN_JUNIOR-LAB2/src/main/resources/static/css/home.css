@@ -10,7 +10,7 @@
     display: grid;
     grid-template-columns: 35% 35% 30%; /* Соотношение ширины столбцов */
     gap: 8px;
-    grid-template-rows: 345px;
+    grid-template-rows: 47vh;
 }
 
 /* Нижняя строка */
@@ -18,7 +18,7 @@
     display: grid;
     grid-template-columns: 40% 30% 30%; /* Другое соотношение ширины столбцов */
     gap: 8px;
-    grid-template-rows: 345px;
+    grid-template-rows: 47vh;
 }
 
 /* Общие стили для ячеек */
