@@ -92,9 +92,10 @@
 
       #closeButtomCreateFunction{
         text-align: center;
-        position: absolute;
-        right: 23px;
-        bottom: 22px;
+        float: right;
+        margin-top: 5px;
+        margin-right: 1px;
+        margin-bottom: 10px;
         background-color: #ff66b3;
         color: white;
         font-family: Tahoma, sans-serif;
@@ -116,25 +117,113 @@
         display: none;
         transform: translate(-50%, -50%);
         background: #2e2e2e;
-        padding: 20px;
         border: none;
         border-radius: 25px;
+        padding: 15px 25px;
         width: 400px;
-        height: 230px;
+        min-height: 230px;
+        max-height: 1500px;
         z-index: 1001;
         position: fixed;
         top: 50%;
         left: 50%;
       }
+
+      #modalContentFunction{
+        color: #ccff66;
+        font-size: 17px;
+      }
+
+      #grinch table {
+        width: 55%; /* Занимает всю ширину родительского контейнера */
+        border-spacing: 0; /* Убирает двойные линии между ячейками */
+        font-family: Tahoma, sans-serif;
+        margin: 0;
+        overflow: hidden;
+        border: none;
+      }
+
+      #grinch th, #grinch td {
+        padding: 10px; /* Внутренние отступы */
+        text-align: center; /* Текст по левому краю */
+        border: 1px solid #e0e0e0; /* Светло-серая рамка */
+      }
+
+      #grinch th {
+        background-color: #ccff66; /* Фон заголовка таблицы — розовый */
+        color: #2e2e2e; /* Белый текст в заголовке */
+        font-weight: bold; /* Жирный текст */
+      }
+
+      #grinch tr:nth-child(even) {
+        background-color: #f2f2f2; /* Серый фон для четных строк */
+      }
+
+      #grinch tr:nth-child(odd) {
+        background-color: #fff; /* Белый фон для нечетных строк */
+      }
+
+      #grinch td:first-child {
+        text-align: center; /* Центровка первой колонки */
+      }
+
+      #grinch table tr:hover {
+        background-color: #dbfb96; /* Слегка розовый цвет при наведении на строку */
+      }
+
+      #grinch thead th:first-child {
+        border-top-left-radius: 25px; /* Левый верхний угол */
+      }
+      #grinch thead th:last-child {
+        border-top-right-radius: 25px; /* Правый верхний угол */
+      }
+      #grinch tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 25px; /* Левый нижний угол */
+      }
+      #grinch tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 25px; /* Правый нижний угол */
+      }
+
+      #loadButton{
+        background-color: #ccff66;
+        color: #2e2e2e;
+        border: none;
+        border-radius: 25px;
+        width: 130px;
+        height: 40px;
+        text-align: center;
+        margin-bottom: 15px;
+        margin-top: 10px;
+        float: left;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+        font-weight: bold;
+      }
+
+      #closeclose{
+        background-color: #ff66b3;
+        color: #ffffff;
+        border: none;
+        border-radius: 25px;
+        width: 130px;
+        height: 40px;
+        text-align: center;
+        margin-bottom: 15px;
+        margin-top: 10px;
+        float: right;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+        font-weight: bold;
+      }
     </style>
 </head>
 <body>
 
-<div id="modalFunction" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+<div id="modalFunction">
   <div id="modalContentFunction">
     <h3>Выберите функцию</h3>
     <table border="1" width="100%">
-      <thead>
+      <thead id="grinch">
       <tr>
         <th>ID</th>
         <th>Имя функции</th>
@@ -149,13 +238,12 @@
       </tbody>
     </table>
     <button id="loadButton" onclick="loadFunction()">Загрузить</button>
-    <button onclick="closeFunctionList()">Закрыть</button>
+    <button id="closeclose" onclick="closeFunctionList()">Закрыть</button>
   </div>
 </div>
 
 <div id="modal">
   <div id="modalContent"></div>
-  <button id="closeButtomCreateFunction" type="button" onclick="closeModal()">Закрыть</button>
 </div>
 
 <div id="modalSave">

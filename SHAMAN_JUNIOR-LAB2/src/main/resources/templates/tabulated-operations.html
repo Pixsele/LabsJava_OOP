@@ -217,41 +217,105 @@
             border-color: #aaa;
         }
 
-        table {
+        #rosa table {
             width: 55%; /* Занимает всю ширину родительского контейнера */
-            border-collapse: collapse; /* Убирает двойные линии между ячейками */
+            border-spacing: 0; /* Убирает двойные линии между ячейками */
             font-family: Tahoma, sans-serif;
             margin: 0 auto;
+            overflow: hidden;
+            border: none;
         }
 
-        th, td {
+        #rosa th, td {
             padding: 10px; /* Внутренние отступы */
             text-align: center; /* Текст по левому краю */
             border: 1px solid #e0e0e0; /* Светло-серая рамка */
         }
 
-        th {
+        #rosa th {
             background-color: #ff66b3; /* Фон заголовка таблицы — розовый */
             color: white; /* Белый текст в заголовке */
             font-weight: bold; /* Жирный текст */
         }
 
-        tr:nth-child(even) {
+        #rosa tr:nth-child(even) {
             background-color: #f2f2f2; /* Серый фон для четных строк */
         }
 
-        tr:nth-child(odd) {
+        #rosa tr:nth-child(odd) {
             background-color: #fff; /* Белый фон для нечетных строк */
         }
 
-        td:first-child {
+        #rosa td:first-child {
             text-align: center; /* Центровка первой колонки */
         }
 
-        table tr:hover {
+        #rosa table tr:hover {
             background-color: #f9c5f0; /* Слегка розовый цвет при наведении на строку */
         }
 
+        #rosa thead th:first-child {
+            border-top-left-radius: 25px; /* Левый верхний угол */
+        }
+        #rosa thead th:last-child {
+            border-top-right-radius: 25px; /* Правый верхний угол */
+        }
+        #rosa tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 25px; /* Левый нижний угол */
+        }
+        #rosa tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 25px; /* Правый нижний угол */
+        }
+
+        #ora table {
+            width: 55%; /* Занимает всю ширину родительского контейнера */
+            border-spacing: 0; /* Убирает двойные линии между ячейками */
+            font-family: Tahoma, sans-serif;
+            margin: 0 auto;
+            overflow: hidden;
+            border: none;
+        }
+
+        #ora th, td {
+            padding: 10px; /* Внутренние отступы */
+            text-align: center; /* Текст по левому краю */
+            border: 1px solid #e0e0e0; /* Светло-серая рамка */
+        }
+
+        #ora th {
+            background-color: #ff9933; /* Фон заголовка таблицы — розовый */
+            color: white; /* Белый текст в заголовке */
+            font-weight: bold; /* Жирный текст */
+        }
+
+        #ora tr:nth-child(even) {
+            background-color: #f2f2f2; /* Серый фон для четных строк */
+        }
+
+        #ora tr:nth-child(odd) {
+            background-color: #fff; /* Белый фон для нечетных строк */
+        }
+
+        #ora td:first-child {
+            text-align: center; /* Центровка первой колонки */
+        }
+
+        #ora table tr:hover {
+            background-color: #ffcc7f; /* Слегка розовый цвет при наведении на строку */
+        }
+
+        #ora thead th:first-child {
+            border-top-left-radius: 25px; /* Левый верхний угол */
+        }
+        #ora thead th:last-child {
+            border-top-right-radius: 25px; /* Правый верхний угол */
+        }
+        #ora tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 25px; /* Левый нижний угол */
+        }
+        #ora tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 25px; /* Правый нижний угол */
+        }
     </style>
 </head>
 <body>
@@ -265,7 +329,7 @@
             <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
             <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
             <button onclick="openRemove('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null or count1 == 2 }">Удалить точку</button>
-            <div th:if="${operand1Func != null}">
+            <div th:if="${operand1Func != null}" id="rosa">
                 <h4>Таблица функции:</h4>
                 <table border="1">
                     <thead>
@@ -296,7 +360,7 @@
             <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
             <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
             <button onclick="openRemove('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null or count2 == 2 }">Удалить точку</button>
-            <div th:if="${operand2Func != null}">
+            <div th:if="${operand2Func != null}" id="rosa">
                 <h4>Таблица функции:</h4>
                 <table border="1">
                     <thead>
@@ -338,7 +402,7 @@
 
         <div id="resultContent">
             <button onclick="openSave('result')" th:attr="disabled=${resultFunc == null}">Сохранить</button>
-            <div th:if="${resultFunc != null}">
+            <div th:if="${resultFunc != null}" id="ora">
                 <h4>Таблица функции:</h4>
                 <table border="1">
                     <thead>
