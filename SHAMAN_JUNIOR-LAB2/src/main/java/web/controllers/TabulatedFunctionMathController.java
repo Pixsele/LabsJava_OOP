@@ -21,13 +21,13 @@ import java.util.Map;
 @RequestMapping("/tabulated-function-mathfunc")
 public class TabulatedFunctionMathController {
 
-    private final FunctionRepository functionRepository;
+    public FunctionRepository functionRepository;
 
     public TabulatedFunctionMathController(FunctionRepository functionRepository) {
         this.functionRepository = functionRepository;
     }
 
-    private TabulatedFunctionFactory tableFunctionFactory;
+    public TabulatedFunctionFactory tableFunctionFactory;
 
     @GetMapping("/modal")
     public String showModalForm(@RequestParam("redirectTarget") String redirectTarget,
@@ -62,7 +62,6 @@ public class TabulatedFunctionMathController {
 
         TabulatedFunction func = tableFunctionFactory.create(function,xFrom,xTo,count);
         session.setAttribute(target+"Func",func);
-        System.out.println(redirectTarget);
 
         return "redirect:/"+redirectTarget;
     }

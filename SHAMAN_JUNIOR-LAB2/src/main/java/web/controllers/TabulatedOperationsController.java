@@ -33,8 +33,7 @@ import java.util.Objects;
 public class TabulatedOperationsController {
 
     @Autowired
-    private MathFunctionsRepository mathFunctionsRepository;
-
+    public MathFunctionsRepository mathFunctionsRepository;
 
     @GetMapping
     public String showForm(Model model, HttpSession session,
