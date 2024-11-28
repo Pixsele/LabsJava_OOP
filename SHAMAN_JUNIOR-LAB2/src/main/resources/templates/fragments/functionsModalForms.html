@@ -166,26 +166,37 @@
       <button type="submit">Cохранить</button>
     </form>
 
-    <button id="saveBtn">Сохранить файл</button>
+    <!-- Кнопка для открытия диалога выбора файла -->
+    <input type="file" id="fileInput" />
+    <button id="uploadBtn">Загрузить файл</button>
 
     <script>
-      // Функция для создания и скачивания файла
-      document.getElementById('saveBtn').addEventListener('click', function() {
-        // Данные для файла
-        const fileContent = 'Это текст файла, который будет сохранен.';
-        const blob = new Blob([fileContent], { type: 'text/plain' });
+      // Слушаем клик по кнопке и отправляем файл на сервер
+      document.getElementById('uploadBtn').addEventListener('click', function() {
+        // Получаем выбранный файл
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];  // Берем первый выбранный файл
 
-        // Создаем ссылку для скачивания
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'example.txt';  // Указываем имя файла, который будет сохранен
+        if (file) {
+          // Создаем объект FormData, чтобы отправить файл на сервер
+          const formData = new FormData();
+          formData.append('file', file);
 
-        // Программно кликаем по ссылке, чтобы инициировать скачивание
-        a.click();
-
-        // Освобождаем объект URL после использования
-        URL.revokeObjectURL(url);
+          // Отправляем файл на сервер
+          fetch('/functions/save', {
+            method: 'POST',
+            body: formData
+          })
+                  .then(response => response.json())
+                  .then(data => {
+                    alert('Файл загружен успешно!');
+                  })
+                  .catch(error => {
+                    alert('Ошибка загрузки файла: ' + error);
+                  });
+        } else {
+          alert('Пожалуйста, выберите файл для загрузки.');
+        }
       });
     </script>
 

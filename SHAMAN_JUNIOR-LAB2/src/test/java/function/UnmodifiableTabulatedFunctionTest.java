@@ -169,4 +169,17 @@ class UnmodifiableTabulatedFunctionTest {
 
         assertEquals(function.getCount(), index);
     }
+
+    @Test
+    void testRemoveInsert() {
+        double[] xArray = {1, 2, 4, 10};
+        double[] yArray = {2, 4.0, 9, 20};
+        UnmodifiableTabulatedFunction unmodifiableTabulatedFunction= new UnmodifiableTabulatedFunction(new LinkedListTabulatedFunction(xArray, yArray));
+
+        assertArrayEquals(xArray,unmodifiableTabulatedFunction.getXValues());
+        assertArrayEquals(yArray,unmodifiableTabulatedFunction.getYValues());
+
+        unmodifiableTabulatedFunction.insert(1,2);
+        unmodifiableTabulatedFunction.remove(2);
+    }
 }

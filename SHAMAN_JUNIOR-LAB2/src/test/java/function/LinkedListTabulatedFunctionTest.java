@@ -53,6 +53,14 @@ class LinkedListTabulatedFunctionTest {
     }
 
     @Test
+    public void testGetXValues() {
+
+
+        assertArrayEquals(xVal, list.getXValues());
+        assertArrayEquals(yVal, list.getYValues());
+    }
+
+    @Test
     void testConstructorArraysWithDuplicates(){
 
         double[] xArray = {1.0, 2.0, 1.0, 3.0};
