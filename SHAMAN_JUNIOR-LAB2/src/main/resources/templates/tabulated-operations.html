@@ -216,6 +216,42 @@
             color: #ededed;
             border-color: #aaa;
         }
+
+        table {
+            width: 55%; /* Занимает всю ширину родительского контейнера */
+            border-collapse: collapse; /* Убирает двойные линии между ячейками */
+            font-family: Tahoma, sans-serif;
+            margin: 0 auto;
+        }
+
+        th, td {
+            padding: 10px; /* Внутренние отступы */
+            text-align: center; /* Текст по левому краю */
+            border: 1px solid #e0e0e0; /* Светло-серая рамка */
+        }
+
+        th {
+            background-color: #ff66b3; /* Фон заголовка таблицы — розовый */
+            color: white; /* Белый текст в заголовке */
+            font-weight: bold; /* Жирный текст */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Серый фон для четных строк */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #fff; /* Белый фон для нечетных строк */
+        }
+
+        td:first-child {
+            text-align: center; /* Центровка первой колонки */
+        }
+
+        table tr:hover {
+            background-color: #f9c5f0; /* Слегка розовый цвет при наведении на строку */
+        }
+
     </style>
 </head>
 <body>
