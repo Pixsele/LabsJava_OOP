@@ -84,6 +84,21 @@
         #operand2Content button:hover {
             background-color: #e45ba0;
         }
+
+        button[disabled] {
+            background-color: #cf8cb0; /* Серый фон для заблокированной кнопки */
+            color: #ededed; /* Тусклый цвет текста */
+            cursor: not-allowed; /* Указатель меняется на запрещающий значок */
+            opacity: 0.6; /* Прозрачность для эффекта */
+            border: none; /* Серый цвет рамки */
+        }
+
+        button[disabled]:hover {
+            background-color: #cf8cb0;
+            color: #ededed;
+            border-color: #aaa;
+        }
+
     </style>
 </head>
 <body>
