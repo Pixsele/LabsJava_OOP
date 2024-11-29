@@ -38,12 +38,22 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: #1b40f8;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 400px;
+        background: #2e2e2e;
+        /*padding: 20px;*/
+        border: none;
+        border-radius: 25px;
+        width: 360px;
+        height: 170px;
+        font-family: Tahoma, sans-serif;
+        color: #ccff66;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        padding-top: 35px;
+        padding-left: 20px;
+        padding-right: 20px;
         z-index: 1001;
+        align-items: center;
       }
       #modalEdit {
         display: none;
@@ -51,12 +61,144 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: #1b40f8;
-        padding: 20px;
-        border: 1px solid #ccc;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 400px;
+        background: #2e2e2e;
+        /*padding: 20px;*/
+        border: none;
+        border-radius: 25px;
+        font-family: Tahoma, sans-serif;
+        color: #ccff66;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        padding-top: 35px;
+        padding-left: 20px;
+        padding-right: 20px;
+        align-items: center;
+        width: 360px;
+        height: 230px;
         z-index: 1001;
+      }
+
+      #funcName{
+        width: 70%;
+        height: 40px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-radius: 25px;
+        border: none;
+        padding-left: 20px;
+        background-color: #f4ffcc;
+        color: #6c6c6c;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+      }
+      #modalContentSave button{
+          width: 33%; /* Задайте ширину кнопки */
+          height: 40px;
+          border: none;
+          border-radius: 25px;
+          background-color: #ccff66;
+          color: #2e2e2e;
+          font-family: Tahoma, sans-serif;
+          font-size: 15px;
+          margin-bottom: 10px;
+          font-weight: bold;
+          text-align: center;
+          margin-left: 41px;
+          float: left;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      #modalContentSave button:hover {
+          background-color: #c4e65a;
+      }
+
+      #clooose{
+        width: 33%; /* Задайте ширину кнопки */
+        height: 40px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ff66b3;
+        color: white;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #clooose:hover {
+        background-color: #d15c98;
+      }
+
+      #xValue{
+        width: 70%;
+        height: 40px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-radius: 25px;
+        border: none;
+        padding-left: 20px;
+        background-color: #f4ffcc;
+        color: #6c6c6c;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+      }
+
+      #yValue{
+        width: 70%;
+        height: 40px;
+        margin-bottom: 15px;
+        border-radius: 25px;
+        border: none;
+        padding-left: 20px;
+        background-color: #f4ffcc;
+        color: #6c6c6c;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+      }
+
+      #modalEditContent button{
+        width: 33%; /* Задайте ширину кнопки */
+        height: 40px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ccff66;
+        color: #2e2e2e;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 41px;
+        float: left;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #modalEditContent button:hover {
+        background-color: #c4e65a;
+      }
+
+      #closeEdit{
+        width: 33%; /* Задайте ширину кнопки */
+        height: 40px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ff66b3;
+        color: white;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #closeEdit:hover {
+        background-color: #c15188;
       }
 
       #modalRemove {
@@ -66,11 +208,76 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background: #2e2e2e;
-        padding: 20px;
+        /*padding: 20px;*/
         border: none;
         border-radius: 25px;
-        width: 400px;
+        width: 360px;
+        height: 170px;
+        font-family: Tahoma, sans-serif;
+        color: #ccff66;
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+        padding-top: 35px;
+        padding-left: 20px;
+        padding-right: 20px;
         z-index: 1001;
+        align-items: center;
+      }
+
+      #xToRemove{
+        width: 70%;
+        height: 40px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        border-radius: 25px;
+        border: none;
+        padding-left: 20px;
+        background-color: #f4ffcc;
+        color: #6c6c6c;
+        font-size: 15px;
+        font-family: Tahoma, sans-serif;
+      }
+
+      #modalRemoveContent button{
+        width: 33%; /* Задайте ширину кнопки */
+        height: 40px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ccff66;
+        color: #2e2e2e;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center;
+        margin-left: 41px;
+        float: left;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #modalRemoveContent button:hover {
+        background-color: #c4e65a;
+      }
+
+      #ccclose{
+        width: 33%; /* Задайте ширину кнопки */
+        height: 40px;
+        border: none;
+        border-radius: 25px;
+        background-color: #ff66b3;
+        color: white;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #closeEdit:hover {
+        background-color: #c15188;
       }
 
       #modal {
@@ -198,6 +405,12 @@
         font-size: 15px;
         font-family: Tahoma, sans-serif;
         font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #loadButton:hover {
+        background-color: #c4e65a;
       }
 
       #closeclose{
@@ -214,6 +427,12 @@
         font-size: 15px;
         font-family: Tahoma, sans-serif;
         font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      #closeclose:hover {
+        background-color: #e45ba0;
       }
     </style>
 </head>
@@ -249,47 +468,12 @@
 <div id="modalSave">
   <div id="modalContentSave">
     <form onsubmit="saveFunction(event)">
-      <label for="funcName">Название функции:</label>
-      <input type="text" name="funcName" id="funcName" required>
+      <label for="funcName">Сохранение функции</label>
+      <input type="text" name="funcName" placeholder="Введите название" id="funcName" required>
       <button type="submit">Cохранить</button>
     </form>
-
-    <!-- Кнопка для открытия диалога выбора файла -->
-    <input type="file" id="fileInput" />
-    <button id="uploadBtn">Загрузить файл</button>
-
-    <script>
-      // Слушаем клик по кнопке и отправляем файл на сервер
-      document.getElementById('uploadBtn').addEventListener('click', function() {
-        // Получаем выбранный файл
-        const fileInput = document.getElementById('fileInput');
-        const file = fileInput.files[0];  // Берем первый выбранный файл
-
-        if (file) {
-          // Создаем объект FormData, чтобы отправить файл на сервер
-          const formData = new FormData();
-          formData.append('file', file);
-
-          // Отправляем файл на сервер
-          fetch('/functions/save', {
-            method: 'POST',
-            body: formData
-          })
-                  .then(response => response.json())
-                  .then(data => {
-                    alert('Файл загружен успешно!');
-                  })
-                  .catch(error => {
-                    alert('Ошибка загрузки файла: ' + error);
-                  });
-        } else {
-          alert('Пожалуйста, выберите файл для загрузки.');
-        }
-      });
-    </script>
-
   </div>
-  <button onclick="closeSave()">Закрыть</button>
+  <button onclick="closeSave()"  id="clooose">Закрыть</button>
 </div>
 
 <div id="modalAnother" class="modalAnother">
@@ -300,25 +484,25 @@
 <div id="modalEdit">
   <div id="modalEditContent">
     <form onsubmit="editFunc(event)">
-      <label for="xValue">Какую точку изменить:</label>
-      <input type="number" name="xValue" id="xValue" required>
-      <label for="yValue">На что изменить</label>
-      <input type="number" name="yValue" id="yValue" required>
+      <label for="xValue">Изменение точки</label>
+      <input type="number" name="xValue" placeholder="Какую точку" id="xValue" required>
+      <label for="yValue"></label>
+      <input type="number" name="yValue" id="yValue" placeholder="На что" required>
       <button type="submit">Cохранить</button>
     </form>
   </div>
-  <button onclick="closeEdit()">Закрыть</button>
+  <button onclick="closeEdit()" id="closeEdit">Закрыть</button>
 </div>
 
 <div id="modalRemove">
   <div id="modalRemoveContent">
     <form onsubmit="removeFunc(event)">
-      <label for="xToRemove">Какую точку изменить:</label>
-      <input type="number" name="xValue" id="xToRemove" required>
+      <label for="xToRemove">Удаление точки</label>
+      <input type="number" name="xValue" id="xToRemove" placeholder="Какую точку" required>
       <button type="submit">Cохранить</button>
     </form>
   </div>
-  <button onclick="closeRemove()">Закрыть</button>
+  <button onclick="closeRemove()" id="ccclose">Закрыть</button>
 </div>
 
 <div id="modalOverlay" class="modal-overlay"></div>

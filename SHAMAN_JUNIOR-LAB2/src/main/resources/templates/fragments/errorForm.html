@@ -1,8 +1,60 @@
-<div id="errorForm" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid black;">
+<style>
+    #errorForm{
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #2e2e2e;
+        padding: 20px;
+        border: none;
+        border-radius: 25px;
+        width: 350px;
+        height: 190px;
+        align-items: center;
+    }
+
+    #errorTitle{
+        font-family: Tahoma, sans-serif;
+        font-weight: bold;
+        font-size: 27px;
+        color: #ccff66;
+        text-align: center;
+    }
+
+    #errorForm{
+    }
+
+    #errorMes{
+        text-align: center;
+        color: white;
+    }
+
+    #errorForm button{
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        font-family: Tahoma, sans-serif;
+        border-radius: 25px;
+        border: none;
+        width: 35%;
+        height: 35px;
+        color: white;
+        background-color: #ff66b3;
+        margin-left: 114px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #errorForm button:hover {
+        background-color: #e45ba0;
+    }
+</style>
+<div id="errorForm">
     <div id="errorContent"></div>
-    <p>Ошибка</p>
+    <p id="errorTitle">Тут ошибочка<br>вышла...</p>
     <p id="errorMessage"></p>
-    <p th:text="${errorMessage}"></p>
+    <p th:text="${errorMessage}" id="errorMes"></p>
     <button onclick="closeModal()">Закрыть</button>
 </div>
 <script>
