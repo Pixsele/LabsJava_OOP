@@ -7,7 +7,7 @@
         body{
             font-family: Tahoma, sans-serif;
         }
-        .modalAnother {
+        /*.modalAnother {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -27,7 +27,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            display: none; /* По умолчанию скрыт */
+            display: none; /* По умолчанию скрыт
             z-index: 1000;
         }
 
@@ -54,8 +54,8 @@
             background: #1b40f8;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна *
+            width: 400px; /* Устанавливаем фиксированную ширину *
             z-index: 1001;
         }
 
@@ -68,54 +68,240 @@
             background: #1b40f8;
             padding: 20px;
             border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
-            width: 400px; /* Устанавливаем фиксированную ширину */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна *
+            width: 400px; /* Устанавливаем фиксированную ширину *
             z-index: 1001;
+        }*/
+
+        body {
+            font-family: Tahoma, sans-serif;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            grid-template-rows: repeat(1, 1fr);
+            gap: 10px;
+            padding: 10px;
+            font-family: Tahoma, sans-serif;
+        }
+
+        #flamish{
+            background-color: #ffe6f0;
+            border-radius: 25px;
+            padding: 5px;
+            height: 100%;
+            min-height: 94vh;
+            text-align: center;
+        }
+
+        #flamishTitle{
+            font-weight: bold;
+            font-size: 27px;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        #flamish button{
+            font-family: Tahoma, sans-serif;
+            background-color: #ff66b3;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            width: 35%;
+            height: 45px;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #flamish button:hover {
+            background-color: #e45ba0;
+        }
+
+        #flamish button[disabled] {
+            background-color: #ecc2da; /* Серый фон для заблокированной кнопки */
+            color: #ffffff; /* Тусклый цвет текста */
+            cursor: not-allowed; /* Указатель меняется на запрещающий значок */
+            opacity: 0.6; /* Прозрачность для эффекта */
+            border: none; /* Серый цвет рамки */
+        }
+
+        #flamish button[disabled]:hover {
+            background-color: #d89ecd;
+            color: #ffffff;
+            border-color: #aaa;
+        }
+
+        #flamish table {
+            width: 55%; /* Занимает всю ширину родительского контейнера */
+            border-spacing: 0; /* Убирает двойные линии между ячейками */
+            font-family: Tahoma, sans-serif;
+            margin: 0 auto;
+            overflow: hidden;
+            border: none;
+        }
+
+        #flamish th, td {
+            padding: 10px; /* Внутренние отступы */
+            text-align: center; /* Текст по левому краю */
+            border: 1px solid #e0e0e0; /* Светло-серая рамка */
+        }
+
+        #flamish th {
+            background-color: #ff66b3; /* Фон заголовка таблицы — розовый */
+            color: white; /* Белый текст в заголовке */
+            font-weight: bold; /* Жирный текст */
+        }
+
+        #flamish tr:nth-child(even) {
+            background-color: #f2f2f2; /* Серый фон для четных строк */
+        }
+
+        #flamish tr:nth-child(odd) {
+            background-color: #fff; /* Белый фон для нечетных строк */
+        }
+
+        #flamish td:first-child {
+            text-align: center; /* Центровка первой колонки */
+        }
+
+        #flamish table tr:hover {
+            background-color: #f9c5f0; /* Слегка розовый цвет при наведении на строку */
+        }
+
+        #flamish thead th:first-child {
+            border-top-left-radius: 25px; /* Левый верхний угол */
+        }
+        #flamish thead th:last-child {
+            border-top-right-radius: 25px; /* Правый верхний угол */
+        }
+        #flamish tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 25px; /* Левый нижний угол */
+        }
+        #flamish tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 25px; /* Правый нижний угол */
+        }
+
+        #ramen{
+            background-color: #f4ffcc;
+            border-radius: 25px;
+            padding: 5px;
+            height: 100%;
+            min-height: 94vh;
+            text-align: center;
+        }
+
+        #ramenTitle{
+            font-weight: bold;
+            font-size: 27px;
+            margin-bottom: 30px;
+            margin-top: 50px;
+        }
+
+        #threadCount{
+            width: 55%;
+            height: 45px;
+            border: none;
+            border-radius: 25px;
+            background-color: white;
+            font-family: Tahoma, sans-serif;
+            font-size: 15px;
+            padding-left: 20px;
+            padding-right: 15px;
+            outline: none; /* Убираем обводку при фокусе */
+            box-shadow: none;
+            margin-bottom: 10px;
+        }
+
+        #ramen button{
+            font-family: Tahoma, sans-serif;
+            background-color: #ccff66;
+            color: #2e2e2e;
+            border: none;
+            border-radius: 25px;
+            margin-bottom: 10px;
+            width: 130px;
+            height: 45px;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #ramen button:hover {
+            background-color: #c4e65a;
+        }
+
+        #ramen button[disabled] {
+            background-color: #c5d3a3; /* Серый фон для заблокированной кнопки */
+            color: #858585; /* Тусклый цвет текста */
+            cursor: not-allowed; /* Указатель меняется на запрещающий значок */
+            opacity: 0.6; /* Прозрачность для эффекта */
+            border: none; /* Серый цвет рамки */
+        }
+
+        #ramen button[disabled]:hover {
+            background-color: #a7b682;
+            color: #9c9c9c;
+            border-color: #6c6c6c;
         }
 
     </style>
 </head>
 <body>
-<h3>Функция</h3>
-<div id="integralContent">
-    <div th:if="${integralFunc != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, countOfIntegral - 1)}">
-                <td><input type="number" th:value="${integralFunc.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${integralFunc.getYValues()[i]}" ></td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container">
+    <div id="flamish">
+        <h3 id="flamishTitle">Функция</h3>
+        <button onclick="openModal('integral','integral')">Создать функцию</button>
+        <button onclick="openSave('integral')" th:attr="disabled=${integralFunc == null}">Сохранить</button>
+        <button onclick="openFunctionList('integral')">Загрузить</button>
+        <button onclick="openAnother('integral','integral')">Открыть</button>
+        <button onclick="openEdit('integral','integral')" th:attr="disabled=${integralFunc == null}">Вставить или изменить</button>
+        <button onclick="openRemove('integral','integral')" th:attr="disabled=${integralFunc == null or countOfIntegral == 2 }">Удалить точку</button>
+        <div id="integralContent">
+            <div th:if="${integralFunc != null}">
+                <h4>Таблица функции:</h4>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, countOfIntegral - 1)}">
+                        <td><input type="number" th:value="${integralFunc.getXValues()[i]}" ></td>
+                        <td><input type="number" th:value="${integralFunc.getYValues()[i]}" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${integralFunc == null}">
+                <p>Функция отсутствует</p>
+            </div>
+        </div>
+        <div>
     </div>
-    <div th:if="${integralFunc == null}">
-        <p>Отсутствует функция</p>
+</div>
+    <div id="ramen">
+        <h4 id="ramenTitle">Результат</h4>
+        <form action="/integral/calculate" method="post">
+            <input type="number" id="threadCount" name="threadCount" value="1" min="1" max="100" required>
+            <button type="submit" th:attr="disabled=${integralFunc == null}">Выполнить</button>
+        </form>
+
+        <div th:if="${integralResult != null}">
+            <p th:text="${integralResult}"></p>
+        </div>
+        <div th:if="${integralResult == null}">
+            <p>Нет результата</p>
+        </div>
     </div>
-    <button onclick="openModal('integral','integral')">Создать функцию</button>
-    <button onclick="openSave('integral')" th:attr="disabled=${integralFunc == null}">Сохранить</button>
-    <button onclick="openFunctionList('integral')">Загрузить</button>
-    <button onclick="openAnother('integral','integral')">Открыть</button>
-    <button onclick="openEdit('integral','integral')" th:attr="disabled=${integralFunc == null}">Вставить или изменить</button>
-    <button onclick="openRemove('integral','integral')" th:attr="disabled=${integralFunc == null or countOfIntegral == 2 }">Удалить точку</button>
-</div>
-<div>
-    <form action="/integral/calculate" method="post">
-        <input type="number" id="threadCount" name="threadCount" value="1" min="1" max="100" required>
-        <button type="submit" th:attr="disabled=${integralFunc == null}">Выполнить</button>
-    </form>
-</div>
-<div th:if="${integralResult != null}">
-    <p th:text="${integralResult}"></p>
-</div>
-<div th:if="${integralResult == null}">
-    <p>Нет результата</p>
+
 </div>
 
 <div th:replace="fragments/functionsModalForms"></div>

@@ -5,54 +5,234 @@
     <script th:src="@{/js/graphScript.js}" type="text/javascript"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Diff</title>
+
+    <style>
+    .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;
+    padding: 10px;
+    font-family: Tahoma, sans-serif;
+    }
+
+    #flis{
+    background-color: #ffe6f0;
+    border-radius: 25px;
+    padding: 5px;
+    height: 100%;
+    min-height: 94vh;
+    text-align: center;
+    }
+
+    #flisTitle{
+        font-weight: bold;
+        font-size: 27px;
+        margin-bottom: 30px;
+        margin-top: 50px;
+    }
+
+    #flis button{
+        font-family: Tahoma, sans-serif;
+        background-color: #ff66b3;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        margin-bottom: 10px;
+        width: 35%;
+        height: 45px;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #flis button:hover {
+        background-color: #e45ba0;
+    }
+
+    #flis button[disabled] {
+        background-color: #ecc2da; /* Серый фон для заблокированной кнопки */
+        color: #ffffff; /* Тусклый цвет текста */
+        cursor: not-allowed; /* Указатель меняется на запрещающий значок */
+        opacity: 0.6; /* Прозрачность для эффекта */
+        border: none; /* Серый цвет рамки */
+    }
+
+    #flis button[disabled]:hover {
+        background-color: #d89ecd;
+        color: #ffffff;
+        border-color: #aaa;
+    }
+
+    #flis table {
+        width: 55%; /* Занимает всю ширину родительского контейнера */
+        border-spacing: 0; /* Убирает двойные линии между ячейками */
+        font-family: Tahoma, sans-serif;
+        margin: 0 auto;
+        overflow: hidden;
+        border: none;
+    }
+
+    #flis th, td {
+        padding: 10px; /* Внутренние отступы */
+        text-align: center; /* Текст по левому краю */
+        border: 1px solid #e0e0e0; /* Светло-серая рамка */
+    }
+
+    #flis th {
+        background-color: #ff66b3; /* Фон заголовка таблицы — розовый */
+        color: white; /* Белый текст в заголовке */
+        font-weight: bold; /* Жирный текст */
+    }
+
+    #flis tr:nth-child(even) {
+        background-color: #f2f2f2; /* Серый фон для четных строк */
+    }
+
+    #flis tr:nth-child(odd) {
+        background-color: #fff; /* Белый фон для нечетных строк */
+    }
+
+    #flis td:first-child {
+        text-align: center; /* Центровка первой колонки */
+    }
+
+    #flis table tr:hover {
+        background-color: #f9c5f0; /* Слегка розовый цвет при наведении на строку */
+    }
+
+    #flis thead th:first-child {
+        border-top-left-radius: 25px; /* Левый верхний угол */
+    }
+    #flis thead th:last-child {
+        border-top-right-radius: 25px; /* Правый верхний угол */
+    }
+    #flis tbody tr:last-child td:first-child {
+        border-bottom-left-radius: 25px; /* Левый нижний угол */
+    }
+    #flis tbody tr:last-child td:last-child {
+        border-bottom-right-radius: 25px; /* Правый нижний угол */
+    }
+
+    #glamur{
+        background-color: #f4ffcc;
+        border-radius: 25px;
+        padding: 5px;
+        height: 100%;
+        min-height: 94vh;
+        text-align: center;
+    }
+
+    #glamurTitle{
+        font-weight: bold;
+        font-size: 27px;
+        margin-bottom: 30px;
+        margin-top: 50px;
+    }
+
+    #xToApply{
+        width: 55%;
+        height: 45px;
+        border: none;
+        border-radius: 25px;
+        background-color: white;
+        font-family: Tahoma, sans-serif;
+        font-size: 15px;
+        padding-left: 20px;
+        padding-right: 15px;
+        outline: none; /* Убираем обводку при фокусе */
+        box-shadow: none;
+        margin-bottom: 10px;
+    }
+
+    #glamur button{
+        font-family: Tahoma, sans-serif;
+        background-color: #ccff66;
+        color: #2e2e2e;
+        border: none;
+        border-radius: 25px;
+        margin-bottom: 10px;
+        width: 130px;
+        height: 45px;
+        font-weight: bold;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #glamur button:hover {
+        background-color: #c4e65a;
+    }
+
+    #glamur button[disabled] {
+        background-color: #c5d3a3; /* Серый фон для заблокированной кнопки */
+        color: #858585; /* Тусклый цвет текста */
+        cursor: not-allowed; /* Указатель меняется на запрещающий значок */
+        opacity: 0.6; /* Прозрачность для эффекта */
+        border: none; /* Серый цвет рамки */
+    }
+
+    #glamur button[disabled]:hover {
+        background-color: #a7b682;
+        color: #9c9c9c;
+        border-color: #6c6c6c;
+    }
+    </style>
 </head>
 <body>
-<h3>Функция</h3>
-<div id="graphContent">
-    <div th:if="${graphFunc != null}">
-        <h4>Таблица функции:</h4>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>X</th>
-                <th>Y</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="i : ${#numbers.sequence(0, countGraph - 1)}">
-                <td><input type="number" th:value="${graphFunc.getXValues()[i]}" ></td>
-                <td><input type="number" th:value="${graphFunc.getYValues()[i]}" ></td>
-            </tr>
-            </tbody>
-        </table>
+<div class="container">
+    <div id="flis">
+        <h3 id="flisTitle">Функция</h3>
+        <button onclick="openModal('graph','graph')">Создать функцию</button>
+        <button onclick="openSave('graph')" th:attr="disabled=${graphFunc == null}">Сохранить</button>
+        <button onclick="openFunctionList('graph')">Загрузить</button>
+        <button onclick="openAnother('graph','graph')">Открыть</button>
+        <button onclick="openEdit('graph','graph')" th:attr="disabled=${graphFunc == null}">Вставить или изменить</button>
+        <button onclick="openRemove('graph','graph')" th:attr="disabled=${graphFunc == null or countGraph == 2 }">Удалить точку</button>
+        <div id="graphContent">
+            <div th:if="${graphFunc != null}">
+                <h4>Таблица функции:</h4>
+                <table border="1">
+                    <thead>
+                    <tr>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="i : ${#numbers.sequence(0, countGraph - 1)}">
+                        <td><input type="number" th:value="${graphFunc.getXValues()[i]}" ></td>
+                        <td><input type="number" th:value="${graphFunc.getYValues()[i]}" ></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:if="${graphFunc == null}">
+                <p>Отсутствует функция</p>
+            </div>
+        </div>
     </div>
-    <div th:if="${graphFunc == null}">
-        <p>Отсутствует функция</p>
+    <div id="glamur">
+        <h3 id="glamurTitle">График</h3>
+        <form action="/graph/apply" method="post">
+            <input type="number" id="xToApply" placeholder="Введите Х" name="xToApply" required>
+            <button type="submit" th:attr="disabled=${graphFunc == null}">Выполнить</button>
+        </form>
+
+    <div th:if="${graphResult != null}">
+        <p th:text="${graphResult}"></p>
     </div>
-    <button onclick="openModal('graph','graph')">Создать функцию</button>
-    <button onclick="openSave('graph')" th:attr="disabled=${graphFunc == null}">Сохранить</button>
-    <button onclick="openFunctionList('graph')">Загрузить</button>
-    <button onclick="openAnother('graph','graph')">Открыть</button>
-    <button onclick="openEdit('graph','graph')" th:attr="disabled=${graphFunc == null}">Вставить или изменить</button>
-    <button onclick="openRemove('graph','graph')" th:attr="disabled=${graphFunc == null or countGraph == 2 }">Удалить точку</button>
-
+    <div th:if="${graphResult == null}">
+        <p>Нет результата</p>
+    </div>
+    <div id="functionGraphContainer">
+        <canvas id="functionGraph"></canvas>
+    </div>
 </div>
-<div>
-    <form action="/graph/apply" method="post">
-        <input type="number" id="xToApply" name="xToApply" required>
-        <button type="submit" th:attr="disabled=${graphFunc == null}">Выполнить</button>
-    </form>
 </div>
-<div th:if="${graphResult != null}">
-    <p th:text="${graphResult}"></p>
-</div>
-<div th:if="${graphResult == null}">
-    <p>Нет результата</p>
-</div>
-<div id="functionGraphContainer">
-    <canvas id="functionGraph"></canvas>
-</div>
-
 <div th:replace="fragments/functionsModalForms"></div>
 
 </body>

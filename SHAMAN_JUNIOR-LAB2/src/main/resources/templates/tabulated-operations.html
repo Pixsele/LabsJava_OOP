@@ -326,7 +326,7 @@
             <button onclick="openModal('operand1','tabulated-operations')">Создать функцию</button>
             <button onclick="openSave('operand1')" th:attr="disabled=${operand1Func == null}">Сохранить</button>
             <button onclick="openFunctionList('operand1')">Загрузить</button>
-            <button onclick="openAnother('tabulated-operations','operand1')">Открыть</button>
+            <button onclick="openAnother('tabulated-operations','operand1')">Создать (интервал)</button>
             <button onclick="openEdit('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null}">Вставить или изменить</button>
             <button onclick="openRemove('operand1','tabulated-operations')" th:attr="disabled=${operand1Func == null or count1 == 2 }">Удалить точку</button>
             <div th:if="${operand1Func != null}" id="rosa">
@@ -357,7 +357,7 @@
             <button onclick="openModal('operand2','tabulated-operations')">Создать функцию</button>
             <button onclick="openSave('operand2')" th:attr="disabled=${operand2Func == null}">Сохранить</button>
             <button onclick="openFunctionList('operand2')">Загрузить</button>
-            <button onclick="openAnother('tabulated-operations','operand2')">Открыть</button>
+            <button onclick="openAnother('tabulated-operations','operand2')">Создать (интервал)</button>
             <button onclick="openEdit('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null}">Вставить или изменить</button>
             <button onclick="openRemove('operand2','tabulated-operations')" th:attr="disabled=${operand2Func == null or count2 == 2 }">Удалить точку</button>
             <div th:if="${operand2Func != null}" id="rosa">
