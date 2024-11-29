@@ -64,7 +64,7 @@ public abstract class AbstractTabulatedFunction implements TabulatedFunction, Se
     public static void checkSorted(double[] xValues) {
         for (int i = 1; i < xValues.length; i++) {
             if (xValues[i] <= xValues[i - 1]) {
-                throw new ArrayIsNotSortedException("Array xValues is not sorted.");
+                throw new ArrayIsNotSortedException("Массив не отсортирован");
             }
         }
     }

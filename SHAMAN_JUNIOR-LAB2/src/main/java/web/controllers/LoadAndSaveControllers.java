@@ -63,7 +63,7 @@ public class LoadAndSaveControllers {
             session.setAttribute(target+"Func", result);
             return "redirect:/tabulated-operations";
         }else{
-            throw new LoadFunctionExecption("Function have < 2 points");
+            throw new LoadFunctionExecption("У функции должно быть >2 точек");
         }
     }
 

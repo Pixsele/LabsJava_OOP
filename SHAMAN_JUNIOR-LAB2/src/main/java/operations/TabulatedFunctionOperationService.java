@@ -56,7 +56,7 @@ public class TabulatedFunctionOperationService {
     private TabulatedFunction doOperation(TabulatedFunction a, TabulatedFunction b, BiOperation operation) {
         // Проверка на совместимость функций
         if (a.getCount() != b.getCount()) {
-            throw new InconsistentFunctionsException("Functions have different number of points.");
+            throw new InconsistentFunctionsException("У функций разное количество точек");
         }
 
         Point[] pointsA = asPoints(a);
@@ -67,7 +67,7 @@ public class TabulatedFunctionOperationService {
 
         for (int i = 0; i < a.getCount(); i++) {
             if (pointsA[i].x != pointsB[i].x) {
-                throw new InconsistentFunctionsException("Functions have different x-values at index " + i);
+                throw new InconsistentFunctionsException("У функций разные значения X");
             }
             xValues[i] = pointsA[i].x;
             yValues[i] = operation.apply(pointsA[i].y, pointsB[i].y); // Применение операции
