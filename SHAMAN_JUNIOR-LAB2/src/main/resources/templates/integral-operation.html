@@ -274,8 +274,8 @@
                     </thead>
                     <tbody>
                     <tr th:each="i : ${#numbers.sequence(0, countOfIntegral - 1)}">
-                        <td><input type="number" th:value="${integralFunc.getXValues()[i]}" ></td>
-                        <td><input type="number" th:value="${integralFunc.getYValues()[i]}" ></td>
+                        <td><input type="number" th:value="${integralFunc.getXValues()[i]}" readonly></td>
+                        <td><input type="number" th:value="${integralFunc.getYValues()[i]}" readonly></td>
                     </tr>
                     </tbody>
                 </table>

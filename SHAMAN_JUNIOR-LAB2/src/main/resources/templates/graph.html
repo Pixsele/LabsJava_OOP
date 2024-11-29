@@ -204,8 +204,8 @@
                     </thead>
                     <tbody>
                     <tr th:each="i : ${#numbers.sequence(0, countGraph - 1)}">
-                        <td><input type="number" th:value="${graphFunc.getXValues()[i]}" ></td>
-                        <td><input type="number" th:value="${graphFunc.getYValues()[i]}" ></td>
+                        <td><input type="number" th:value="${graphFunc.getXValues()[i]}" readonly></td>
+                        <td><input type="number" th:value="${graphFunc.getYValues()[i]}" readonly></td>
                     </tr>
                     </tbody>
                 </table>
