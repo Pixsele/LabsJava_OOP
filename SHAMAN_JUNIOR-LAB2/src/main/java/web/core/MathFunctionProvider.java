@@ -6,6 +6,9 @@ import function.IdentityFunction;
 import function.SqrFunction;
 import function.api.MathFunction;
 import org.reflections.Reflections;
+import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -28,7 +31,9 @@ public class MathFunctionProvider {
         List<AnnotatedFunctions> functions = new ArrayList<>();
 
         try {
-            Reflections reflections = new Reflections(packageName);
+            Reflections reflections = new Reflections(new ConfigurationBuilder()
+                    .setUrls(ClasspathHelper.forPackage(packageName))
+                    .setScanners(new TypeAnnotationsScanner()));
 
             Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(FunctionInfo.class);
 

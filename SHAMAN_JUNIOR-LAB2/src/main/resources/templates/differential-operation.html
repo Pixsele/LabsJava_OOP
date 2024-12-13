@@ -224,7 +224,7 @@
     <button onclick="openModal('diff','differential-operation')">Создать функцию</button>
     <button onclick="openSave('diff')" th:attr="disabled=${diffFunc == null}">Сохранить</button>
     <button onclick="openFunctionList('diff')">Загрузить</button>
-    <button onclick="openAnother('differential-operation','diff')">Открыть</button>
+    <button onclick="openAnother('differential-operation','diff')">Создать (интервал)</button>
     <button onclick="openEdit('diff','differential-operation')" th:attr="disabled=${diffFunc == null}">Вставить или изменить</button>
     <button onclick="openRemove('diff','differential-operation')" th:attr="disabled=${diffFunc == null or countOfDiff == 2 }">Удалить точку</button>
     <div>

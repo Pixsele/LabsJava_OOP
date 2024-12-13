@@ -24,7 +24,7 @@ public class CustomExceptionHandler {
         String page = "/";
         String redirectTarget = request.getParameter("redirectTarget");
 
-        redirectAttributes.addAttribute("errorMessage", exception.getMessage());
+        redirectAttributes.addAttribute("errorMessage", "Массив не отсортирован");
         redirectAttributes.addAttribute("showError", true);
         redirectAttributes.addAttribute("redirectTarget", redirectTarget);
         return "redirect:/"+redirectTarget;
@@ -64,7 +64,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(RemoveIncorrectPoint.class)
     public ResponseEntity<Map<String, String>> handleRemoveIncorrectPoint(RemoveIncorrectPoint exception, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Map<String, String> response = new HashMap<>();
-        response.put("error", exception.getMessage());
+        response.put("error", "Некорректная точка");
         response.put("showError", "true");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }

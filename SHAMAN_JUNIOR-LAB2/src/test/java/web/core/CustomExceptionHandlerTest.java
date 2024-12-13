@@ -56,7 +56,7 @@ class CustomExceptionHandlerTest {
     @Test
     public void testHandleArrayIsNotSortedException() {
         // Подготовка данных
-        String expectedMessage = "Array is not sorted";
+        String expectedMessage = "Массив не отсортирован";
         when(arrayIsNotSortedException.getMessage()).thenReturn(expectedMessage);
         when(request.getParameter("redirectTarget")).thenReturn("someTarget");
 
@@ -122,7 +122,7 @@ class CustomExceptionHandlerTest {
     @Test
     public void testHandleRemoveIncorrectPoint() {
         // Подготовка данных
-        String expectedMessage = "Point to remove is incorrect";
+        String expectedMessage = "Некорректная точка";
         when(removeIncorrectPoint.getMessage()).thenReturn(expectedMessage);
 
         // Вызов метода

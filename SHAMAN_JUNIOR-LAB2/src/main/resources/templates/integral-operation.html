@@ -259,7 +259,7 @@
         <button onclick="openModal('integral','integral')">Создать функцию</button>
         <button onclick="openSave('integral')" th:attr="disabled=${integralFunc == null}">Сохранить</button>
         <button onclick="openFunctionList('integral')">Загрузить</button>
-        <button onclick="openAnother('integral','integral')">Открыть</button>
+        <button onclick="openAnother('integral','integral')">Создать (интервал)</button>
         <button onclick="openEdit('integral','integral')" th:attr="disabled=${integralFunc == null}">Вставить или изменить</button>
         <button onclick="openRemove('integral','integral')" th:attr="disabled=${integralFunc == null or countOfIntegral == 2 }">Удалить точку</button>
         <div id="integralContent">

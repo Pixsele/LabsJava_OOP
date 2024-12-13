@@ -189,7 +189,7 @@
         <button onclick="openModal('graph','graph')">Создать функцию</button>
         <button onclick="openSave('graph')" th:attr="disabled=${graphFunc == null}">Сохранить</button>
         <button onclick="openFunctionList('graph')">Загрузить</button>
-        <button onclick="openAnother('graph','graph')">Открыть</button>
+        <button onclick="openAnother('graph','graph')">Создать (интервал)</button>
         <button onclick="openEdit('graph','graph')" th:attr="disabled=${graphFunc == null}">Вставить или изменить</button>
         <button onclick="openRemove('graph','graph')" th:attr="disabled=${graphFunc == null or countGraph == 2 }">Удалить точку</button>
         <div id="graphContent">
